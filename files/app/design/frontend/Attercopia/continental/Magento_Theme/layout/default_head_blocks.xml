@@ -3,5 +3,7 @@
     <head>
         <css src="css/styles.css" />
         <css src="css/print.css" media="print" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet" />
     </head>
 </page>

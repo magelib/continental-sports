@@ -224,59 +224,43 @@ $addto-color: $primary__color !default;
 $addto-hover-color: $link__hover__color !default;
 
 
-// Font Awesome
 
-$icons__font-name: 'FontAwesome';
-$icon-font__size: 14px;
-$icon-font__line-height: inherit;
-$icon-wishlist-full: '\f004';
-$icon-wishlist-empty: '\f08a';
-$icon-success: '\f058';
-$icon-error: '\f071';
-$icon-warning: '\f071';
-$icon-update: '\f021';
-$icon-star: '\f005';
-$icon-star-empty: '\f006';
-$icon-settings: '\f013';
-$icon-menu: '\f0c9';
-$icon-location: '\f041';
-$icon-info: '\f129';
-$icon-list: '\f00b';
-$icon-grid: '\f009';
-$icon-comment-reflected: '\f075';
-$icon-collapse: '\f147';
-$icon-checkmark: '\f00c';
-$icon-bag: '\f290';
-$icon-cart: '\f291';
-$icon-calendar: '\f073';
-$icon-arrow-up: '\f176';
-$icon-arrow-down: '\f175';
-$icon-search: '\f002';
-$icon-next: '\f105';
-$icon-prev: '\f104';
-$icon-pointer-down: '\f0d7';
-$icon-pointer-up: '\f0d8';
-$icon-pointer-right: '\f0da';
-$icon-pointer-left: '\f0d9';
-$icon-flag: '\f024';
-$icon-expand: '\f196';
-$icon-envelope: '\f0e0';
-$icon-compare-full: '\f0ec';
-$icon-compare-empty: '\f0ec';
-$icon-comment: '\f075';
-$icon-up: '\f106';
-$icon-down: '\f107';
-$icon-help: '\f059';
-$icon-arrow-up-thin: '\f176';
-$icon-arrow-right-thin: '\f178';
-$icon-arrow-down-thin: '\f175';
-$icon-arrow-left-thin: '\f177';
-$icon-account: '\f007';
-$icon-gift-registry: '\f274';
-$icon-present: '\f06b';
-$icon-trash: '\f1f8';
-$icon-edit: '\f040';
-$icon-remove: '\f00d';
-$icon-print: '\f02f';
-$icsaon-download: '\f0ab';
-$icon-private: '\f023';
+// Custom Variables 
+
+
+
+// Paths
+
+$devPath: '../images';
+
+$imagePath: $devPath;
+
+
+// Custom Variables
+
+// Color Variables
+
+$red: #d1242e;
+$black: #333333;
+$white: #ffffff;
+$grey: #808080;
+
+$headingColor: $black;
+$fontDark: $black;
+$fontLight: $white;
+
+$primary: $red;
+$secondary: $grey;
+
+// Font Variables
+
+$font: "Roboto";
+$hfont: "Montserrat";
+
+// Custom Breakpoints
+
+$xlarge: 1600px;
+$large: 1350px;
+$medium: 1035px;
+$small: 767px;
+$xsmall: 620px;

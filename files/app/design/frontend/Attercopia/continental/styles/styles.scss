@@ -12,6 +12,7 @@
 @include lib-magento-reset();
 
 // Theme blocks
+@import 'blocks/mixins';
 @import 'blocks/extends';
 @import 'blocks/typography';
 @import 'blocks/layout';

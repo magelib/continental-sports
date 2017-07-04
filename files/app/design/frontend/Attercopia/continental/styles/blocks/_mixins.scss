@@ -1,0 +1,26 @@
+// Custom Mixins
+
+@mixin font-size ($size : 16)
+{
+  $sizeRem: ($size / 10) - ( ( ($size /10 ) * 37.5) /100 );
+  font-size: $size + px;
+  font-size: $sizeRem + rem;
+}
+@mixin btn-shape ($deg) {
+	transform: skew($deg);
+	-webkit-transform: skew($deg);
+  -moz-transform: skew($deg);
+  -o-transform: skew($deg);
+}
+
+@mixin diagonal-gradient ($colorStart, $colorEnd) {
+	background: $colorStart;
+	background: -moz-linear-gradient(-45deg, $colorStart 0%, $colorStart 7%, $colorEnd 99%, $colorEnd 100%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, $colorStart), color-stop(7%, $colorStart), color-stop(99%, $colorEnd), color-stop(100%, $colorEnd));
+	background: -webkit-linear-gradient(-45deg, $colorStart 0%, $colorStart 7%, $colorEnd 99%, $colorEnd 100%);
+	background: -o-linear-gradient(-45deg, $colorStart 0%, $colorStart 7%, $colorEnd 99%, $colorEnd 100%);
+	background: -ms-linear-gradient(-45deg, $colorStart 0%, $colorStart 7%, $colorEnd 99%, $colorEnd 100%);
+	background: linear-gradient(135deg, $colorStart 0%, $colorStart 7%, $colorEnd 99%, $colorEnd 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#$colorStart', endColorstr='#$colorEnd', GradientType=1 );
+}
+

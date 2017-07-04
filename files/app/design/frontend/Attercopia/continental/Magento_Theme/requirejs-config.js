@@ -39,6 +39,7 @@ var config = {
         "mage/common",
         "mage/dataPost",
         "js/theme",
-        "mage/bootstrap"
+        "mage/bootstrap",
+        "Magento_Theme/js/main",
     ]
 };

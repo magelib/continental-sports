@@ -22,7 +22,7 @@
                     <argument name="show_part" xsi:type="string">welcome</argument>
                 </arguments>
             </block>
-        </referenceBlock>
+        </referenceBlock>        
         <referenceContainer name="main.content">
             <block class="Magento\Framework\View\Element\Template" name="skip_to_content.target" before="-" template="Magento_Theme::html/skiptarget.phtml">
                 <arguments>
@@ -88,8 +88,18 @@
                         </block>
                     </block>
                 </block>
-            </container>
+            </container> 
+            <!-- Custom banner -->
+             <container name="main-banner" htmlClass="main-banner" htmlTag="div">
+                 <block class="Magento\Cms\Block\Block" name="main_banner">
+                    <arguments>
+                        <argument name="css_class" xsi:type="string">main_banner</argument>
+                        <argument name="block_id" xsi:type="string">main_banner</argument>
+                    </arguments>
+                </block>
+            </container>           
         </referenceContainer>
+
         <referenceContainer name="page.top">
             
             <container name="top.container" as="topContainer" label="After Page Header Top" htmlTag="div" htmlClass="top-container"/>

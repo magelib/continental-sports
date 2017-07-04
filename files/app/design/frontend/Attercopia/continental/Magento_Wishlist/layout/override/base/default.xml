@@ -10,8 +10,14 @@
         <referenceBlock name="head.components">
             <block class="Magento\Framework\View\Element\Js\Components" name="wishlist_page_head_components" template="Magento_Wishlist::js/components.phtml"/>
         </referenceBlock>
-        <referenceContainer name="sidebar.additional">
+        <referenceBlock name="top.links">
+            <block class="Magento\Wishlist\Block\Link" name="wish-list-link" after="my-account-link"/>
+        </referenceBlock>
+        <referenceBlock name="wishlist.sidebar" remove="true">
             <block class="Magento\Wishlist\Block\Customer\Sidebar" name="wishlist_sidebar" as="wishlist" template="Magento_Wishlist::sidebar.phtml"/>
+        </referenceBlock>
+        <referenceContainer name="sidebar.additional">
+		<block class="Mirasvit\Blog\Block\Sidebar\Recent" name="blog.sidebar.recent" template="sidebar/recent.phtml"/>
         </referenceContainer>
     </body>
 </page>

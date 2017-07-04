@@ -12,12 +12,13 @@
       <li><a href="">Spare Parts</a></li>
       <li><a href="">Maintenance Service</a></li>
       <li><a href="">Technical Information</a></li>
+      <li><a href="">News</a></li>
       <li>
-		    <a href="<?php echo $block->getAccountUrl() ?>">
+		    <a class="" href="<?php echo $block->getAccountUrl() ?>">
 				 	<?php if ($block->isLoggedIn()): ?>
 					 	<?php echo __('My Account') ?>
 						<?php else: ?>
-						My Account
+						Login
   				<?php endif; ?>
 		    </a>
 		 	</li>
