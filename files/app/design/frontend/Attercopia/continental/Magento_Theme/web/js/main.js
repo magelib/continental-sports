@@ -12,14 +12,20 @@ function($) {
 
        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
        var featureBox = $('.home-feature-box');
-    		
-    		if(width <= 770) {
-	        $("featureBox").each(function() {
+      
+  		$(featureBox).each(function() {	
 
-	        var detach = $(this).find(".btn").detach();
+				var detach = $(this).find(".btn").detach();
 
-	        $(detach).insertAfter($(this).find("p"));
-        })
-    	}
+				if(width <= 620) {
+
+					$(detach).insertAfter($(this).find("p"));
+
+				}
+				else {
+					$(detach).insertAfter($(this).find("h2"));
+				}
+
+  		});
     });
 });
