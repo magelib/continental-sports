@@ -4,9 +4,9 @@ define([
 function($) {
   "use strict";
 
+  // Move "explore our resources" button to below technical section text for mobile screens.
+
    var $window = $(window);
-   
-   // var $moveBtn = $(this).featureBox.find('.btn');
 
     $window.resize(function resize(){
 

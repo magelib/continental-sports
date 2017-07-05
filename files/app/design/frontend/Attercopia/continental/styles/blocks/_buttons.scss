@@ -25,6 +25,8 @@ a.action.primary {
   float: left;
   cursor: pointer;
   margin-right: 6px;
+  transition: 0.3s all ease-in-out;
+  @include font-size(14);
   @include btn-shape(-20deg);
   span {
   	@include btn-shape(20deg);
