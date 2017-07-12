@@ -1,0 +1,29 @@
+<?php
+/**
+ * Nav view template
+ *
+ * @var $block \Continental\Nav\Block\Menu
+ */
+?>
+
+<div class="header-top-links">
+  <nav>
+    <ul>
+      <li><a href="">Spare Parts</a></li>
+      <li><a href="">Maintenance Service</a></li>
+      <li><a href="">Technical Information</a></li>
+      <li><a href="/news" title="News">News</a></li>
+      <li>
+		    <a class="" href="<?php echo $block->getAccountUrl() ?>">
+				 	<?php if ($block->isLoggedIn()): ?>
+					 	<?php echo __('My Account') ?>
+						<?php else: ?>
+						Login
+  				<?php endif; ?>
+		    </a>
+		 	</li>
+		 	<li><a class="redBg" href="">Contact Us</a></li>
+    </ul>
+  </nav>
+</div>
+
