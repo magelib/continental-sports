@@ -13,12 +13,19 @@ class Index extends Action
 {
     private $content;
 
+   function execute() {
+	$result = $this->resultFactory->create(PdfResult::TYPE);
+   	return $result;
+    }
 
-    public function execute()
+     function _dev_execute()
     {
 	$filename = 'contitest.pdf';
-//      $page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+	echo "Hello PDF";
+
 	$result = $this->resultFactory->create(PdfResult::TYPE);
+	
+	$result->appendContent('haha');
 
 	$result->setFilename($filename);
 
@@ -31,29 +38,9 @@ class Index extends Action
 		]
 		)
 	);
-
-/*	$result->addpageOptions(
-		new PdfOptions(
-		    [
-			PdfOptions::KEY_PAGE_COOKIES => $_COOKIE,
-		    ]
-		)
-	);
-*/
-
-//	$this->pdfFactory = new PdfFactory();
-//	$this->pdf = $this->pdfFactory->create();
-	// Try content?
-//	$this->pdf->appendContent('Trampoline');
-//	$result->renderPdf();
+	echo "Complete";
 	return $result;
 
-      //  return $page;
-	echo "Hello PDF";
-//	$this->pdf = this->_objectManager->create('staempfli_pdf/pdf');
-//	$this->content = $this->pdf->createBlock('staempfli_pdf/pdf_content');
-//	$this->buildContent();
-	
     }
 
 public function standardHeader() {

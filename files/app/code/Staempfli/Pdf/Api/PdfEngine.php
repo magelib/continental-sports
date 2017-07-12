@@ -9,7 +9,7 @@ interface PdfEngine
     /**
      * Append HTML content (Add "web page")
      *
-     * @param $html
+     * @param string $html
      * @param Options $options
      * @return void
      */
