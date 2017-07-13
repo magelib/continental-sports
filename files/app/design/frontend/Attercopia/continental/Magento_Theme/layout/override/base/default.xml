@@ -6,6 +6,10 @@
  */
 -->
 <page layout="3columns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<head>
+<!--
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,‌​100italic,300,300ita‌​lic,400italic,500,50‌​0italic,700,700itali‌​c,900italic,900' rel='stylesheet' type='text/css' /> -->
+</head>
     <update handle="default_head_blocks"/>
     <body>
         <block name="require.js" class="Magento\Framework\View\Element\Template" template="Magento_Theme::page/js/require_js.phtml" />
@@ -89,15 +93,7 @@
                     </block>
                 </block>
             </container> 
-            <!-- Custom banner -->
-             <container name="main-banner" htmlClass="main-banner" htmlTag="div">
-                 <block class="Magento\Cms\Block\Block" name="main_banner">
-                    <arguments>
-                        <argument name="css_class" xsi:type="string">main_banner</argument>
-                        <argument name="block_id" xsi:type="string">main_banner</argument>
-                    </arguments>
-                </block>
-            </container>           
+                     
         </referenceContainer>
 
         <referenceContainer name="page.top">

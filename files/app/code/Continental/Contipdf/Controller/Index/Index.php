@@ -14,19 +14,25 @@ class Index extends Action
     private $content;
 
    function execute() {
-	$result = $this->resultFactory->create(PdfResult::TYPE);
-   	return $result;
+	$page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+        return $page;
+  //	$result = $this->resultFactory->create(PdfResult::TYPE);
+
+  // 	return $result;
     }
 
-     function _dev_execute()
+     function _execute()
     {
 	$filename = 'contitest.pdf';
-	echo "Hello PDF";
-
 	$result = $this->resultFactory->create(PdfResult::TYPE);
+	$source = $result->renderSourceDocument();
+	$this->pdf = new 
+	$this->pdf->appendContent($source);
+ 
+	# Generate PDF:
+ 
+	$pdfFileContents = $this->pdf->file()->toString();
 	
-	$result->appendContent('haha');
-
 	$result->setFilename($filename);
 
 	$result->addGlobalOptions(
