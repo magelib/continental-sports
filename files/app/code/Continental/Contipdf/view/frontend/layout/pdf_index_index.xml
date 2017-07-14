@@ -1,8 +1,17 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="3columns" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+<head>
+        <title>
+            Test Page
+        </title>
+    </head>
     <body>
+	Test
         <referenceContainer name="main">
-	     <block type="Continental\Contipdf\Maker" name="sample" template="Continental_Contipdf::sample.phtml"/>
+
+            <block class="Continental\Contipdf\Block\Maker" template="Continental_Contipdf::sample.phtml"/>
+
         </referenceContainer>
+
     </body>
 </page>

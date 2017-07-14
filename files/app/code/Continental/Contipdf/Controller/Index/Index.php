@@ -9,16 +9,33 @@ use Staempfli\Pdf\Service\Pdf;
 use Staempfli\Pdf\Service\PdfOptions;
 use Staempfli\Pdf\Service\PdfFactory;
 #use Continental\Contipdf;
-class Index extends Action
+class Index extends \Magento\Framework\App\Action\Action 
 {
     private $content;
 
-   function execute() {
-	$page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
-        return $page;
-  //	$result = $this->resultFactory->create(PdfResult::TYPE);
+    public function __construct(
+        \Magento\Framework\App\Action\Context $context,
+        \Magento\Framework\View\Result\PageFactory $resultPageFactory
+    ) {
+        $this->resultPageFactory = $resultPageFactory;
+        parent::__construct($context);
 
-  // 	return $result;
+    /**
+     * Load the page defined in view/frontend/layout/samplenewpage_index_index.xml
+     *
+     * // return \Magento\Framework\View\Result\Page
+     */
+
+   }
+
+   function execute() {
+
+//	$page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
+ //       return $page;
+
+  	$result = $this->resultFactory->create(PdfResult::TYPE);
+
+   	return $result;
     }
 
      function _execute()

@@ -28,7 +28,6 @@ class PdfFactory
 
     public function create()
     {
-	echo "<p>Create pdfFactory</p>";
         $pdf = new Pdf($this->pdfEngine);
         $pdf->setOptions($this->optionsFromConfig());
         return $pdf;
