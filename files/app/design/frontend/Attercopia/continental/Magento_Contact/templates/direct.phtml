@@ -7,12 +7,10 @@
 // @codingStandardsIgnoreFile
 
 ?>
-<?php 
+<?php
 $om =   \Magento\Framework\App\ObjectManager::getInstance();
-$testClass = 'Continental_Forms\ContactForms';
-$testClass = '\Magento\Contact\Block\ContactForm';
 
-$contiForms = $this->getLayout()->createBlock($testClass);
+$contiForms = $this->getLayout()->createBlock('\Magento\Contact\Block\ContactForm');
 ?>
 <?php
 	echo "Braintree: ";
@@ -24,7 +22,7 @@ $contiForms = $this->getLayout()->createBlock($testClass);
 
 	$args = array(':customer_id' => '3023202');
 	$args = array();
-	// Testing 
+	// Testing
 
 	$clientToken = $om->create($test)->generate($args);
 ?>
@@ -70,16 +68,7 @@ $contiForms = $this->getLayout()->createBlock($testClass);
             </div>
 </div>
 
-<!--
-        <div class="field name required">
-            <label class="label" for="name"><span><?php /* @escapeNotVerified */ echo __('Name') ?></span></label>
-            <div class="control">
-                <input name="name" id="name" title="<?php /* @escapeNotVerified */ echo __('Name') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $this->helper('Magento\Contact\Helper\Data')->getUserName()) ?>" class="input-text" type="text" data-validate="{required:true}"/>
-            </div>
-</div>
--->
-
-        <div class="field telephone">
+    <div class="field telephone">
             <label class="label" for="telephone"><span><?php /* @escapeNotVerified */ echo __('Telephone') ?></span></label>
             <div class="control">
                 <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */ echo __('Telephone') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone')) ?>" class="input-text" type="text" />
@@ -132,8 +121,6 @@ $contiForms = $this->getLayout()->createBlock($testClass);
             </div>
         </div>
 
-
-
         <div class="field message">
             <label class="label" for="message"><span><?php /* @escapeNotVerified */ echo __('Message') ?></span></label>
             <div class="control">
@@ -142,20 +129,19 @@ $contiForms = $this->getLayout()->createBlock($testClass);
 	<?php
         $cartData = $om->create('Magento\Checkout\Model\Cart')->getQuote()->getAllItems();
         $cartDataCount = count( $cartData );
-        
+
 	foreach($cartData as $item) {
     echo 'ID: '.$item->getProductId().' ';
     echo 'Name: '.$item->getName().' ';
     echo 'Sku: '.$item->getSku().' ';
     echo 'Quantity: '.$item->getQty().' ';
     echo 'Price: '.$item->getPrice();
-    echo PHP_EOL;            
+    echo PHP_EOL;
 }
 ?>
 </textarea>
             </div>
         </div>
-
 
     <div class="field reference required ">
             <label class="label" for="reference"><span><?php /* @escapeNotVerified */ echo __('Reference') ?></span></label>
@@ -171,15 +157,25 @@ $contiForms = $this->getLayout()->createBlock($testClass);
             </div>
         </div>
 
-<div class="field contact-method">
-            <label class="label" for="contact-method"><span><?php /* @escapeNotVerified */ echo __('Preferred contact method') ?></span></label>
-            <div class="control">
-                <select name="contact-method" id="contact-method" title="<?php /* @escapeNotVerified */ echo __('Preferred contact method') ?>" class="select-text"  data-validate="{required:true}"><option value="telephone">Telephone</option><option value="email">Email</option></select>
-            </div>
-        </div>
+			<div class="field contact-method">
+				<label class="label" for="contact-method"><span><?php /* @escapeNotVerified */ echo __('Preferred contact method') ?></span></label>
+				<div class="control">
+					<select name="contact-method" id="contact-method" title="<?php /* @escapeNotVerified */ echo __('Preferred contact method') ?>" class="select-text"  data-validate="{required:true}"><option value="telephone">Telephone</option><option value="email">Email</option></select>
+				</div>
+			</div>
 
         <?php echo $block->getChildHtml('form.additional.info'); ?>
     </fieldset>
+<!-- Braintree form goes here>
+		<fieldset>
+			<div class="field card-number">
+				<label class="label" for="card-number"><span><?php /* @escapeNotVerified */ echo __('Card Number') ?></span></label>
+				<div class="control"> -->
+<!--
+				</div>
+			</div>
+		</fieldset>
+-->
     <div class="actions-toolbar">
         <div class="primary">
             <input type="hidden" name="hideit" id="hideit" value="" />
@@ -189,22 +185,67 @@ $contiForms = $this->getLayout()->createBlock($testClass);
         </div>
     </div>
 </form>
+<form id="payment-form">
+    <input type="text" value="" name="cardNumber" id="cardNumber" />
+    <input type="text" value="" name="cvv" id="cvv" />
+    <input type="text" value="" name="expirationDate" id="expirationDate" />
+     <button class="pay-button">Pay</button>
+</form>
+<!--
+script src="https://js.braintreegateway.com/web/3.19.1/js/client.min.js"></script>
+script src="https://js.braintreegateway.com/web/3.19.1/js/hosted-fields.min.js"></script>
+-->
 <script>
-console.log("Start");
-//require(['//js.braintreegateway.com/js/braintree-2.32.1.min']);
-//braintree.setup();
-braintree.setup("<?php echo $clientToken; ?>", "custom", {
-        id: "my-test-form",
-        hostedFields: {
-          number: {
-            selector: "#card-number"
-          },
-          cvv: {
-            selector: "#cvv"
-          },
-          expirationDate: {
-            selector: "#expiration-date"
-          }
-        }
-      });
+
+require(["jquery", "braintreeClient", "hostedFields"], function($, client, hostedFields) {
+
+	  var formData = {
+	      number: {
+	        selector: "#cardNumber"
+	      },
+	      cvv: {
+	        selector: "#cvv"
+	      },
+	      expirationDate: {
+	        selector: "#expirationDate"
+	      }
+	  };
+
+var authorization = "<?php echo $clientToken; ?>";
+
+client.create({  authorization: authorization }, function (clientErr, clientInstance) {
+
+if (clientErr) {
+    // Handle error in client creation
+		return;
+}
+
+    hostedFields.create(
+        {
+            client:clientInstance,
+            styles: { 'input': { 'font-size': '14pt' }, 'input.invalid': { 'color': 'red' }, 'input.valid': { 'color': 'green' }  },
+            fields: formData
+        }, function (hostedFieldsErr, hostedFieldsInstance) {
+            if (hostedFieldsErr) {
+           // Handle error in Hosted Fields creation
+           return;
+           }
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+            if (tokenizeErr) {
+          // Handle error in Hosted Fields tokenization
+                return;
+            }
+
+            document.querySelector('input[name="payment-method-nonce"]').value = payload.nonce;
+            form.submit();
+         });
+
+	});
+     });
+
+});
+
 </script>

@@ -7,7 +7,7 @@
  */
 
 //class Continental_Contipdf_Maker extends Staempfli_Pdf_Model_Pdf
-class Maker extends Staempfli_Pdf
+class Maker extends Staempfli_Pdf_Model_Pdf
 {
     private $title;
     private $cssPAth;
