@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+*.swp
 readme*
 docker*
 current*
@@ -7,6 +7,4 @@ Docker*
 *.sh
 */*
 !files/app
-=======
 files/app/sftp-config.json
->>>>>>> remotes/origin/jamie
