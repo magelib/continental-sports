@@ -38,7 +38,7 @@ class SideProducts
 		$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 		$category = $objectManager->get('Magento\Framework\Registry')->registry('current_category');//get current category
 		$subcats = $category->getChildrenCategories();
-		$_helper = $this->helper('Magento\Catalog\Helper\Output');
+//		$_helper = $this->helper('Magento\Catalog\Helper\Output');
 ?>
 
 <ul>
@@ -46,19 +46,10 @@ class SideProducts
     foreach ($subcats as $subcat) {
         if ($subcat->getIsActive()) {
             $_category = $objectManager->create('Magento\Catalog\Model\Category')->load($subcat->getId());
-            $_outputhelper = $this->helper('Magento\Catalog\Helper\Output');
             $subcaturl = $subcat->getUrl();
 
-	if ($showImages === true) {
-            $_imgHtml = '';
-            if ($_imgUrl = $_category->getImageUrl()) {
-
-                $_imgHtml = '<img src="' . $_imgUrl . '" />';
-                $_imgHtml = $_outputhelper->categoryAttribute($_category, $_imgHtml, 'image');
-}
-}
                 /* @escapeNotVerified */
-                printf('<a href="%s" class="block-promo" title="%s">%s</a></li>',
+                printf('<li><a href="%s" class="block-promo" title="%s">%s</a></li>',
 								$subcaturl, $subcat->getName(), $subcat->getName()
 							);
         }
