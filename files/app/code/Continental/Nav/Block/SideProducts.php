@@ -1,5 +1,5 @@
 <?php
-namespace Continental\SideProducts\Block;
+namespace Continental\Nav\Block;
 
 /**
 * Nav block
@@ -56,15 +56,14 @@ class SideProducts
                 $_imgHtml = '<img src="' . $_imgUrl . '" />';
                 $_imgHtml = $_outputhelper->categoryAttribute($_category, $_imgHtml, 'image');
 }
+}
                 /* @escapeNotVerified */
                 printf('<a href="%s" class="block-promo" title="%s">%s</a></li>',
-								$subcaturl, $subcat->getName(), $subcat->getName, $subcat->getName
+								$subcaturl, $subcat->getName(), $subcat->getName()
 							);
-
-            }
         }
     } ?>
 </ul>
 <?php
-}
+}}
 ?>
