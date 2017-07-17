@@ -171,9 +171,6 @@ $contiForms = $this->getLayout()->createBlock('\Magento\Contact\Block\ContactFor
 			<div class="field card-number">
 				<label class="label" for="card-number"><span><?php /* @escapeNotVerified */ echo __('Card Number') ?></span></label>
 				<div class="control"> -->
-					<input type="text" value="" name="card-number" id="card-number" />
-					<input type="text" value="" name="cvv" id="cvv" />
-					<input type="text" value="" name="expiration-date" id="expiration-date" />
 <!--
 				</div>
 			</div>
@@ -188,29 +185,50 @@ $contiForms = $this->getLayout()->createBlock('\Magento\Contact\Block\ContactFor
         </div>
     </div>
 </form>
+<form id="payment-form">
+    <input type="text" value="" name="cardNumber" id="cardNumber" />
+    <input type="text" value="" name="cvv" id="cvv" />
+    <input type="text" value="" name="expirationDate" id="expirationDate" />
+     <button class="pay-button">Pay</button>
+</form>
+<!--
+script src="https://js.braintreegateway.com/web/3.19.1/js/client.min.js"></script>
+script src="https://js.braintreegateway.com/web/3.19.1/js/hosted-fields.min.js"></script>
+-->
 <script>
-	define(['jquery', 'braintree'], function($, braintree) {
-	console.log("loaded");
-	setTimeout(function() {
-	console.log("fired");
-	  var formdata = {
-	    id: "my-test-form",
-	    hostedFields: {
+
+require(["jquery", "braintreeClient", "hostedFields"], function($, client, hostedFields) {
+
+	  var formData = {
 	      number: {
-	        selector: "#card-number"
+	        selector: "#cardNumber"
 	      },
 	      cvv: {
 	        selector: "#cvv"
 	      },
 	      expirationDate: {
-	        selector: "#expiration-date"
+	        selector: "#expirationDate"
 	      }
-	    }
-
 	  };
-	  braintree.setup("<?php echo $clientToken; ?>", "custom", formdata);
-	  //alert("oh wow, , dis works ok too");
-}, 2000);
 
-	});
+var authorization = "<?php echo $clientToken; ?>";
+
+client.create({  authorization: authorization }, function (clientErr, clientInstance) {
+
+if (clientErr) {
+    // Handle error in client creation
+		return;
+}
+
+    hostedFields.create(
+        {
+            client:clientInstance,
+            styles: { 'input': { 'font-size': '14pt' }, 'input.invalid': { 'color': 'red' }, 'input.valid': { 'color': 'green' }  },
+            fields: formData
+        }
+    );
+});
+
+});
+
 </script>
