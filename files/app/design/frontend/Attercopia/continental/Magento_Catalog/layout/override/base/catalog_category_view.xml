@@ -15,9 +15,11 @@
             </container>
         </referenceContainer>
         <referenceContainer name="content">
+            <!-- Block to show sub categies in left menu -->
             <block class="Continental\Nav\Block\SideProducts" name="category.sidebar" template="Continental_Nav::default/sideproducts.phtml">
                 <block class="Magento\Framework\View\Element\Template" as="default"/>
             </block>
+            
             <block class="Magento\Catalog\Block\Category\View" name="category.products" template="Magento_Catalog::category/products.phtml">
                 <block class="Magento\Catalog\Block\Product\ListProduct" name="category.products.list" as="product_list" template="Magento_Catalog::product/list.phtml">
                     <container name="category.product.list.additional" as="additional" />
