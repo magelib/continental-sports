@@ -192,12 +192,12 @@ $testcvv 	= '123';
 ?>
 <div class="paymentWrapper" style="width:45%;margin:0 auto;">
 <form id="payment-form">
-    <label class="label" for="cardNumber">Card Number</label>
-    <input type="text" value="<?php echo  $testcardnumber; ?>" name="cardNumber" id="cardNumber" class="hosted-field"  />
-    <label class="label" for="cvv">CVV</label>
-    <input type="text" value="<?php echo $testcvv; ?>" name="cvv" id="cvv" class="hosted-field" />
+    <label class="label">Card Number</label>
+    <div name="cardNumber" id="cardNumber" class="hosted-field"></div>
+    <label class="label">CVV</label>
+    <div name="cvv" id="cvv" class="hosted-field" /></div>
     <label class="label" for="expirationDate">Expiration Date</label>
-    <input type="text" value="<?php echo $testexpiration; ?>" name="expirationDate" id="expirationDate" class="hosted-field" />
+    <div name="expirationDate" id="expirationDate" class="hosted-field"></div>
 
     <input type="text" name="payment-method-nonce">
     <button class="pay-button">Pay</button>
