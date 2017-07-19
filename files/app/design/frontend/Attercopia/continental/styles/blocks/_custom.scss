@@ -239,6 +239,52 @@ h1.page-title {
   width: 33.333%;
 }
 
+
+// Blog Pages
+
+.news-cat-left {
+	width: 40%;
+	float: left;
+	img {
+		width: 100%;
+		max-height: 200px;
+	}
+}
+.news-cat-right {
+	width: 60%;
+	float: right;
+	padding-left: 2%;
+	h2 {
+		margin-top: 0;
+		@include font-size(24);
+		a {
+			color: $black;
+			&:hover {
+				color: $primary;
+				text-decoration: none;
+			}
+		}
+	}
+	.btn {
+		float: right;
+	}
+}
+.blog__post-meta {
+	color: $primary;
+}
+.blog__post-list {
+	list-style: none;
+}
+.blog__post-item {
+	width: 100%;
+	float: left;
+}
+.field.limiter {
+	margin-right: 12px;
+	.control {
+		display: inline-block;
+	}
+}
 // Footer styling 
 
 .page-footer {
