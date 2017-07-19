@@ -185,66 +185,134 @@ $contiForms = $this->getLayout()->createBlock('\Magento\Contact\Block\ContactFor
         </div>
     </div>
 </form>
+<?php 
+$testcardnumber = '5555555555554444';
+$testexpiration = '10 / 2019';
+$testcvv 	= '123';
+?>
+<div class="paymentWrapper" style="width:45%;margin:0 auto;">
 <form id="payment-form">
-    <input type="text" value="" name="cardNumber" id="cardNumber" />
-    <input type="text" value="" name="cvv" id="cvv" />
-    <input type="text" value="" name="expirationDate" id="expirationDate" />
-     <button class="pay-button">Pay</button>
+    <label class="label" for="cardNumber">Card Number</label>
+    <input type="text" value="<?php echo  $testcardnumber; ?>" name="cardNumber" id="cardNumber" class="hosted-field"  />
+    <label class="label" for="cvv">CVV</label>
+    <input type="text" value="<?php echo $testcvv; ?>" name="cvv" id="cvv" class="hosted-field" />
+    <label class="label" for="expirationDate">Expiration Date</label>
+    <input type="text" value="<?php echo $testexpiration; ?>" name="expirationDate" id="expirationDate" class="hosted-field" />
+
+    <input type="text" name="payment-method-nonce">
+    <button class="pay-button">Pay</button>
 </form>
-<!--
-script src="https://js.braintreegateway.com/web/3.19.1/js/client.min.js"></script>
-script src="https://js.braintreegateway.com/web/3.19.1/js/hosted-fields.min.js"></script>
--->
+</div>
 <script>
 
 require(["jquery", "braintreeClient", "hostedFields"], function($, client, hostedFields) {
 
-	  var formData = {
-	      number: {
-	        selector: "#cardNumber"
-	      },
-	      cvv: {
-	        selector: "#cvv"
-	      },
-	      expirationDate: {
-	        selector: "#expirationDate"
-	      }
-	  };
+    var authorization = "<?php echo $clientToken; ?>";
 
-var authorization = "<?php echo $clientToken; ?>";
+    var form = document.getElementById('payment-form');
 
-client.create({  authorization: authorization }, function (clientErr, clientInstance) {
-
-if (clientErr) {
+    client.create({
+  authorization: authorization
+}, function (clientErr, clientInstance) {
+  if (clientErr) {
     // Handle error in client creation
-		return;
-}
+    return;
+  }
 
-    hostedFields.create(
-        {
-            client:clientInstance,
-            styles: { 'input': { 'font-size': '14pt' }, 'input.invalid': { 'color': 'red' }, 'input.valid': { 'color': 'green' }  },
-            fields: formData
-        }, function (hostedFieldsErr, hostedFieldsInstance) {
-            if (hostedFieldsErr) {
-           // Handle error in Hosted Fields creation
-           return;
-           }
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
+  hostedFields.create({
+    client: clientInstance,
+    styles: {
+      'input': {
+        'font-size': '14pt'
+      },
+      'input.invalid': {
+        'color': 'red'
+      },
+      'input.valid': {
+        'color': 'green'
+      }
+    },
+    fields: {
+      number: {
+        selector: '#cardNumber',
+        placeholder: '4111 1111 1111 1111'
+      },
+      cvv: {
+        selector: '#cvv',
+        placeholder: '123'
+      },
+      expirationDate: {
+        selector: '#expirationDate',
+        placeholder: '10 / 2019'
+      }
+    }
+  }, function (hostedFieldsErr, hostedFieldsInstance) {
+    if (hostedFieldsErr) {
+      // Handle error in Hosted Fields creation
+      return;
+    }
 
-            hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
-            if (tokenizeErr) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+	alert("send to brtree");
+      hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
+        if (tokenizeErr) {
           // Handle error in Hosted Fields tokenization
-                return;
-            }
+	alert("error with token: " + tokenizeErr);
+         tokenErrorHandler(tokenizeErr);
+          return;
+        }
 
-            document.querySelector('input[name="payment-method-nonce"]').value = payload.nonce;
-            form.submit();
-         });
+        document.querySelector('input[name="payment-method-nonce"]').value = payload.nonce;
+        form.submit();
+      });
+    }, false);
+  });
+});
 
-	});
-     });
+// function to handle tokenizeerrors 
+function tokenErrorHandler(tokenizeErr) {
+ switch (tokenizeErr.code) {
+      case 'HOSTED_FIELDS_FIELDS_EMPTY':
+        // occurs when none of the fields are filled in
+        console.error('All fields are empty! Please fill out the form.');
+        break;
+      case 'HOSTED_FIELDS_FIELDS_INVALID':
+        // occurs when certain fields do not pass client side validation
+        console.error('Some fields are invalid:', tokenizeErr.details.invalidFieldKeys);
+        break;
+      case 'HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE':
+        // occurs when:
+        //   * the client token used for client authorization was generated
+        //     with a customer ID and the fail on duplicate payment method
+        //     option is set to true
+        //   * the card being tokenized has previously been vaulted (with any customer)
+        // See: https://developers.braintreepayments.com/reference/request/client-token/generate/#options.fail_on_duplicate_payment_method
+        console.error('This payment method already exists in your vault.');
+        break;
+      case 'HOSTED_FIELDS_TOKENIZATION_CVV_VERIFICATION_FAILED':
+        // occurs when:
+        //   * the client token used for client authorization was generated
+        //     with a customer ID and the verify card option is set to true
+        //     and you have credit card verification turned on in the Braintree
+        //     control panel
+        //   * the cvv does not pass verfication (https://developers.braintreepayments.com/reference/general/testing/#avs-and-cvv/cid-responses)
+        // See: https://developers.braintreepayments.com/reference/request/client-token/generate/#options.verify_card
+        console.error('CVV did not pass verification');
+        break;
+      case 'HOSTED_FIELDS_FAILED_TOKENIZATION':
+        // occurs for any other tokenization error on the server
+        console.error('Tokenization failed server side. Is the card valid?');
+        break;
+      case 'HOSTED_FIELDS_TOKENIZATION_NETWORK_ERROR':
+        // occurs when the Braintree gateway cannot be contacted
+        console.error('Network error occurred when tokenizing.');
+        break;
+      default:
+        console.error('Something bad happened!', tokenizeErr);
+    }
+//    console.log('Got nonce:', payload.nonce);
+}
 
 });
 
