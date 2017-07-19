@@ -13,9 +13,12 @@
 //echo "Testing background: [" . $this->categoryBackgroundImage() . "]";
 ?>
 <script>
-require(['jquery'], function($) {
-// Note to J - this needs removing in layout; using js to test
-$(".category-image").remove();
-$("#maincontent").css({"background-image":"url('<?php echo $this->categoryBackgroundImage(); ?>')"});
-});
+	require(['jquery'], function($) {
+	// Note to J - this needs removing in layout; using js to test
+	$(".category-image").remove();
+
+	$( "#maincontent" ).wrap( "<div class='category-bg'></div>" );
+	$(".category-bg").find('.page-title-wrapper').prependTo('.category-nav ul');
+	$(".category-bg").css({"background-image":"url('<?php echo $this->categoryBackgroundImage(); ?>')"});
+	});
 </script>
