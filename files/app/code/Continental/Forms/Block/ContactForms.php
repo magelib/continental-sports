@@ -23,13 +23,28 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
         parent::__construct($context, $data);
         $this->_isScopePrivate = true;
         $this->directoryBlock = $directoryBlock;
+	$this->checkSubmission(); 
+    }
+
+    public function checkSubmission() {
+        $email = $this->getRequest()->getPost('email');
+	if ( !empty($email) ) {
+		exit("submission");
+	}
+    
+    }
+
+    public function braintreeHosted() {
+	
     }
 
     public function getCountries()
     {
-        $country = $this->directoryBlock->getCountryHtmlSelect();
-        return $country;
+//	$this->checkSubmission();
+       $country = $this->directoryBlock->getCountryHtmlSelect();
+       return $country;
     }
+
     public function getRegion()
     {
         $region = $this->directoryBlock->getRegionHtmlSelect();
