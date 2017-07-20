@@ -27,12 +27,25 @@ $collection = $block->getPostCollection();
                             <?= $block->getPostMetaHeader($post)->toHtml() ?>
                         </header>
 
-                        <div class="blog__post-excerpt" itemprop="text">                        
+                        <div class="blog__post-excerpt" itemprop="text">                                   
+                            
+                          <!-- <?php //substr($post->getShortContent(),0,300); ?>... -->
+                          <?php
 
-                            <?= $post->getShortContent() ?>
+                                $charLimit = 160;
+                                $str = $post->getShortContent();
 
-                            <a class="read-more btn btn-primary" href="<?= $post->getUrl() ?>"><span><?= __('Read more') ?></span></a>
+                                if (strlen($str) > $charLimit) {
+                                    $x = explode(' ', substr($str,0, $charLimit));
+                                    array_pop($x);
+                                    echo implode(' ', $x) . '...';
+                                } else {
+                                    echo $str;
+                                }
+                          ?>
+                           
                         </div>
+                         <a class="read-more btn btn-primary" href="<?= $post->getUrl() ?>"><span><?= __('Read more') ?></span></a>
                     </div>                   
 
                     <!-- <?= $block->getPostMetaFooter($post)->toHtml() ?> -->
