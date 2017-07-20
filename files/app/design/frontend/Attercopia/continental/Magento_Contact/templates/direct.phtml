@@ -10,7 +10,9 @@
 <?php
 $om =   \Magento\Framework\App\ObjectManager::getInstance();
 
-$contiForms = $this->getLayout()->createBlock('\Magento\Contact\Block\ContactForm');
+//$contiForms = $this->getLayout()->createBlock('\Magento\Contact\Block\ContactForm');
+$contiForms = $this->getLayout()->createBlock('\Continental\Forms\Block\ContactForms');
+
 ?>
 <?php
 	echo "Braintree: ";
@@ -115,9 +117,7 @@ $contiForms = $this->getLayout()->createBlock('\Magento\Contact\Block\ContactFor
     <div class="field country">
             <label class="label" for="country"><span><?php /* @escapeNotVerified */ echo __('Country') ?></span></label>
             <div class="control">
-                <select name="country" id="country" title="<?php /* @escapeNotVerified */ echo __('Country') ?>" class="select-text" type="text">
-					<option value="">Please select</option>
-				</select>
+          	<?php echo $contiForms->getCountries(); ?>
             </div>
         </div>
 
@@ -190,19 +190,22 @@ $testcardnumber = '5555555555554444';
 $testexpiration = '10 / 2019';
 $testcvv 	= '123';
 ?>
-<div class="paymentWrapper" style="width:45%;margin:0 auto;">
-<form id="payment-form">
-    <label class="label">Card Number</label>
-    <div name="cardNumber" id="cardNumber" class="hosted-field"></div>
-    <label class="label">CVV</label>
-    <div name="cvv" id="cvv" class="hosted-field" /></div>
-    <label class="label" for="expirationDate">Expiration Date</label>
-    <div name="expirationDate" id="expirationDate" class="hosted-field"></div>
 
-    <input type="text" name="payment-method-nonce">
+<div class="paymentWrapper" style="width:45%;margin:0 auto;">
+<form id="payment-form" action="/direct-payment" method="post">
+    <label class="label">Card Number</label>
+    <div id="card-number" class="hosted-field"></div>
+    <label class="label">CVV</label>
+    <div id="cvv" class="hosted-field"></div>
+    <label class="label">Expiration Date</label>
+    <div id="expirationDate" class="hosted-field"></div>
+
+    <input type="text" name="email" id="email" />
+    <input type="text" name="payment-method-nonce"/>
     <button class="pay-button">Pay</button>
 </form>
 </div>
+
 <script>
 
 require(["jquery", "braintreeClient", "hostedFields"], function($, client, hostedFields) {
@@ -223,7 +226,9 @@ require(["jquery", "braintreeClient", "hostedFields"], function($, client, hoste
     client: clientInstance,
     styles: {
       'input': {
-        'font-size': '14pt'
+        'font-size': '14pt',
+	'border': '1px solid #c2c2c2',
+        'height': '25px'
       },
       'input.invalid': {
         'color': 'red'
@@ -234,16 +239,16 @@ require(["jquery", "braintreeClient", "hostedFields"], function($, client, hoste
     },
     fields: {
       number: {
-        selector: '#cardNumber',
-        placeholder: '4111 1111 1111 1111'
+        selector: '#card-number',
+        placeholder: '<?php echo $testcardnumber; ?>'
       },
       cvv: {
         selector: '#cvv',
-        placeholder: '123'
+        placeholder: '<?php echo $testcvv; ?>'
       },
       expirationDate: {
         selector: '#expirationDate',
-        placeholder: '10 / 2019'
+        placeholder: '<?php echo $testexpiration; ?>'
       }
     }
   }, function (hostedFieldsErr, hostedFieldsInstance) {
@@ -264,6 +269,8 @@ require(["jquery", "braintreeClient", "hostedFields"], function($, client, hoste
         }
 
         document.querySelector('input[name="payment-method-nonce"]').value = payload.nonce;
+	// Populate hidden fields
+	jQuery("#payment-form #email").val( jQuery("#contact-form #email").val() );
         form.submit();
       });
     }, false);
