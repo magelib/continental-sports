@@ -1,7 +1,11 @@
 <?php
 //@codingStandardsIgnoreFile
-
 /** @var \Mirasvit\Blog\Block\Post\View $block */
+
+//$core = $this->getLayout()->createBlock('\Continental\General\Block\Core');
+$core = $this->helper('Continental\General\Helper\Core');
+echo $core->strip_additional_para('<p>This is a test</p><p>This shouldn\'t appear</p>');
+
 $post = $block->getPost();
 ?>
 
