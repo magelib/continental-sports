@@ -12,12 +12,10 @@
 
                 <block class="Mirasvit\Blog\Block\Post\PostList" name="blog.post.list" template="post/list.phtml">
                     <container name="blog.post.list.additional"/>
-
                     <block class="Mirasvit\Blog\Block\Post\PostList\Toolbar" name="blog.post.list.toolbar"
                            template="post/list/toolbar.phtml">
                         
                     </block>
-
                     <action method="setToolbarBlockName">
                         <argument name="name" xsi:type="string">blog.post.list.toolbar</argument>
                     </action>
