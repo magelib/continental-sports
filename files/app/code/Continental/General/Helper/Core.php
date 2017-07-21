@@ -79,7 +79,7 @@ class Core extends AbstractHelper
         foreach ($x as $val) {
             $measure .= $val . ' ';
             if ((strlen($measure) > $position) && ($flag === false)) {
-                $x[$i] = '<span class="' . $class . '">' . $elipsis . '</span><span class="' . $parentClass . '">';
+                $x[$i] = '<span class="' . $class . '">' . $elipsis . '</span><span class="' . $parentClass . '-hidden">';
                 $flag = true;
             }
             $i++;
