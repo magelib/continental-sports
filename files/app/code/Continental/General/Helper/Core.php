@@ -47,11 +47,11 @@ class Core extends AbstractHelper
         }
 
         if (strlen($str) > $tablet) {
-            $str = insertSpan($str, $tablet, 'tablet', 'desktop');
+            $str = $this->insertSpan($str, $tablet, 'tablet', 'desktop');
         }
 
         if (strlen($str) > $mobile) {
-            $str = insertSpan($str, $mobile, 'mobile', 'tablet');
+            $str = $this->insertSpan($str, $mobile, 'mobile', 'tablet');
         }
 
         return $str;
