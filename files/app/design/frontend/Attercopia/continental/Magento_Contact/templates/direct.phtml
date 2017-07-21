@@ -9,12 +9,11 @@
 ?>
 <?php
 $om =   \Magento\Framework\App\ObjectManager::getInstance();
-
-//$contiForms = $this->getLayout()->createBlock('\Magento\Contact\Block\ContactForm');
+$details = $this->helper('Continental\Forms\Helper\Core');
 $contiForms = $this->getLayout()->createBlock('\Continental\Forms\Block\ContactForms');
 
 /* Get customer details */
-$formData = $contiForms->customerDetails();
+//$formData = $contiForms->customerDetails();
 ?>
 <?php
 	$test =  '\Braintree\ClientToken';
@@ -36,9 +35,6 @@ $formData = $contiForms->customerDetails();
       data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
       data-mage-init='{"validation":{}}'>
     <fieldset class="fieldset">
-        <legend class="legend"><span><?php /* @escapeNotVerified */ echo __('Direct Payment') ?></span></legend><br />
- <!--       <div class="field note no-label"><?php /* @escapeNotVerified */ echo __('Jot us a note and we’ll get back to you as quickly as possible.') ?></div> -->
-
         <div class="field name required">
             <label class="label" for="title"><span><?php /* @escapeNotVerified */ echo __('Title') ?></span></label>
             <div class="control">
