@@ -13,15 +13,13 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
     public function __construct(
         Template\Context $context,
 	\Magento\Directory\Block\Data $directoryBlock, 
-        array $data = [],
-        \Magento\Framework\ObjectManagerInterface $objectmanager 
+        array $data = []
    )
     {
         parent::__construct($context, $data);
         $this->_isScopePrivate = true;
         $this->directoryBlock = $directoryBlock;
         $this->checkSubmission();
-	$this->_objectmanager = $objectmanager;
     }
 
     public function checkSubmission()
