@@ -1,42 +1,52 @@
 <?php
 namespace Continental\General\Helper;
+
 use \Magento\Framework\App\Helper\AbstractHelper;
+
 /**
  * Created by PhpStorm.
  * User: MattB
  * Date: 06/07/2017
  * Time: 16:07
  */
-
-class Core extends AbstractHelper
+class Contact extends AbstractHelper
 {
 
-	public function __construct(
-	\Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer) {
-	$this->_currentCustomer = $currentCustomer;
+    public function __construct(
+        \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer,
+        \Magento\Framework\ObjectManagerInterface $objectManager
+    )
+    {
+        $this->_currentCustomer = $currentCustomer;
+        $this->_objectManager = $objectManager;
 	}
-	
+
+    public function saveContact($data)
+    {
+        $model = $this->_objectManager->create('Me\Econtacts\Model\Econtacts');
+        $model->addData($data);
+        $model->save();
+    }
+
     public function customerDetails()
     {
-       
-	 $details = array(
+        $details = array(
             'firstname' => '',
             'surname' => '',
             'email' => '',
             'street' => '',
             'city' => '',
             'postcode' => '',
-	    'country_id' => '',
-	    'company' => '',
+            'country_id' => '',
+            'company' => '',
             'telephone' => '',
             'street' => ''
         );
 
-
         if ($this->_currentCustomer->isLoggedIn()) {
             $details['firstname'] = $this->_currentCustomer->getCustomer()->getFirstname();
-            $details['surname']   = $this->_currentCustomer->getCustomer()->getLastname();
-            $details['email']     = $this->_currentCustomer->getCustomer()->getEmail();
+            $details['surname'] = $this->_currentCustomer->getCustomer()->getLastname();
+            $details['email'] = $this->_currentCustomer->getCustomer()->getEmail();
 
             /* get address details 
             foreach ($customerSession->getAddresses() as $address) {
@@ -51,9 +61,9 @@ class Core extends AbstractHelper
                 $details['country_id'] = $customerAddres['country_id'];
                 $details['company'] = $customerAddres['company'];
             }
-
-        }
 */
+        }
+
         return $details;
     }
 

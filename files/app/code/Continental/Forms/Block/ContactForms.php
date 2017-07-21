@@ -26,6 +26,7 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
     {
         $email = $this->getRequest()->getPost('email');
         if (!empty($email)) {
+	var_dump($this->braintreeHosted() );
             exit("submission");
         }
     }
@@ -80,6 +81,8 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
                 'submitForSettlement' => true
             ]
         ]);
+
+	return $results;
     }
 
     public function getCountries()
