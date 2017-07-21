@@ -51,7 +51,7 @@ $formData = $contiForms->customerDetails();
         <div class="field name required">
             <label class="label" for="firstame"><span><?php /* @escapeNotVerified */ echo __('First Name') ?></span></label>
             <div class="control">
-                <input name="firstname" id="firstname" title="<?php /* @escapeNotVerified */ echo __('First Name') ?>" value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('firstname') ?: $details['firstname']) ?>" class="input-text" type="text" data-validate="{required:true}"/>
+                <input name="firstname" id="firstname" title="<?php /* @escapeNotVerified */ echo __('First Name') ?>" value="" class="input-text" type="text" data-validate="{required:true}"/>
             </div>
 </div>
 

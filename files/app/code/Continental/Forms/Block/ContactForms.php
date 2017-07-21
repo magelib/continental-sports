@@ -5,7 +5,6 @@ namespace Continental\Forms\Block;
      * Features block
      */
 
-use Magento\Customer\Model\Session;
 use Magento\Framework\View\Element\Template;
 
 class ContactForms extends \Magento\Contact\Block\ContactForm
@@ -13,16 +12,16 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
 
     public function __construct(
         Template\Context $context,
-        \Magento\Directory\Block\Data $directoryBlock,
-        Session $sessionModel,
-        array $data = []
-    )
+	\Magento\Directory\Block\Data $directoryBlock, 
+        array $data = [],
+        \Magento\Framework\ObjectManagerInterface $objectmanager 
+   )
     {
-        parent::__construct($context, $directoryBlock, $sessionModel, $data);
+        parent::__construct($context, $data);
         $this->_isScopePrivate = true;
         $this->directoryBlock = $directoryBlock;
-	$this->sessionModel = $sessionModel;
         $this->checkSubmission();
+	$this->_objectmanager = $objectmanager;
     }
 
     public function checkSubmission()
@@ -35,7 +34,8 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
 
     public function customerDetails()
     {
-        $details = array(
+       
+	 $details = array(
             'firstname' => '',
             'surname' => '',
             'email' => '',
