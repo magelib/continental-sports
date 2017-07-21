@@ -58,7 +58,7 @@ class SideProducts
             $subcaturl = $subcat->getUrl();
 
                 /* @escapeNotVerified */
-                printf('<li><a href="%s" class="block-promo" title="%s">%s</a></li>',
+                printf('<li><a href="%s" class="block-promo" title="%s"><span>%s</span></a></li>',
 								$subcaturl, $subcat->getName(), $subcat->getName()
 							);
         }

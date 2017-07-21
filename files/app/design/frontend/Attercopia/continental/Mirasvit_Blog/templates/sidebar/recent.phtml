@@ -23,7 +23,7 @@ $i = 0; ?>
                         <a href="<?= $post->getUrl() ?>">
                             <div class="blog__post-featured-image" style="background-image: url('<?= $imgPath ?>');">
                                 <div class="home-news-head">
-                                    <span><?= $post->getName() ?><?= $post->getToDateFormat() ?></span>
+                                    <span><?= $post->getName() ?> <time><?php echo date("d/m/Y", strtotime($post->getCreatedAt()) ); ?></time></span>
                                     <span class="btn btn-primary"><span>Read More</span></span>
                                 </div>
                             </div>                            

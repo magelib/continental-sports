@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
-      layout="2columns-right">
+      layout="2columns-left">
 
     <update handle="blog_default"/>
 
@@ -14,7 +14,7 @@
                     <container name="blog.post.list.additional"/>
                     <block class="Mirasvit\Blog\Block\Post\PostList\Toolbar" name="blog.post.list.toolbar"
                            template="post/list/toolbar.phtml">
-                        <block class="Mirasvit\Blog\Block\Html\Pager" name="pager"/>
+                        
                     </block>
                     <action method="setToolbarBlockName">
                         <argument name="name" xsi:type="string">blog.post.list.toolbar</argument>

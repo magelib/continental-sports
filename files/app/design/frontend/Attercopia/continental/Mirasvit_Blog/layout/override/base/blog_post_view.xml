@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
-      layout="2columns-right">
+      layout="2columns-left">
 
     <update handle="blog_default"/>
 
     <body>
+        <move element="page.main.title" destination="content" before="blog.post.view" />
         <referenceContainer name="content">
             <block name="blog.post.view" class="Mirasvit\Blog\Block\Post\View" template="post/view.phtml"
                    cacheable="true">

@@ -28,7 +28,7 @@ $contiForms = $this->getLayout()->createBlock('\Continental\Forms\Block\ContactF
 
 	$clientToken = $om->create($test)->generate($args);
 ?>
-<form class="form contact"
+<form class="form contact direct"
       action="<?php /* @escapeNotVerified */ echo $block->getFormAction(); ?>"
       id="contact-form"
       method="post"
@@ -173,14 +173,26 @@ $contiForms = $this->getLayout()->createBlock('\Continental\Forms\Block\ContactF
 			</div>
 		</fieldset>
 -->
-    <div class="actions-toolbar">
-        <div class="primary">
-            <input type="hidden" name="hideit" id="hideit" value="" />
-            <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>" class="action submit primary">
-                <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
-            </button>
+    <div id="payment-form" class="paymentWrapper" style="width:50%;max-width:630px;margin: 0 auto;">
+        <label class="label">Card Number</label>
+        <div id="card-number" class="hosted-field"></div>
+        <label class="label label-small">CVV</label>
+        <div id="cvv" class="hosted-field"></div>
+        <label class="label label-small">Expiration Date</label>
+        <div id="expirationDate" class="hosted-field"></div>
+
+        <input type="text" name="email" id="email" />
+        <input type="text" name="payment-method-nonce"/>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <input type="hidden" name="hideit" id="hideit" value="" />
+                <button type="submit" title="<?php /* @escapeNotVerified */ echo __('Submit') ?>" class="btn btn-primary">
+                    <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
+                </button>
+            </div>
         </div>
     </div>
+    
 </form>
 <?php 
 $testcardnumber = '5555555555554444';
@@ -188,20 +200,7 @@ $testexpiration = '10 / 2019';
 $testcvv 	= '123';
 ?>
 
-<div class="paymentWrapper" style="width:45%;margin:0 auto;">
-<form id="payment-form" action="/direct-payment" method="post">
-    <label class="label">Card Number</label>
-    <div id="card-number" class="hosted-field"></div>
-    <label class="label">CVV</label>
-    <div id="cvv" class="hosted-field"></div>
-    <label class="label">Expiration Date</label>
-    <div id="expirationDate" class="hosted-field"></div>
 
-    <input type="text" name="email" id="email" />
-    <input type="text" name="payment-method-nonce"/>
-    <button class="pay-button">Pay</button>
-</form>
-</div>
 
 <script>
 
