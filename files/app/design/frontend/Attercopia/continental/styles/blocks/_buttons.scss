@@ -22,6 +22,7 @@ a.action.primary {
   	@include btn-shape(20deg);
   	float: left;
   	transition: none;
+    font-weight: normal;
   } 
   &.btn-primary {
   	background-color: $primary;
