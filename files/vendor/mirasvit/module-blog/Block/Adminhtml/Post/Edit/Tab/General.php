@@ -88,7 +88,7 @@ class General extends Form
         $fieldset->addField('short_content', 'text', [
             'label'   => __('Excerpt'),
             'name'    => 'post[short_content]',
-            'value'   => $post->getShortContent(),
+            'value'   => strip_tags($post->getShortContent() ),
             'wysiwyg' => true,
             'style'   => 'height:5em',
             'config'  => $editorConfig
