@@ -83,3 +83,17 @@
 @import '../Magento_Cms/styles/widgets';
 @import '../Magento_MultipleWishlist/styles/widgets';
 @import '../Magento_VersionsCms/styles/widgets';
+
+// Custom
+@import 'custom/header';
+@import 'custom/search';
+@import 'custom/category';
+@import 'custom/footer';
+@import 'custom/mainBanner';
+@import 'custom/homeFeatures';
+@import 'custom/blog';
+@import 'custom/product';
+@import 'custom/directPayment';
+@import 'custom/breadcrumb';
+@import 'custom/topPanel';
+@import 'custom/responsive';

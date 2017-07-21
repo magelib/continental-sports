@@ -1,0 +1,40 @@
+// Main Banner 
+
+.main-banner {
+	background-image: url("#{$imagePath}/main-banner.jpg");
+  float: left;
+  width: 100%;
+  background-size: cover;
+  background-position: center top;
+}
+.banner-container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1860px;
+    width: 88%;
+}
+.banner-block {
+	float: right;
+	color: $white;
+  text-align: right;
+  margin-top: 7%;
+  margin-bottom: 27%;
+  h2 {
+  	@include font-size(48);
+  	margin: 0;
+  }
+  p {
+  	@include font-size(14);
+  	margin-top: 24px;
+  	margin-bottom: 24px;
+  	margin-top: 0;
+  	margin-bottom: 0;
+  	&:first-of-type {
+  		margin-top: 24px;
+  	}
+  }
+  .btn {
+  	float: right;
+  	margin-top: 24px;
+  }
+}

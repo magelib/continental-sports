@@ -3,6 +3,7 @@
 
 /** @var \Mirasvit\Blog\Block\Post\PostList $block */
 $collection = $block->getPostCollection();
+$core = $this->helper('Continental\General\Helper\Core');
 ?>
 
 <?php if ($collection->count()): ?>
@@ -31,17 +32,9 @@ $collection = $block->getPostCollection();
                             
                           <!-- <?php //substr($post->getShortContent(),0,300); ?>... -->
                           <?php
-
-                                $charLimit = 160;
-                                $str = $post->getShortContent();
-
-                                if (strlen($str) > $charLimit) {
-                                    $x = explode(' ', substr($str,0, $charLimit));
-                                    array_pop($x);
-                                    echo implode(' ', $x) . '...';
-                                } else {
-                                    echo $str;
-                                }
+                            $str = $post->getShortContent();
+                            $str = $core->strip_additional_para($str);
+                            echo $core->responsiveTruncateText($str);
                           ?>
                            
                         </div>
