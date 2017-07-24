@@ -26,53 +26,11 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
     {
         $email = $this->getRequest()->getPost('email');
         if (!empty($email)) {
+	var_dump($this->braintreeHosted() );
             exit("submission");
         }
     }
 
-    public function customerDetails()
-    {
-       
-	 $details = array(
-            'firstname' => '',
-            'surname' => '',
-            'email' => '',
-            'street' => '',
-            'city' => '',
-            'postcode' => '',
-	    'country_id' => '',
-	    'company' => '',
-            'telephone' => '',
-            'street' => ''
-        );
-
-/*
-        $customerSession = $om->get('Magento\Customer\Model\Session');
-
-        if ($customerSession->isLoggedIn()) {
-            $details['firstname'] = $customerSession->getCustomer()->getFirstname();
-            $details['surname'] = $customerSession->getCustomer()->getLastname();
-            $details['email'] = $customerSession->getCustomer()->getEmail();
-
-
-            /* get address details 
-            foreach ($customerSession->getAddresses() as $address) {
-                $customerAddress[] = $address->toArray();
-            }
-
-            foreach ($customerAddress as $customerAddres) {
-                $details['street'] = $customerAddres['street'];
-                $details['city'] = $customerAddres['city'];
-                $details['telephone'] = $customerAddres['telephone'];
-                $details['postcode'] = $customerAddres['postcode'];
-                $details['country_id'] = $customerAddres['country_id'];
-                $details['company'] = $customerAddres['company'];
-            }
-
-        }
-*/
-        return $details;
-    }
 
     public function braintreeHosted()
     {
@@ -123,6 +81,8 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
                 'submitForSettlement' => true
             ]
         ]);
+
+	return $results;
     }
 
     public function getCountries()

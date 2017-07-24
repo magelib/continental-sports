@@ -65,6 +65,7 @@ class Core extends AbstractHelper
      * @param string $elipsis
      * @return string
      */
+
     private function insertSpan($str, $position, $class, $parentClass, $elipsis = '...')
     {
 
