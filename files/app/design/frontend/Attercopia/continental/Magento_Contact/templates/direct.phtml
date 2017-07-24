@@ -23,8 +23,7 @@ if ($customerSession->isLoggedIn()) {
     /* Address Details */
     //$a = $customerSession->getCustomerAddresses();
     $a = $customerSession->getCustomer()->getDefaultBilling();
-    echo $a;
-    var_dump($a);
+
 /*
         foreach ($customerSession->getCustomerAddress() as $addressObj) {
             $customerAddress[] = $address->toArray();
@@ -388,7 +387,7 @@ $testcvv = 'XXX';
                             // Handle error in Hosted Fields tokenization
 
                             jQuery(".error").html( tokenErrorHandler(tokenizeErr) );
-                            jQuery(".error").fadeIn('fast').delay(1000).fadeOut('slow');
+                            jQuery(".error").fadeIn('fast').delay(3000).fadeOut('slow');
                             return;
                         }
 

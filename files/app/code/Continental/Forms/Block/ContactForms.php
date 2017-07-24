@@ -1,9 +1,9 @@
 <?php
 namespace Continental\Forms\Block;
 
-    /**
-     * Features block
-     */
+/**
+ * Features block
+ */
 
 use Magento\Framework\View\Element\Template;
 
@@ -12,9 +12,9 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
 
     public function __construct(
         Template\Context $context,
-	\Magento\Directory\Block\Data $directoryBlock, 
+        \Magento\Directory\Block\Data $directoryBlock,
         array $data = []
-   )
+    )
     {
         parent::__construct($context, $data);
         $this->_isScopePrivate = true;
@@ -26,11 +26,49 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
     {
         $email = $this->getRequest()->getPost('email');
         if (!empty($email)) {
-	        var_dump($this->braintreeHosted() );
+            //var_dump($this->braintreeHosted() );
+            $x = $this->braintreeHosted();
+            if ($x->success) {
+                // send email and update
+                $this->saveContact();
+                //redirect to thank you page
+
+            }
             exit("submission");
         }
     }
 
+    private function saveContact()
+    {
+        // Build comment
+        $comment = '';
+        $comment .= 'Reference: ' . $this->getRequest()->getPost('reference') . PHP_EOL;
+        $comment .= 'Amount: ' . $this->getRequest()->getPost('amount') . PHP_EOL;
+        $comment .= 'Message: ' . $this->getRequest()->getPost('message') . PHP_EOL;
+        $comment .= 'Company: ' . $this->getRequest()->getPost('company') . PHP_EOL;
+        $comment .= 'Address: ' . $this->getRequest()->getPost('address1') . PHP_EOL;
+        if ($this->getRequest()->getPost('address2')) {
+            $comment .= '         ' . $this->getRequest()->getPost('address2') . PHP_EOL;
+        }
+        if ($this->getRequest()->getPost('address2')) {
+            $comment .= '         ' . $this->getRequest()->getPost('address2') . PHP_EOL;
+        }
+        $comment .= '         ' . $this->getRequest()->getPost('country') . PHP_EOL;
+        $comment .= '         ' . $this->getRequest()->getPost('postcode') . PHP_EOL;
+
+        $data = array(
+            "name" => $this->getRequest()->getPost('firstname') . " " . $this->getRequest()->getPost('lastname'),
+            "email" => $this->getRequest()->getPost('email'),
+            "telephone" => $this->getRequest()->getPost('telephone'),
+            "comment" => $comment,
+            "store_id" => "1"
+        );
+
+        $om = \Magento\Framework\App\ObjectManager::getInstance();
+        $model = $om->create('Me\Econtacts\Model\Econtacts');
+        $model->addData($data);
+        $model->save();
+    }
 
     public function braintreeHosted()
     {
@@ -90,7 +128,7 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
             ]
         ]);
 
-	return $result;
+        return $result;
     }
 
     public function getCountries()
