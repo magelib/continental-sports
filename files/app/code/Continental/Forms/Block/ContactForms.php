@@ -26,7 +26,7 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
     {
         $email = $this->getRequest()->getPost('email');
         if (!empty($email)) {
-	var_dump($this->braintreeHosted() );
+	        var_dump($this->braintreeHosted() );
             exit("submission");
         }
     }
@@ -35,8 +35,10 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
     public function braintreeHosted()
     {
         $amount = $_POST['amount'];
-        $nonceFromTheClient = $_POST["payment_method_nonce"];
-        $invoice = $_POST['invoice'];
+
+        $nonceFromTheClient = $_POST["payment-method-nonce"];
+
+        $invoice = $_POST['reference'];
 
         $firstname = $lastname = $company = $telephone = $email = $address1 = $address2 = $county = $country = $postcode = null;
 
@@ -46,7 +48,13 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
             ${$val} = $this->getRequest()->getPost($val);
         }
 
-        $result = Braintree_Transaction::sale([
+        /* Need to use Braintree adapter - use this for testing */
+        \Braintree\Configuration::merchantId('hskdkw4bv8v49vr9');
+        \Braintree\Configuration::environment('sandbox');
+        \Braintree\Configuration::publicKey('j8w5xhzjs9bvb2rv');
+        \Braintree\Configuration::privateKey('ff2238a060754e6d3f4673618f110a60');
+
+        $result = \Braintree\Transaction::sale([
             'amount' => $amount,
             'orderId' => $invoice,
             'paymentMethodNonce' => $nonceFromTheClient,
@@ -82,7 +90,7 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
             ]
         ]);
 
-	return $results;
+	return $result;
     }
 
     public function getCountries()
