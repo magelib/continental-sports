@@ -30,7 +30,6 @@ $core = $this->helper('Continental\General\Helper\Core');
 
                         <div class="blog__post-excerpt" itemprop="text">                                   
                             
-                          <!-- <?php //substr($post->getShortContent(),0,300); ?>... -->
                           <?php
                             $str = $post->getShortContent();
                             $str = $core->strip_additional_para($str);

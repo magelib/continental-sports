@@ -36,7 +36,7 @@ class Core extends AbstractHelper
      * @return string
      */
 
-    public function responsiveTruncateText($str, $desktop = 150, $tablet = 100, $mobile = 50, $elipsis = '...')
+    public function responsiveTruncateText($str, $desktop = 300, $tablet = 100, $mobile = 50, $elipsis = '...')
     {
 
         if (strlen($str) > $desktop) {

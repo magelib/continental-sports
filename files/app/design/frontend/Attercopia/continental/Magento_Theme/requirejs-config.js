@@ -24,7 +24,7 @@ var config = {
             "fieldsetResetControl":   "mage/fieldset-controls",
             "redirectUrl":            "mage/redirect-url",
             "loaderAjax":             "mage/loader",
-            "menu":                   "mage/menu",
+            "menu":                   "Magento_Theme/js/menu",
             "popupWindow":            "mage/popup-window",
             "validation":             "mage/validation/validation",
             "welcome":                "Magento_Theme/js/view/welcome"

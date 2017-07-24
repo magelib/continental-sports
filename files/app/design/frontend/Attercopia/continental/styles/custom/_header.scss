@@ -16,25 +16,28 @@
 }
 .navigation {
 	float: left;
-		ul {
-			padding: 0;
-			float: left;
-			margin-left: 12px;
-			margin-top: 5px;
-		}
-		.level0 {
-			  margin: 0 24px 0 0;
+	ul {
+		padding: 0;
+		float: left;
+		margin-left: 12px;
+		margin-top: 5px;
+	}
+	.level0 {
+		  margin: 0 24px 0 0;
 
-		}
-		.level0 > .level-top {
-			@include font-size(16);
-	    display: block;
-	    padding-top: 4px;
-	    padding-bottom: 4px;	     
-	    &:hover {
-	    	color: $primary;
-	    }
-		}
+	}
+	.level0 > .level-top {
+		@include font-size(16);
+    display: block;
+    padding-top: 4px;
+    padding-bottom: 4px;	     
+    &:hover {
+    	color: $primary;
+    }
+	}
+	.level0 .submenu a {
+		font-family: $font;
+	}
 }
 .fa-shopping-cart {
 	&:before {

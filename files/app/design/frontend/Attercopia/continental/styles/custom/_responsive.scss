@@ -68,17 +68,61 @@
     float: left;
     width: 100%;
 	}
+	.nav-sections-item-title {
+		display: none;
+	}
+	.nav-sections-item-content {
+    margin-top: 0 !important;
+    padding-top: 0px !important;
+	}
 	.navigation {
 		width: 100%;
 		text-align: center;
 		.level0 {
-      margin: 0 12px 0 12px;
+			margin: 0 12px 0 12px;
 	    padding-top: 12px;
 	    padding-bottom: 12px;
+	    &.active .all-category .ui-state-focus {
+	    	border: 0 !important;
+	    	color: $primary;
+	    }
+	    &.active > a:not(.ui-state-active) {
+	    	border: 0 !important;
+	    	color: $primary;
+	    }
+	    &:first-child {
+	    	border-top: 0 !important;
+	    }
+	    a {
+	    	font-weight: 400 !important;
+	   	 	padding: 16px 32px 16px 32px !important;
+	   	 	@include font-size(13);
+	   	 	text-transform: uppercase;
+	    }
+		}
+		.submenu {
+			margin-top: 0 !important;
+			border-top: 1px solid #d1d1d1;
+			padding-bottom: 12px!important;
+    	float: none!important;
+	    margin-left: 0!important;
+	    margin-right: 0!important;
+	    position: static!important;
 		}
 		.level1 {
-			padding-top: 12px;
-	    padding-bottom: 12px;
+	    padding-top: 0;
+	    padding-bottom: 0;
+	    margin-top: 0 !important;
+	    padding-left: 0 !important;
+      &:first-child {
+      	border-top: 0;
+      }
+	    a {
+ 			 font-weight: 400 !important;
+	   	 padding: 8px 32px 8px 32px !important;
+	    	@include font-size(13);
+	    	text-transform: uppercase;
+	    }
 		}
 	}
 	.header.content {
@@ -199,6 +243,41 @@
 				width: 75%;
 			}
 		}
+	}
+}
+
+@media all and(max-width: 900px){
+	.header-top-links {
+		text-align: center;
+		li {
+			margin: 0 12px 0 12px;
+ 		 	padding-top: 12px;
+    	padding-bottom: 12px;
+	    border-top: 1px solid #d1d1d1;
+    	font-size: 16px;
+    	width: 97%;
+    	text-align: center;
+    	&:first-child {
+    		border-top: 0;
+    	}
+			a {
+				width: 100%;
+		    color: #575757;
+		    @include font-size(13);
+		    &:hover {
+		    	color: $primary;
+		    	&:not(.redBg):not(.greyBg) {
+			    	background: transparent;
+			    }
+		  	}
+			}
+    	a.redBg {
+    		background: transparent;
+    	}
+		}
+	}
+	.panel.wrapper {
+		display: none;
 	}
 }
 
