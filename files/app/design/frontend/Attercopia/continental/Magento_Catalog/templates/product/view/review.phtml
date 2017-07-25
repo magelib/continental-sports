@@ -8,13 +8,27 @@
 
 ?>
 <?php /** @var $block \Magento\Catalog\Block\Product\AbstractProduct */ ?>
-<?php echo $block->getReviewsSummaryHtml($block->getProduct(), false, true)?>
+<?php echo $block->getReviewsSummaryHtml($block->getProduct(), false, true) ?>
 <script>
-require(["jquery"], function ($) {
-$(document).ready(function() {
-var t = $(".product.media");
-t.height('600');
-$(".product.description").css({"margin-top":"20px"});
-});
-});
+    require(["jquery"], function ($) {
+        $(document).ready(function () {
+
+            productDisplay();
+
+            $( window ).resize(function() {
+                productDisplay();
+            });
+
+            function productDisplay() {
+                var t = $(".product.media");
+                if ($(".nav-toggle").is(":visible") == false) {
+                    $("<style type='text/css'> .desktopProdDiv{ height:600px;} </style>").appendTo("head");
+                    t.addClass("desktopProdDiv")
+                    $(".product.description").css({"margin-top": "20px"});
+                } else {
+                    t.removeClass("desktopProdDiv")
+                }
+            }
+        });
+    });
 </script>
