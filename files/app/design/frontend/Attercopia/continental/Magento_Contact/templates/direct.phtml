@@ -10,8 +10,6 @@
 <?php
 $om = \Magento\Framework\App\ObjectManager::getInstance();
 
-/* $details = $this->helper('Continental\Forms\Helper\Contact')->getDetails(); */
-//$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $customerSession = $om->get('Magento\Customer\Model\Session');
 
 $company = $title = $firstname = $lastname = $telephone = null;
@@ -25,8 +23,7 @@ if ($customerSession->isLoggedIn()) {
     /* Address Details */
     //$a = $customerSession->getCustomerAddresses();
     $a = $customerSession->getCustomer()->getDefaultBilling();
-    echo $a;
-    var_dump($a);
+
 /*
         foreach ($customerSession->getCustomerAddress() as $addressObj) {
             $customerAddress[] = $address->toArray();
@@ -43,10 +40,6 @@ if ($customerSession->isLoggedIn()) {
 */
 }
 $contiForms = $this->getLayout()->createBlock('\Continental\Forms\Block\ContactForms');
-//testContact($om);
-
-/* Get customer details */
-//$formData = $contiForms->customerDetails();
 
 function testContact($om) {
     $data = array(
@@ -306,7 +299,7 @@ $clientToken = $om->create($test)->generate($args);
 
         <div id="expirationDate" class="hosted-field"></div>
 
-        <input type="text" name="email" id="email"/>
+        <!-- <input type="text" name="email" id="email"/> -->
         <input type="text" name="payment-method-nonce"/>
 
         <div class="actions-toolbar">
@@ -317,6 +310,11 @@ $clientToken = $om->create($test)->generate($args);
                     <span><?php /* @escapeNotVerified */
                         echo __('Submit') ?></span>
                 </button>
+            </div>
+        </div>
+        <div class="actions-toolbar error">
+            <div class="primary">
+
             </div>
         </div>
     </div>
@@ -335,8 +333,8 @@ $testcvv = 'XXX';
     require(["jquery", "braintreeClient", "hostedFields"], function ($, client, hostedFields) {
 
         var authorization = "<?php echo $clientToken; ?>";
-
-        var form = document.getElementById('payment-form');
+        var formID = 'contact-form';
+        var form = document.getElementById(formID);
 
         client.create({
             authorization: authorization
@@ -383,18 +381,19 @@ $testcvv = 'XXX';
 
                 form.addEventListener('submit', function (event) {
                     event.preventDefault();
-                    alert("send to brtree");
+
                     hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
                         if (tokenizeErr) {
                             // Handle error in Hosted Fields tokenization
-                            alert("error with token: " + tokenizeErr);
-                            tokenErrorHandler(tokenizeErr);
+
+                            jQuery(".error").html( tokenErrorHandler(tokenizeErr) );
+                            jQuery(".error").fadeIn('fast').delay(3000).fadeOut('slow');
                             return;
                         }
 
                         document.querySelector('input[name="payment-method-nonce"]').value = payload.nonce;
                         // Populate hidden fields
-                        jQuery("#payment-form #email").val(jQuery("#contact-form #email").val());
+                        jQuery( "#" + formID +" #email").val(jQuery("#contact-form #email").val() );
                         form.submit();
                     });
                 }, false);
@@ -406,11 +405,11 @@ $testcvv = 'XXX';
             switch (tokenizeErr.code) {
                 case 'HOSTED_FIELDS_FIELDS_EMPTY':
                     // occurs when none of the fields are filled in
-                    console.error('All fields are empty! Please fill out the form.');
+                    return 'All card detail fields are empty! Please fill out the form.';
                     break;
                 case 'HOSTED_FIELDS_FIELDS_INVALID':
                     // occurs when certain fields do not pass client side validation
-                    console.error('Some fields are invalid:', tokenizeErr.details.invalidFieldKeys);
+                    return 'Some fields are invalid:' + tokenizeErr.details.invalidFieldKeys;
                     break;
                 case 'HOSTED_FIELDS_TOKENIZATION_FAIL_ON_DUPLICATE':
                     // occurs when:
@@ -419,7 +418,7 @@ $testcvv = 'XXX';
                     //     option is set to true
                     //   * the card being tokenized has previously been vaulted (with any customer)
                     // See: https://developers.braintreepayments.com/reference/request/client-token/generate/#options.fail_on_duplicate_payment_method
-                    console.error('This payment method already exists in your vault.');
+                    return 'This payment method already exists in your vault.';
                     break;
                 case 'HOSTED_FIELDS_TOKENIZATION_CVV_VERIFICATION_FAILED':
                     // occurs when:
@@ -429,18 +428,18 @@ $testcvv = 'XXX';
                     //     control panel
                     //   * the cvv does not pass verfication (https://developers.braintreepayments.com/reference/general/testing/#avs-and-cvv/cid-responses)
                     // See: https://developers.braintreepayments.com/reference/request/client-token/generate/#options.verify_card
-                    console.error('CVV did not pass verification');
+                    return 'CVV did not pass verification';
                     break;
                 case 'HOSTED_FIELDS_FAILED_TOKENIZATION':
                     // occurs for any other tokenization error on the server
-                    console.error('Tokenization failed server side. Is the card valid?');
+                    return 'Tokenization failed server side. Is the card valid?';
                     break;
                 case 'HOSTED_FIELDS_TOKENIZATION_NETWORK_ERROR':
                     // occurs when the Braintree gateway cannot be contacted
-                    console.error('Network error occurred when tokenizing.');
+                    return 'Network error occurred when tokenizing.';
                     break;
                 default:
-                    console.error('Something bad happened!', tokenizeErr);
+                    return 'Something bad happened! ' +  tokenizeErr;
             }
 //    console.log('Got nonce:', payload.nonce);
         }
