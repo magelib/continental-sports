@@ -30,11 +30,11 @@ $core = $this->helper('Continental\General\Helper\Core');
 
                         <div class="blog__post-excerpt" itemprop="text">                                   
                             
-                          <?php
+                          <p><?php
                             $str = $post->getShortContent();
                             $str = $core->strip_additional_para($str);
                             echo $core->responsiveTruncateText($str);
-                          ?>
+                          ?></p>
                            
                         </div>
                          <a class="read-more btn btn-primary" href="<?= $post->getUrl() ?>"><span><?= __('Read more') ?></span></a>

@@ -121,7 +121,7 @@
 		  &:first-child {
 		  	border-top: 0;
 		  }
-		  &:hover a {
+		  &:hover a, &.current a {
   	    padding-left: 8px;  	    
    		 	color: $primary;
    		 	padding-right: 0;
@@ -149,5 +149,26 @@
 
 	.mobile, .tablet {
 		display: none;
+	}
+}
+
+@media all and(max-width: 1300px) {
+	.blog__post-excerpt {
+		.desktop-hidden {
+			display: none;
+		}
+		.tablet {
+			display: inline-block;
+		}		
+	}	
+}
+@media all and(max-width: 1146px) {
+	.blog__post-excerpt {
+		.tablet-hidden {
+			display: none;
+		}
+		.mobile {
+			display: inline-block;
+		}
 	}
 }
