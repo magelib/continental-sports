@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_HidePrice
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\Pricing\Render">
+        <plugin name="Amasty_HidePrice:product_price_hide" type="Amasty\HidePrice\Plugin\Framework\Pricing\Render" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\View">
+        <plugin name="Amasty_HidePrice:hide_button" type="Amasty\HidePrice\Plugin\Catalog\Block\Product\View" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare">
+        <plugin name="Amasty_HidePrice:hide_compare_list" type="Amasty\HidePrice\Plugin\Catalog\Block\Product\Compare" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\View\AddTo\Compare">
+        <plugin name="Amasty_HidePrice:hide_compare_view" type="Amasty\HidePrice\Plugin\Catalog\Block\Product\Compare" />
+    </type>
+    <type name="Magento\Wishlist\Block\Catalog\Product\ProductList\Item\AddTo\Wishlist">
+        <plugin name="Amasty_HidePrice:hide_wishlist_list" type="Amasty\HidePrice\Plugin\Catalog\Block\Product\Wishlist" />
+    </type>
+    <type name="Magento\Wishlist\Block\Catalog\Product\View\AddTo\Wishlist">
+        <plugin name="Amasty_HidePrice:hide_wishlist_view" type="Amasty\HidePrice\Plugin\Catalog\Block\Product\Wishlist" />
+    </type>
+    <type name="Magento\Catalog\Block\Product\View\Options\AbstractOptions">
+        <plugin name="Amasty_HidePrice:hide_custom_option_price"
+                type="Amasty\HidePrice\Plugin\Catalog\Block\Product\View\Options\AbstractOptions" />
+    </type>
+    <type name="Magento\Catalog\Model\Product\Option\Value">
+        <plugin name="Amasty_HidePrice:hide_custom_option_price_select"
+                type="Amasty\HidePrice\Plugin\Catalog\Model\Option\Value" />
+    </type>
+    <type name="Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option">
+        <plugin name="Amasty_HidePrice:hide_custom_option_bundle"
+                type="Amasty\HidePrice\Plugin\Bundle\Block\Option" />
+    </type>
+</config>
