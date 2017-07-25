@@ -895,7 +895,7 @@ $form-element-validation__border-error     : lighten($form-validation-note__colo
         }
 
         > .control {
-            width: $_type-inline-control-width;
+            // width: $_type-inline-control-width;
             float: left;
         }
     }

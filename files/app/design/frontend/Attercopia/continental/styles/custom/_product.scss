@@ -57,6 +57,12 @@
 			}
 		}
 	}
+	.box-tocart {
+		margin-bottom: 0 !important;
+		.control {
+			margin-left: 6px;
+		}
+	}
 }
 .product.media {
 	.fotorama__stage__frame .fotorama__img {
@@ -76,3 +82,27 @@
 	height: auto;
 	line-height: normal;
 }
+.product-options-wrapper {
+	margin-bottom: 24px;
+	.fieldset div.configurable {
+		margin-bottom: 12px;
+		label {
+			float: left !important;
+	    margin-right: 12px !important;
+	    margin-bottom: 0 !important;
+	    margin-top: 10px !important;
+	    width: 25% !important;
+		}
+		.control {
+	    float: left !important;
+  		width: 50% !important;
+		}
+	}
+}
+.product.detailed {
+	.title a {
+		cursor: default;
+	}
+}
+
+
