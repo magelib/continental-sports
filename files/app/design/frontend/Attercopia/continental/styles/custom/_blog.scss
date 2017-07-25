@@ -138,6 +138,9 @@
 	    @include font-size(14);
 		}
 	}
+	select.blog-cat-sel {
+		display: none;
+	}
 }
 .blog-post-view {
 	h1.page-title {

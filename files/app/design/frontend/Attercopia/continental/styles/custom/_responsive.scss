@@ -59,7 +59,7 @@
 		margin-bottom: 24px;
 	}
 	.nav-open .nav-sections, .nav-sections, .navigation {
-		background: #f0f0f0;
+		background: #fff;
 	}
 	.page-header .panel.header {
 		padding: 0;
@@ -244,6 +244,14 @@
 			}
 		}
 	}
+	.block-collapsible-nav-title, #block-collapsible-nav-blog ul{
+    visibility: hidden;
+    height: 0;
+	}
+	select.blog-cat-sel {
+		display: block !important;
+	}
+	
 }
 
 @media all and(max-width: 900px){

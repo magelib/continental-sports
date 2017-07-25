@@ -45,13 +45,10 @@
 		  span {
 		  	@include btn-shape(20deg);
 		  	float: left;
-		  	
+		  	opacity: 1;
+		  	animation: fade 0.5s ease-in-out;
 		  }
 		}		
-		// span {
-		// 	opacity: 1;
-  // 		animation: fade 1s linear;
-		// }
 	}
 	h1.page-title {
 		color: $white;
@@ -63,10 +60,10 @@
     margin-bottom: 32px;
 	}
 }
-// @keyframes fade {
-//   0% { opacity: 0 }
-//   100% { opacity: 1 }
-// }
+@keyframes fade {
+  0% { opacity: 0 }
+  100% { opacity: 1 }
+}
 
 // Checkout Styling
 
