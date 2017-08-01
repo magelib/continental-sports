@@ -7,14 +7,15 @@ $spinner-color-to: #D8D8D8;
 
   display: none;
   border: 1px solid #C2C2C2;
+
   padding: 24px;
   position: absolute;
-  top: 60px !important;
+  top: 50px !important;
   right: 0 !important;
   left: auto !important;
   box-sizing: border-box;
   background: #fff;
-  border-radius: 0 0 1px 1px;
+  border-radius: 6px;
   min-height: 35px;
   z-index: 1000;
   width: 500px !important;
@@ -68,13 +69,33 @@ $spinner-color-to: #D8D8D8;
       .total {
           font-weight: 600; //@font-weight__semibold;
       }
+      h2 {
+        position: relative;
+        @include font-size(16);
+        font-family: $font;
+        letter-spacing: 0px;
+        float: left;
+        margin-bottom: 24px;
+        width: 100%;
+        text-align: left;
+        text-transform: initial;
+        &:after {
+          content:"";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 0.5em;
+          border-top: 1px solid #eaeaea;
+          z-index: -1;
+        }
+      }
   }
   .search-list-title {
-    @include font-size(20);
+    background: white;
+    padding-right: 8px;
     float: left;
-    margin-bottom: 24px;
-    width: 100%;
-    text-align: left;
+    
   }
   ul {
       list-style: none;
@@ -207,6 +228,7 @@ $spinner-color-to: #D8D8D8;
 
 .searchautocomplete__highlight {
     font-weight: $font-weight__semibold;
+    color: $primary;
 }
 .searchautocomplete__spinner {
   position: relative;

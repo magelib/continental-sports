@@ -14,7 +14,7 @@
         <div data-bind="foreach: { data: result().indices, as: 'index' }">
             <div data-bind="visible: index.totalItems, attr: {class: 'searchautocomplete__index-' + index.identifier}">
                 <div class="index-title">
-                    <span class="search-list-title" data-bind="text: index.title"></span>
+                    <h2><span class="search-list-title" data-bind="text: index.title"></span></h2>
                 </div>
 
                 <ul data-bind="foreach: { data: index.items, as: 'item' }">
