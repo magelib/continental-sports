@@ -1,3 +1,10 @@
+.searchautocomplete__active {
+  .head-search {
+     position: static !important;
+     width: 100%;
+     float: right;
+  }
+}
 $spinner-color-from: #D8D8D8;
 $spinner-color-to: #D8D8D8;
 .searchautocomplete__autocomplete {
@@ -10,7 +17,7 @@ $spinner-color-to: #D8D8D8;
 
   padding: 24px;
   position: absolute;
-  top: 50px !important;
+  top: 55px !important;
   right: 0 !important;
   left: auto !important;
   box-sizing: border-box;
@@ -18,11 +25,19 @@ $spinner-color-to: #D8D8D8;
   border-radius: 6px;
   min-height: 35px;
   z-index: 1000;
-  width: 500px !important;
   &._active {
       display: block;
   }
-
+  &:before {
+    content: "";
+    background-image: url("#{$imagePath}/search-arrow.png");
+    height: 32px;
+    background-repeat: no-repeat;
+    width: 40px;
+    position: absolute;
+    top: -22px;
+    right: 15px;
+  }
   .searchautocomplete__spinner {
       display: none;
       position: absolute;
@@ -65,6 +80,7 @@ $spinner-color-to: #D8D8D8;
       font-size: 1.2rem;
       line-height: 1.2rem;
       color: $header-color;
+      padding-left: 0;
 
       .total {
           font-weight: 600; //@font-weight__semibold;
@@ -94,8 +110,7 @@ $spinner-color-to: #D8D8D8;
   .search-list-title {
     background: white;
     padding-right: 8px;
-    float: left;
-    
+    float: left;   
   }
   ul {
       list-style: none;
@@ -104,11 +119,13 @@ $spinner-color-to: #D8D8D8;
 
       li {
           margin: 0;
-          padding: 0.5rem 1rem;
+          padding: 0;
           cursor: pointer;
           float: left;
           width: 100%;
-          margin-bottom: 12px;
+          float: left;
+          margin-bottom: 24px;
+          position: relative;
           // .lib-clearfix();
 
           &._active {
@@ -128,7 +145,10 @@ $spinner-color-to: #D8D8D8;
             text-decoration: none !important;
           }
       }
-  }
+      &[role="listbox"] {
+        display: none;
+      }
+  }  
 }
 .searchautocomplete__index-recent {
     .index-title {
@@ -149,6 +169,8 @@ $spinner-color-to: #D8D8D8;
     a.title {
         display: block;
         margin-bottom: 0.5rem;
+       @include font-size(20);
+       color: #555555;
     }
 
     .sku {
@@ -161,7 +183,7 @@ $spinner-color-to: #D8D8D8;
 
     .description {
         font-size: 1.2rem;
-        color: #999;
+        color: #555555;
         height: 3rem;
         line-height: 1.5rem;
         overflow: hidden;
@@ -171,11 +193,36 @@ $spinner-color-to: #D8D8D8;
     .price {
         display: block;
         float: right;
-        font-weight: 400;
+        font-weight: 300;
         color: $primary;
         float: left;
+         @include font-size(20);
     }
-
+    .btn-secondary {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    .search-auto-left {
+      width: 75%;
+      float: left;
+      .left {
+        float: left;
+        width: 20%;
+      }
+      .right {
+        float: right;
+        width: 80%;
+        padding-left: 12px;
+      }
+    }
+    .search-auto-right {
+      width: 22%;
+      float: right;
+    }
     .product-reviews-summary {
         margin: 0;
         .reviews-actions {
@@ -405,3 +452,43 @@ $spinner-color-to: #D8D8D8;
         background-color: $spinner-color-to;
     }
 }
+@media all and (min-width: $medium) {
+  .searchautocomplete__autocomplete {
+    width: 800px !important;
+  }
+}
+@media all and (max-width: $medium) {
+  .searchautocomplete__autocomplete {
+    left: auto !important;
+    right: auto !important;
+    top: 75px !important;
+  }
+  .searchautocomplete__active {
+    .block-search .control {
+      margin-left: 30px;
+      width: 100%;
+      float: right;
+    } 
+    .head-search {
+      position: static !important;
+      float: right;
+      width: 100%;
+    }
+  }
+}
+@media all and (max-width: $xsmall) {
+  .searchautocomplete__autocomplete {
+    // max-width: 300px;
+    .search-auto-left, .search-auto-right {
+      width: 100% !important;
+    }
+    .btn-secondary {
+      position: static;
+      margin-top: 12px;
+      margin-left: auto;
+      margin-right: auto;
+      float: right !important;
+    }
+  }
+}
+

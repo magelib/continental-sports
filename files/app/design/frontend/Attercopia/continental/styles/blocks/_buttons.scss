@@ -33,4 +33,19 @@ a.action.primary {
 	  	border: 1px solid $black;
 	  }
   }
+  &.btn-secondary {
+    transform: none !important;
+    background-color: $primary;
+    border: 1px solid $primary;
+    border-radius: 6px;
+    @include button2;
+    span {
+      transform: none !important;
+    }
+    &:hover {
+      background: $black;
+      color: $white;
+      border: 1px solid $black;
+    }
+  }
 }
