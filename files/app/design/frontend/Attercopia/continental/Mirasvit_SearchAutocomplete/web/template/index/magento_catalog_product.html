@@ -1,21 +1,29 @@
-<!-- ko if: image -->
-<img data-bind="attr: {src: image}"/>
-<!-- /ko -->
+<div class="search-auto-left">
+	<div class="left">
+		<!-- ko if: image -->
+		<img data-bind="attr: {src: image}"/>
+		<!-- /ko -->
+	</div>
+	<div class="right">
+		<a class="title" data-bind="html: name, attr: {href: url}, highlight"></a>
 
-<a class="title" data-bind="html: name, attr: {href: url}, highlight"></a>
+		<!-- ko if: sku -->
+		<div class="sku" data-bind="text: sku, highlight"></div>
+		<!-- /ko -->
 
-<!-- ko if: sku -->
-<div class="sku" data-bind="text: sku, highlight"></div>
-<!-- /ko -->
+		<!-- ko if: description -->
+		<div class="description" data-bind="text: description, highlight"></div>
+		<!-- /ko -->
 
-<!-- ko if: description -->
-<div class="description" data-bind="text: description, highlight"></div>
-<!-- /ko -->
+		<!-- ko if: price > 0 -->
+		<div data-bind="text: price, price" class="price"></div>
+		<!-- /ko -->
 
-<!-- ko if: price > 0 -->
-<div data-bind="text: price, price" class="price"></div>
-<!-- /ko -->
-
-<!-- ko if: rating -->
-<div data-bind="html: rating"></div>
-<!-- /ko -->
+		<!-- ko if: rating -->
+		<div data-bind="html: rating"></div>
+		<!-- /ko -->
+	</div>
+</div>
+<div class="search-auto-right">
+	<a class="btn btn-secondary">View</a>
+</div>
