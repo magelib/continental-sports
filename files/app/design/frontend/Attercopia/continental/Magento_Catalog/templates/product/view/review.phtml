@@ -14,11 +14,24 @@
         $(document).ready(function () {
 
             productDisplay();
+		
+            setDefaultOptions();
 
             $( window ).resize(function() {
                 productDisplay();
             });
 
+	    function setDefaultOptions() {
+	          console.log("<?php echo $block->getProduct()->getId(); ?>");
+                  console.log("setting default");
+		  
+	          $( ".poduct-options-wrapper" ).each(function() {
+		console.log("found");
+//	           console.log( $(this).html() );
+//		  $(this).find('option:not(:empty)').first().prop('selected',true);
+	      });
+	    }
+	
             function productDisplay() {
                 var t = $(".product.media");
                 if ($(".nav-toggle").is(":visible") == false) {
