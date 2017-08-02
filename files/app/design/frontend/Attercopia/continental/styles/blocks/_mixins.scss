@@ -38,4 +38,9 @@
   transition: 0.3s all ease-in-out;
   border-radius: 0;
 }
+@mixin button2 {
+  padding-left: 32px;
+  padding-right: 32px;
+  margin-right: 0;
+}
 
