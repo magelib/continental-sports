@@ -55,9 +55,9 @@
                     </container>
                     <block class="Magento\Catalog\Block\Product\View" name="product.info.review" template="product/view/review.phtml" after="product.info.stock.sku" />
                     <block class="Magento\Catalog\Block\Product\View" name="product.info" template="product/view/form.phtml" after="product.info.stock.sku">
-                        <container name="product.info.form.content" as="product_info_form_content">
+                        <!-- <container name="product.info.form.content" as="product_info_form_content">
                             <block class="Magento\Catalog\Block\Product\View" name="product.info.addtocart" as="addtocart" template="product/view/addtocart.phtml"/>
-                        </container>
+                        </container> -->
                         <block class="Magento\Framework\View\Element\Template" name="product.info.form.options" as="options_container">
                             <block class="Magento\Catalog\Block\Product\View" name="product.info.options.wrapper" as="product_options_wrapper" template="product/view/options/wrapper.phtml">
                                 <block class="Magento\Catalog\Block\Product\View\Options" name="product.info.options" as="product_options" template="product/view/options.phtml">

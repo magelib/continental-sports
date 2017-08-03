@@ -99,6 +99,13 @@ function($) {
       }
     }
 
+    // Add and subtract quantity for product page input 
 
+    $('.add').click(function () {
+        $(this).prev().val(+$(this).prev().val() + 1);
+    });
+    $('.subtract').click(function () {
+        if ($(this).next().val() > 0) $(this).next().val(+$(this).next().val() - 1);
+    });
 });
 
