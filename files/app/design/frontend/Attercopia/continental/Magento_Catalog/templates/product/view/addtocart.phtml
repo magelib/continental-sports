@@ -10,6 +10,14 @@
 ?>
 <?php $_product = $block->getProduct(); ?>
 <?php $buttonTitle = __('Add to Basket'); ?>
+<?php 
+$prodBlock = $this->getLayout()->createBlock('\Continental\Products\Block\Details');
+
+echo $prodBlock->childProducts($_product);
+
+//	 echo $_product->getAttributeText('id');
+?>
+<?php echo "Testing"; ?>
 <?php if ($_product->isSaleable()): ?>
 <div class="box-tocart">
     <div class="fieldset">

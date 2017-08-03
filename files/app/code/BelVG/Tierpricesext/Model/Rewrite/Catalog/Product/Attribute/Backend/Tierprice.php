@@ -86,7 +86,8 @@ class Tierprice extends \Magento\Catalog\Model\Product\Attribute\Backend\Tierpri
         if (isset($data[$param])) {
             if (isset($data['percent']) && ($data['percent'] >= 1)) {
                 unset($data['percent']);
-                return ($basePrice * $data[$param] / 100);
+//                return ($basePrice * $data[$param] / 100);
+                return ($basePrice - ($basePrice * ($data[$param] / 100) ) );
             }
         }
         
