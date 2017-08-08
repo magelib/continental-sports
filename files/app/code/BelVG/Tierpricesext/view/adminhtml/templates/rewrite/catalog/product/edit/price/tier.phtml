@@ -44,8 +44,9 @@ $element = $block->getElement();
 require([
     'mage/template',
     "prototype",
-    "mage/adminhtml/form"
-], function (mageTemplate) {
+    "mage/adminhtml/form",
+    "jquery"
+], function (mageTemplate, $)  {
 
 //<![CDATA[
 var tierPriceRowTemplate = '<tr>'
@@ -156,8 +157,13 @@ $('<?php /* @escapeNotVerified */ echo $_htmlId ?>_container').up('table').selec
 <?php endif; ?>
 
 window.tierPriceControl = tierPriceControl;
+// here's an extra bodge to make the percentage bit a tad more user friendly
+$('.admin__control-checkbox').change(function() {
+        var x = $(this).is(':checked');
+        alert("ok " + x);
+    });
 //]]>
-
+alert("Testing");
 });
 </script>
     </div>
