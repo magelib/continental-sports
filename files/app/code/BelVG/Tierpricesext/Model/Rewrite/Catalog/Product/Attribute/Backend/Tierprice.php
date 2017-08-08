@@ -84,6 +84,11 @@ class Tierprice extends \Magento\Catalog\Model\Product\Attribute\Backend\Tierpri
     public function calculatePercentPrices($data, $param = 'price', $basePrice)
     {
         if (isset($data[$param])) {
+/* if percentage sign found */
+	    exit($data['price']);
+            if (preg_match('/.*%$/', $data['price'])) {
+		exit("You have  entered a percentage bro");
+	}
             if (isset($data['percent']) && ($data['percent'] >= 1)) {
                 unset($data['percent']);
 //                return ($basePrice * $data[$param] / 100);
