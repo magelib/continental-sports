@@ -22,6 +22,10 @@ $contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\De
 $_productCollection = $block->getLoadedProductCollection();
 
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
+
+// Load contiproducts class
+$contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\Details');
+
 ?>
 <?php if (!$_productCollection->count()): ?>
     <div class="message info empty"><div><?php /* @escapeNotVerified */ echo __('We can\'t find products matching the selection.') ?></div></div>
@@ -85,9 +89,9 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                                     <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
                                 </div>                           
                             <?php endif; ?>
-				<?php if ($configurablesCount = $contiproducts ->showConfirurableCount($_product)): ?>
-                                  <p class="show-configurables"><?php echo $configurablesCount; ?>  configurable options</p>
-                            	<?php endif; ?>
+                            <?php if ($configurablesCount = $contiproducts->showConfirurableCount($_product)): ?>
+                                <p class="show-configurables"><?php echo $configurablesCount; ?> configurations</p>
+                            <?php endif; ?>
                         </div>
                         <?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
                         <?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
