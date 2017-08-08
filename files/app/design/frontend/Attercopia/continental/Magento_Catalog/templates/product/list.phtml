@@ -16,6 +16,9 @@ use Magento\Framework\App\Action\Action;
  */
 ?>
 <?php
+// Load contiproducts class
+$contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\Details');
+
 $_productCollection = $block->getLoadedProductCollection();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
 ?>
@@ -107,6 +110,11 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                                     <?php endif; ?>
                                 </div>
                             </div>
+
+                            <?php if ($configurablesCount = $contiproducts ->showConfirurableCount($_product)): ?>
+                                <div>Available in <?php echo $configurablesCount; ?> configurations</div>
+                            <?php endif; ?>
+
                             <?php if ($showDescription):?>
                                 <div class="product description product-item-description">
                                     <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>

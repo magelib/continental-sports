@@ -382,7 +382,7 @@ class AdvancedPricing extends \Magento\ImportExport\Model\Import\Entity\Abstract
                         'qty' => $rowData[self::COL_TIER_PRICE_QTY],
                         'value' => str_replace('%', '', $rowData[self::COL_TIER_PRICE]), // Remove % sign
                         'website_id' => $this->getWebsiteId($rowData[self::COL_TIER_PRICE_WEBSITE]),
-                        'percent' => preg_match('/[0-9]+%$/', $rowData[self::COL_TIER_PRICE]) ? 1 : 0 // update percent
+                        'percent' => preg_match('/[0-9]+%$/', $rowData[self::COL_TIER_PRICE]) ? true : false // update percent
                     ];
                 }
             }
@@ -415,7 +415,9 @@ class AdvancedPricing extends \Magento\ImportExport\Model\Import\Entity\Abstract
      */
     protected function saveProductPrices(array $priceData, $table)
     {
-        exit($table);
+        \Magento\Framework\App\ObjectManager::getInstance()
+        ->get(\Psr\Log\LoggerInterface::class)->debug( print_r($priceData, true) . " dirtyfries");
+
         if ($priceData) {
             $tableName = $this->_resourceFactory->create()->getTable($table);
             $priceIn = [];
