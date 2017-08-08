@@ -194,7 +194,8 @@ class AdvancedPricing extends \Magento\ImportExport\Model\Import\Entity\Abstract
         AdvancedPricing\Validator $validator,
         AdvancedPricing\Validator\Website $websiteValidator,
         AdvancedPricing\Validator\TierPrice $tierPriceValidator
-    ) {
+    )
+    {
         $this->dateTime = $dateTime;
         $this->jsonHelper = $jsonHelper;
         $this->_importExportData = $importExportData;
@@ -379,8 +380,9 @@ class AdvancedPricing extends \Magento\ImportExport\Model\Import\Entity\Abstract
                             $rowData[self::COL_TIER_PRICE_CUSTOMER_GROUP]
                         ),
                         'qty' => $rowData[self::COL_TIER_PRICE_QTY],
-                        'value' => $rowData[self::COL_TIER_PRICE],
-                        'website_id' => $this->getWebsiteId($rowData[self::COL_TIER_PRICE_WEBSITE])
+                        'value' => str_replace('%', '', $rowData[self::COL_TIER_PRICE]), // Remove % sign
+                        'website_id' => $this->getWebsiteId($rowData[self::COL_TIER_PRICE_WEBSITE]),
+                        'percent' => preg_match('/[0-9]+%$/', $rowData[self::COL_TIER_PRICE]) ? 1 : 0 // update percent
                     ];
                 }
             }
@@ -413,6 +415,7 @@ class AdvancedPricing extends \Magento\ImportExport\Model\Import\Entity\Abstract
      */
     protected function saveProductPrices(array $priceData, $table)
     {
+        exit($table);
         if ($priceData) {
             $tableName = $this->_resourceFactory->create()->getTable($table);
             $priceIn = [];
