@@ -64,14 +64,24 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                         <?php
                             $_productNameStripped = $block->stripTags($_product->getName(), null, true);
                         ?>
-                        <div class="product-information">
+                        <?php if ($_product->getShortDescription()):?>
+                            <div class="product-information">
+                        <?php else: ?>
+                            <div class="product-information no-description">
+                        <?php endif; ?>
                             <strong class="product name product-item-name">
                                 <a class="product-item-link"
                                    href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
                                     <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
-                                </a>
-                                <span><?php /* @escapeNotVerified */ echo $_product->getSku() ?></span>
+                                    <span><?php /* @escapeNotVerified */ echo $_product->getSku() ?></span>
+                                </a>                                
                             </strong>
+                             <?php if ($_product->getShortDescription()):?>
+                                <div class="product description product-item-description">                    
+                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                                </div>                           
+                            <?php endif; ?>
+                            <p class="show-configurables">2 configurable options</p>
                         </div>
                         <?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
                         <?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
@@ -101,6 +111,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                                     <?php endif; ?> -->
                                     
                                 </div>
+
                                 <a class="btn btn-secondary" title="View Item"
                                    href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
                                     <span>View Item</span>
@@ -110,15 +121,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                                         <?php echo $addToBlock->setProduct($_product)->getChildHtml(); ?>
                                     <?php endif; ?>
                                 </div>
-                            </div>
-
-                        <?php if ($_product->getShortDescription()):?>
-                            <div class="product description product-item-description">
-                                    <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
-                                    <a href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>" title="<?php /* @escapeNotVerified */ echo $_productNameStripped ?>"
-                                       class="action more"><?php /* @escapeNotVerified */ echo __('Learn More') ?></a>
-                            </div>                           
-                        <?php endif; ?>
+                            </div>                        
                         </div>
                     </div>
                 </div>
