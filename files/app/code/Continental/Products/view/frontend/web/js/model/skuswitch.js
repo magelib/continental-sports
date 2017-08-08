@@ -7,7 +7,7 @@ define([
     'use strict';
 
     return function(targetModule){
-        alert("test when called");
+        // alert("test when called");
         var reloadPrice = targetModule.prototype._reloadPrice;
         var reloadPriceWrapper = wrapper.wrap(reloadPrice, function(original){
             //do extra stuff
