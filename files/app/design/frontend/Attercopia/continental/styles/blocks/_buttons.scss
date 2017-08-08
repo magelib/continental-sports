@@ -31,6 +31,7 @@ a.action.primary {
 	  	background: $black;
 	  	color: $white;
 	  	border: 1px solid $black;
+      text-decoration: none;
 	  }
   }
   &.btn-secondary {
@@ -46,6 +47,7 @@ a.action.primary {
       background: $black;
       color: $white;
       border: 1px solid $black;
+      text-decoration: none;
     }
   }
 }
