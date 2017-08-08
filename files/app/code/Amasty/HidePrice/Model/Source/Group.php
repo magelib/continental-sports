@@ -10,7 +10,7 @@ namespace Amasty\HidePrice\Model\Source;
 
 use Amasty\HidePrice\Helper\Data as Helper;
 
-class Group implements \Magento\Framework\Option\ArrayInterface
+class Group extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource implements \Magento\Framework\Option\ArrayInterface
 {
     /**
      * @var \Magento\Customer\Model\Customer\Attribute\Source\Group
@@ -45,4 +45,10 @@ class Group implements \Magento\Framework\Option\ArrayInterface
         $values =  array_column($optionArray, 'value');
         return array_combine($values, $labels);
     }
+
+    public function getAllOptions()
+    {
+        return $this->toOptionArray();
+    }
+
 }
