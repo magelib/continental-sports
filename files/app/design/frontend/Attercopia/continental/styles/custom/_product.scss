@@ -38,15 +38,17 @@
 		font-weight: 300;
 	}
 	.box-tocart  {
+		margin-bottom: 0 !important;
 		label[for="qty"] {
 	    display: none !important;
 		}
 		.control {
 			@include btn-shape(-20deg);
 			background: $black;
-			padding-top: 8px;
-			padding-bottom: 8px;
-			float: left !important;			
+			padding-top: 1px;
+			padding-bottom: 1px;
+			float: left !important;		
+			margin-left: 6px;	
 			input.input-text.qty {
 				color: $white;
 				@include btn-shape(20deg);
@@ -55,13 +57,31 @@
 				height: auto !important;
 				float: left;
 				line-height: normal;
+		    width: 44px;
+        height: 32px !important;
+		    background: transparent;
+		    color: #fff;
+		    text-align: center;
+		    padding-left: 0;
+		    padding-right: 0;
+		    &:focus {
+		    	box-shadow: none !important;
+		    }
 			}
-		}
-	}
-	.box-tocart {
-		margin-bottom: 0 !important;
-		.control {
-			margin-left: 6px;
+			.add, .subtract {
+				background: transparent;
+		    color: #fff;
+		    border: 0;
+		    float: left;		 
+		    @include btn-shape(20deg);
+		    &:hover {
+		    	background: transparent;
+		    	border: 0;
+		    }   
+			}
+			.add {
+				float: right;
+			}
 		}
 	}
 }
