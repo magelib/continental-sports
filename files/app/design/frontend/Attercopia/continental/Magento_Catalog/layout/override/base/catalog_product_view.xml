@@ -71,6 +71,7 @@
                             </block>                            
                         </block>
                     </block>
+                     <block class="Magento\Catalog\Block\Product\View" name="product.info.tier.price" as="product.info.tierprice" template="product/view/tierPrice.phtml"/>
                     <block class="Magento\Catalog\Pricing\Render" name="product.price.final" after="product.info.sku">
                         <arguments>
                             <argument name="price_render" xsi:type="string">product.price.render.default</argument>

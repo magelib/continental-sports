@@ -19,6 +19,16 @@
 
 	$( ".page-with-filter #maincontent" ).wrap( "<div class='category-bg'></div>" );
 	$(".category-bg").find('.page-title-wrapper').prependTo('.category-nav ul');
+
+	<?php 
+		if ($this->categoryBackgroundImage()):
+	?>
+
 	$(".category-bg").css({"background-image":"url('<?php echo $this->categoryBackgroundImage(); ?>')"});
+	
+	<?php 
+		endif;
+	?>
+
 	});
 </script>

@@ -3,7 +3,7 @@
 .products.wrapper ~ .toolbar .limiter {
     display: block !important;
 }
-.page-products.page-layout-1column .products-grid .product-items {
+.page-products .products-grid .product-items {
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
@@ -110,6 +110,54 @@
   }
 }
 
+// Pagination 
+
+.toolbar-products .pages {
+	ul {
+		white-space: unset;
+	}
+ li {
+ 	float: left;
+ 	width: auto;
+
+		.action {
+			border: 0;
+			width: auto;
+			&:before {
+				content: none !important;
+			}
+			span {
+				position: static;
+				width: auto;
+				@include font-size(14);
+				color: $black;
+			}
+		}
+		a {
+			* {
+				transition:  all 0.3s ease-in-out;
+			}
+			span {
+				@include font-size(14);
+				color: $black;			
+			}
+			&:hover span {
+
+				color: $primary;
+			}
+		}
+		.label {
+			display: none;
+		}
+		&.current {
+			span {
+				color: $primary;
+				@include font-size(14);
+			}
+		}
+	}
+}
+
 @media only screen and (max-width: $large) {
 	.page-products.page-layout-1column .products-grid .product-items {
     .product-item {
@@ -141,3 +189,6 @@
 		}
 	}
 }
+
+
+
