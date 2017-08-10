@@ -51,3 +51,49 @@ a.action.primary {
     }
   }
 }
+.btn-pdf {
+  border-radius: 4px;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  text-transform: uppercase;
+  background-color: $lgrey;
+  float: left;
+  color: $dgrey;
+  padding-left: 48px;
+  padding-right: 48px;
+  width: 48%;
+  &:hover {
+    text-decoration: none;
+    color: $primary;
+  }
+  span {
+    background: url('#{$imagePath}/pdf-icon.png') no-repeat 0 0;
+    width: 19px;
+    height: 19px;
+    float: left;
+    margin-top: -1px;
+    margin-right: 6px;
+  }
+}
+.btn-spares {
+  background-color: $white;
+  border: 1px solid #000;
+  border-radius: 4px;
+  float: right;
+  text-transform: uppercase;
+  width: 48%;
+  padding-top: 9px;
+  padding-bottom: 8px;
+  span {
+    background: url('#{$imagePath}/spares-icon.png') no-repeat 0 0;
+    width: 13px;
+    height: 10px;
+    display: inline-block;
+    margin-top: 3px;
+    margin-right: 6px;
+  }
+  &:hover {
+    background-color: inherit;
+    border: 1px solid #000;
+  }
+}

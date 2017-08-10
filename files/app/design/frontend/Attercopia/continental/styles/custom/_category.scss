@@ -6,6 +6,8 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	float: left;
+	background-image: url('#{$imagePath}/generic-banner.jpg');
+  min-height: 600px;
 	.columns .column.main {
     padding-bottom: 0;
   }

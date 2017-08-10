@@ -43,7 +43,7 @@
                     <?php $text = $block->getAnchorTextForPrevious() ? $block->getAnchorTextForPrevious() : '';?>
                     <a class="<?php /* @escapeNotVerified */ echo $text ? 'link ' : 'action '?> previous" href="<?php /* @escapeNotVerified */ echo $block->getPreviousPageUrl() ?>" title="<?php /* @escapeNotVerified */ echo $text ? $text : __('Previous') ?>">
                         <span class="label"><?php /* @escapeNotVerified */ echo __('Page') ?></span>
-                        <span><?php /* @escapeNotVerified */ echo $text ? $text : __('Previous') ?></span>
+                        <span>&laquo; <?php /* @escapeNotVerified */ echo $text ? $text : __('Previous Page') ?></span>
                     </a>
                 </li>
             <?php endif;?>
@@ -105,7 +105,7 @@
                     <?php $text = $block->getAnchorTextForNext() ? $block->getAnchorTextForNext() : '';?>
                     <a class="<?php /* @escapeNotVerified */ echo $text ? 'link ' : 'action '?> next" href="<?php /* @escapeNotVerified */ echo $block->getNextPageUrl() ?>" title="<?php /* @escapeNotVerified */ echo $text ? $text : __('Next') ?>">
                         <span class="label"><?php /* @escapeNotVerified */ echo __('Page') ?></span>
-                        <span><?php /* @escapeNotVerified */ echo $text ? $text : __('Next') ?></span>
+                        <span><?php /* @escapeNotVerified */ echo $text ? $text : __('Next page') ?> &raquo;</span>
                     </a>
                 </li>
             <?php endif;?>
