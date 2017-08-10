@@ -13,11 +13,13 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     protected $_scopeConfig;
 
-    CONST ENABLE      = 'continental_banners/general/enable';
-    CONST BLOCK_LABEL = 'continental_banners/general/block_label';
-    CONST TEXT_ALIGN  = 'continental_banners/general/text_align';
-    CONST BLOCK_TITLE = 'continental_banners/general/block_title';
-    CONST BLOCK_TEXT = 'continental_banners/general/block_text';
+    CONST ENABLE      = 'Continental_Banners/general/enable';
+    CONST BLOCK_LABEL = 'Continental_Banners/general/block_label';
+    CONST TEXT_ALIGN  = 'Continental_Banners/general/text_align';
+    CONST BLOCK_TITLE = 'Continental_Banners/general/block_title';
+    CONST BLOCK_TEXT = 'Continental_Banners/general/block_text';
+    CONST BLOCK_HREF = 'Continental_Banners/general/block_href';
+    CONST BLOCK_BACK = 'Continental_Banners/general/background_image';
 
     public function __construct(
         \Magento\Framework\App\Helper\Context $context
@@ -38,8 +40,15 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return $this->_scopeConfig->getValue(self::TEXT_ALIGN);
     }
  
+    public function getBlockBack(){
+        return $this->_scopeConfig->getValue(self::BLOCK_BACK);
+    }
+
+    public function getBlockHref(){
+        return $this->_scopeConfig->getValue(self::BLOCK_HREF);
+    }
+
     public function getBlockText(){
-	return 'Bouncy';
         return $this->_scopeConfig->getValue(self::BLOCK_TEXT);
     }
 

@@ -36,6 +36,18 @@ class Homepage extends \Magento\Framework\View\Element\Template
         return $this->_scopeConfig->getValue('Continental_Banners/general/block_text', $storeScope);
     }
 
+    public function getBlockBack(){
+        return $this->_helper->getBlockBack();
+    }
+    
+    public function getBlockText(){
+        return $this->_helper->getBlockText();
+    }
+    
+    public function getBlockHref(){
+        return $this->_helper->getBlockHref();
+    }
+
     public function getBlockLabel(){
         return $this->_helper->getBlockLabel();
     }
