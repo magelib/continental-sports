@@ -34,6 +34,7 @@
                     </argument>
                 </arguments>
             </block>
+            <block class="Magento\Catalog\Block\Navigation" name="catalog.leftnav"template="navigation/left.phtml" remove="true"/>
         </referenceBlock>
         <referenceContainer name="after.body.start">
             <block class="Magento\Framework\View\Element\Js\Components" name="head.components" as="components" template="Magento_Catalog::js/components.phtml"/>

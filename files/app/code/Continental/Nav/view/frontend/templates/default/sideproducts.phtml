@@ -17,7 +17,7 @@
 
 		// This adds a wrapping div around main content called category-bg. It then finds the h1 parent div and puts drops the h1 inside the ul. Gives the category bg a style attribute and gets the category image from the cms.
 
-	$( ".page-with-filter #maincontent" ).wrap( "<div class='category-bg'></div>" );
+	$( "#maincontent" ).wrap( "<div class='category-bg'></div>" );
 	$(".category-bg").find('.page-title-wrapper').prependTo('.category-nav ul');
 
 	<?php 
@@ -25,7 +25,7 @@
 	?>
 
 	$(".category-bg").css({"background-image":"url('<?php echo $this->categoryBackgroundImage(); ?>')"});
-	
+
 	<?php 
 		endif;
 	?>
