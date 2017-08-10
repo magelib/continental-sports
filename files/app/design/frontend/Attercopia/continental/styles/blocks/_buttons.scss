@@ -62,17 +62,16 @@ a.action.primary {
   padding-left: 48px;
   padding-right: 48px;
   width: 48%;
+  text-align: center;
   &:hover {
     text-decoration: none;
     color: $primary;
   }
   span {
     background: url('#{$imagePath}/pdf-icon.png') no-repeat 0 0;
-    width: 19px;
-    height: 19px;
-    float: left;
-    margin-top: -1px;
     margin-right: 6px;
+    padding-left: 26px;
+    display: inline-block;
   }
 }
 .btn-spares {
