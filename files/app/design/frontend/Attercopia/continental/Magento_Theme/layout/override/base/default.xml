@@ -148,5 +148,11 @@
         <referenceContainer name="content">
             <block class="Magento\Framework\View\Element\FormKey" name="formkey"/>
         </referenceContainer>
+
+<!-- testing -->
+<referenceContainer name="sidebar.main">
+<referenceBlock name="catalog.leftnav" remove="true"/>
+</referenceContainer>
+
     </body>
 </page>

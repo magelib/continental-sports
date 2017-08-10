@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!-- /** * @author  Team * @copyright Copyright (c) 2015  (http://www.Continental.com) * @package _ */ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Config/etc/system_file.xsd">
+    <system>
+        <tab id="Continental" translate="label" sortOrder="10">
+            <label></label>
+        </tab>
+ 
+        <section id="Continental_Banners" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>_</label>
+            <tab>Continental</tab>
+            <resource>Continental_Banners::Continental_Banners</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="enable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Banners Extensopm</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>
+                        Comment for 'Enable Banners' setting.
+                    </comment>
+                </field>
+                <field id="block_label" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Block Label</label>
+                </field>
+                <field id="text_align" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Text Align</label>
+                    <source_model>\\Model\Source\Align</source_model>
+                </field>
+            </group>
+        </section>
+ 
+    </system>
+</config>
