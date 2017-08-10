@@ -3,7 +3,7 @@
  * Copyright © 2017 Attercopia. All rights reserved.
  */
 
-namespace Continental\Banners\Model\ResourceModel;
+namespace Continental\Banners\Model;
 
 class Banners extends \Magento\Framework\Model\AbstractModel
 {
