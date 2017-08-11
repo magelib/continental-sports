@@ -38,15 +38,32 @@
 		font-weight: 300;
 	}
 	.box-tocart  {
+		margin-bottom: 0 !important;
+		display: block !important;
 		label[for="qty"] {
 	    display: none !important;
+		}
+		.fieldset {
+			margin-bottom: 24px;
+	    float: left;
+  	  width: 100%;
+			.field {
+				margin-bottom: 0;
+			}
+		}
+		.qty {
+	    width: 30%;
+    	float: left;
 		}
 		.control {
 			@include btn-shape(-20deg);
 			background: $black;
-			padding-top: 8px;
-			padding-bottom: 8px;
-			float: left !important;			
+			padding-top: 1px;
+			padding-bottom: 1px;
+			float: left !important;		
+			margin-left: 6px;	
+			width: 100%;
+			position: relative;
 			input.input-text.qty {
 				color: $white;
 				@include btn-shape(20deg);
@@ -55,14 +72,58 @@
 				height: auto !important;
 				float: left;
 				line-height: normal;
+		    width: 100%;
+        height: 32px !important;
+		    background: transparent;
+		    color: #fff;
+		    text-align: center;
+		    padding-left: 0;
+		    padding-right: 0;
+		    &:focus {
+		    	box-shadow: none !important;
+		    }
+			}
+			.add, .subtract {
+				background: transparent;
+		    color: #fff;
+		    border: 0;
+		    float: left;		 
+		    @include btn-shape(20deg);
+		    padding: 8px;
+		    position: absolute;
+		    z-index: 10;
+		    &:hover {
+		    	background: transparent;
+		    	border: 0;
+		    }   
+			}
+			.add {
+				float: right;
+				right: 6px;
+			}
+			.subtract {
+				
+
+				left: 6px;
+			}			
+		}
+		.actions {
+	    width: 69%;
+    	float: right;
+		}
+		#product-addtocart-button {
+			width: 100%;
+			span {
+				width: 100%;
 			}
 		}
-	}
-	.box-tocart {
-		margin-bottom: 0 !important;
-		.control {
-			margin-left: 6px;
+		.product-buttons {
+			width: 100%;
+			float: left;
 		}
+	}
+	.price-final_price .con-price-from {
+		display: none;
 	}
 }
 .product.media {
@@ -105,5 +166,51 @@
 		cursor: default;
 	}
 }
-
+.price-table {
+  float: left;
+  margin-bottom: 24px;
+  width: 100%;
+	* {
+		transition: none !important;
+	}
+	.thead {
+		background-color: #f5f5f5;
+		span {
+			font-weight: 600;
+			padding: 12px;
+		}
+	}
+	.trow, .thead {
+    width: 100%;
+    display: table;
+		span {
+		  text-align: center;
+		  display: table-cell;
+		  width: 25%;
+      padding-top: 12px;
+		  & + span + span {
+		  	width: 50%;
+		  }
+		}
+	}
+	.expand-table {
+		background: none;
+		border: 0;
+		float: right;
+		color: $primary;
+		margin-top: 12px;
+		@include font-size(14);
+		font-weight: 400;
+		padding: 0;
+	}
+}
+.product.data.items > .item.content{
+  margin-left: 0;
+  float: left;
+  width: 100%;
+  margin-top: 12px;
+}
+.gallery-placeholder {
+	cursor: zoom-in;
+}
 

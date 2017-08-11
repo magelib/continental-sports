@@ -4,4 +4,3 @@
         <plugin disabled="false" name="Continental_Products_Plugin_Magento_ConfigurableProduct_Block_Product_View_Type_Configurable" sortOrder="10" type="Continental\Products\Plugin\Magento\ConfigurableProduct\Block\Product\View\Type\Configurable"/>
     </type>
 </config>
-

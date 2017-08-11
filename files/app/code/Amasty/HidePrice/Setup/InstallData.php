@@ -153,7 +153,7 @@ class InstallData implements InstallDataInterface
                 'label'             => __('Use Current Price Mode By Customer Group'),
                 'input'             => 'multiselect',
                 'class'             => '',
-                'source'            => 'Magento\Customer\Model\Customer\Source\Group',
+                'source'            => 'Amasty\HidePrice\Model\Source\Group',
                 'global'            => \Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface::SCOPE_STORE,
                 'visible'           => false,
                 'required'          => false,

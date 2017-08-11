@@ -3,17 +3,14 @@
         <body>
         	<referenceContainer name="header.container">
         			<!-- Custom banner -->
-             <container name="main-banner" htmlClass="main-banner" htmlTag="div">
-                 <block class="Magento\Cms\Block\Block" name="main_banner">
-                    <arguments>
-                        <argument name="css_class" xsi:type="string">main_banner</argument>
-                        <argument name="block_id" xsi:type="string">main_banner</argument>
-                    </arguments>
-                </block>
-            </container>  
-          </referenceContainer>
+<!--			<container name="main-banner" htmlClass="main-banner" htmlTag="div"> -->
+
+	      <block class="Continental\Banners\Block\Homepage" template="Continental_HomeFeatures::default/mainBanner.phtml"/>
+                </referenceContainer>
+
+
             <referenceContainer name="main">
-	        		<block class="Continental\HomeFeatures\Block\Features" template="Continental_HomeFeatures::default/features.phtml"/>
+	     		<block class="Continental\HomeFeatures\Block\Features" template="Continental_HomeFeatures::default/features.phtml"/>
             </referenceContainer>
         </body>
     </page>

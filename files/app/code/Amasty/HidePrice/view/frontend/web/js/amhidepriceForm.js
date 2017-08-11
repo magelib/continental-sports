@@ -74,6 +74,7 @@ define([
         },
 
         submitForm: function (form) {
+            form = $(form);
             var self = this;
 
             var data = form.serialize();
