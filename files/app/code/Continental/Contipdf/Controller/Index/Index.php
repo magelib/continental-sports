@@ -29,13 +29,40 @@ class Index extends \Magento\Framework\App\Action\Action
    }
 
    function execute() {
+	$productId = isset($_GET['id']) ? preg_replace('/[^0-9]/','', $_GET['id']) : false;
 
-//	$page = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
- //       return $page;
+	if (!$productId) {
+		exit("<script>history.back();</script>");
+	}
 
-  	$result = $this->resultFactory->create(PdfResult::TYPE);
+	$html = isset($_GET['html']) ? true : false;
 
-   	return $result;
+	if ($html) {
+		$this->createHtml($productId);
+	} else {
+	// Force Download of Pdf
+	}
+   }
+
+	function createHtml($productId = false) {
+	# Get product id
+	if ($productId === false) return false;
+	
+	# Get template
+        $template = '/var/www/html/app/design/frontend/Attercopia/continental/Magento_Catalog/templates/product/productpdf.phtml';
+	if (!file_exists($template)) exit("Cannot open template");//return false; # Log missing template
+	$contents = file_get_contents($template);
+	
+	echo $contents;
+	# Get product details
+
+	# Populate template
+
+	# Show html
+
+//  	$result = $this->resultFactory->create(PdfResult::TYPE);
+
+//   	return $result;
     }
 
      function _execute()

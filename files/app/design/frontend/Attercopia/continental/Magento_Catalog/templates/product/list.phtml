@@ -89,7 +89,7 @@ $contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\De
                                     <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
                                 </div>                           
                             <?php endif; ?>
-                            <?php if ($configurablesCount = $contiproducts->showConfirurableCount($_product)): ?>
+                            <?php if ($configurablesCount = $contiproducts->showConfigurableCount($_product)): ?>
                                 <p class="show-configurables"><?php echo $configurablesCount; ?> configurations</p>
                             <?php endif; ?>
                         </div>
