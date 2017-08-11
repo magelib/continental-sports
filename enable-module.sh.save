@@ -1,0 +1,21 @@
+#!/bin/bash
+docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:status'
+#cho "Enter name of module to disable:"
+#read module
+#docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:enable Continental_HomeFeatures'
+#docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:enable Continental_Nav'
+#docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:enable Mirasvit_Kb'
+#docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:enable Me_Econtacts'
+#docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:enable Continental_Forms'
+#docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:enable Staempfli_Pdf'
+#docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:enable BelVG_Tierpricesext'
+#docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:enable Continental_Products'
+#docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:enable #docker exec continentalsports_co_uk_caretaker bash -c 'php bin/magento module:enable Continental_Products''
+
+
+sh module-setup.sh
+Amasty_Base
+BelVG_Tierpricesext
+Continental_Banners
+Amasty_HidePrice
+Mirasvit_SearchUltimate
