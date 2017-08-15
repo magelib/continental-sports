@@ -34,7 +34,8 @@ class Index extends \Magento\Framework\App\Action\Action
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        LinkManagementInterface $linkManagement
+        LinkManagementInterface $linkManagement,
+        \Magento\Framework\App\Filesystem\DirectoryList $directoryList
     )
     {
         $this->resultPageFactory = $resultPageFactory;
@@ -42,6 +43,7 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->productRepository = $productRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->linkManagement = $linkManagement;
+        $this->directoryList = $directoryList;
         /**
          * Load the page defined in view/frontend/layout/samplenewpage_index_index.xml
          *
@@ -64,7 +66,44 @@ class Index extends \Magento\Framework\App\Action\Action
             $this->createHtml($productId);
         } else {
             // Force Download of Pdf
+            //result = $this->resultFactory->create(PdfResult::TYPE);
+            $product = $this->getProduct($productId);
+            $filename = str_replace(' ', '_', $product->getName());
+            $filename = str_replace(' - ', '-', $filename);
+            $filename = preg_replace('/[^A-Za-z0-9_-]/', '', $filename);
+            $filename .= '.pdf';
+            $path = '/var/www/html/pub/media/pdf/';
+            $path = $this->getStoreManager()->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+            exit($path);
+            //$result = $this->resultFactory->create(PdfResult::TYPE);
+            //return $result;
+            if (!file_exists($path . $filename)) {
+                echo $path . $filename;
+                // $this->getProtocol() . '//'.
+                $url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+                $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf \'' . $url . '&html=yes\' \'' . $path . $filename . '\'';
+//                exit($command);
+                $bash = exec($command);
+                echo "<p>Result: $bash </p>";
+        } else {
+                echo " exists";
+            }
+            echo "Downloaded";
+            exit();
+            // Force Download
+            //return $result;
         }
+    }
+
+    function getProtocol() {
+        $isSecure = false;
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+            $isSecure = true;
+        }
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+            $isSecure = true;
+        }
+        return $isSecure ? 'https' : 'http';
     }
 
     function createHtml($productId = false)
