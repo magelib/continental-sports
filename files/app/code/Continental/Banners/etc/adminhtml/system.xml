@@ -28,11 +28,11 @@
                     <label>Text</label>
                 </field>
 
-
+<!--
                 <field id="background_image" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Background Image</label>
                 </field>
-
+-->
 
                 <field id="block_href" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Link</label>
@@ -42,8 +42,12 @@
                     <source_model>Continental\Banners\Model\Source\Align</source_model>
                 </field>
 -->
-            </group>
-        </section>
- 
+        <field id="custom_file_upload" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="60" showInDefault="1" showInWebsite="1" >
+            <label>Upload Banner</label>
+            <backend_model>Magento\Config\Model\Config\Backend\File</backend_model>
+            <upload_dir config="system" scope_info="1">banners</upload_dir>
+        </field>
+    </group>
+</section> 
     </system>
 </config>

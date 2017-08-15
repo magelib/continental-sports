@@ -42,6 +42,16 @@ class Details extends \Magento\Framework\View\Element\Template
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
     }
 
+    public function showConfigurableCount($product = null)
+    {
+        if ($product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
+            $_children = $product->getTypeInstance()->getUsedProducts($product);
+            $count = count($_children);
+            return ($count > 0 ) ? $count : false;
+        }
+        return false;
+    }
+
 
     protected function showConfigurables($product = null)
     {

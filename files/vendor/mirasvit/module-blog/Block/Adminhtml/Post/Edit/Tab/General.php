@@ -85,10 +85,10 @@ class General extends Form
             'config'  => $editorConfig,
         ]);
 
-        $fieldset->addField('short_content', 'text', [
+        $fieldset->addField('short_content', 'editor', [
             'label'   => __('Excerpt'),
             'name'    => 'post[short_content]',
-            'value'   => strip_tags($post->getShortContent() ),
+            'value'   => $post->getShortContent(),
             'wysiwyg' => true,
             'style'   => 'height:5em',
             'config'  => $editorConfig

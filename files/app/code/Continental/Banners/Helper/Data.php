@@ -20,6 +20,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     CONST BLOCK_TEXT = 'Continental_Banners/general/block_text';
     CONST BLOCK_HREF = 'Continental_Banners/general/block_href';
     CONST BLOCK_BACK = 'Continental_Banners/general/background_image';
+    CONST BLOCK_UPLOAD = 'Continental_Banners/general/custom_file_upload'; 
 
     public function __construct(
         \Magento\Framework\App\Helper\Context $context
@@ -41,7 +42,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
  
     public function getBlockBack(){
-        return $this->_scopeConfig->getValue(self::BLOCK_BACK);
+//        return $this->_scopeConfig->getValue(self::BLOCK_BACK);
+        return '/pub/media/banners/'. $this->_scopeConfig->getValue(self::BLOCK_UPLOAD);
+
     }
 
     public function getBlockHref(){

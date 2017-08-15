@@ -49,7 +49,22 @@ $contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\De
 	require([
     "jquery"
 	], function ($){
-			
+
+// Need to get spConfi value
+		$(document).ready(function() {
+		console.log("live4eggs");
+               $("select").each(function() {
+		
+		for (var i = 0; i < $(this).length; i++){
+		var t = $(this).attr("id");
+		$("#" + t + " option").each(function() {
+			console.log( $(this).text() +  " " + $(this).val() );
+		});
+//   		   var option = $(this).options[i];
+		  // now have option.text, option.value
+ //		  console.log( option.txt + " " + option.value );
+		 }
+	       });
 		var trigger = $('.expand-table');
 
 		$(trigger).click(function() {
@@ -68,4 +83,5 @@ $contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\De
 		});
 
 	});
+});
 </script>
