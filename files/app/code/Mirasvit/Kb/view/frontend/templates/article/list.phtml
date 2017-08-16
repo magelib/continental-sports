@@ -14,7 +14,7 @@ $collection = $block->getArticleCollection();
     <ol class="kb-articles__list">
         <?php foreach ($collection as $article): ?>
             <li class="kb-articles__article">
-                <a href="<?= $article->getUrl() ?>"><?= $article->getName(); ?></a>
+                <a class="kb__title" href="<?= $article->getUrl() ?>"><?= $article->getName(); ?></a>
 
                 <div class="kb-article__metadata kb-article__metadata-list">
                     <div class="author">
@@ -36,10 +36,10 @@ $collection = $block->getArticleCollection();
                     <?php endif ?>
                 </div>
 
-                <?php
+                <p class="kb__description"><?php
                 $remainder = '';
                 echo $this->helper('Mirasvit\Core\Helper\Text')->truncate(strip_tags($article->getSummary()), 300, ' ...', $remainder, false);
-                ?>
+                ?></p>
             </li>
         <?php endforeach; ?>
     </ol>
