@@ -54,6 +54,7 @@ class Index extends \Magento\Framework\App\Action\Action
 
     function execute()
     {
+	ob_start();
         $productId = isset($_GET['id']) ? preg_replace('/[^0-9]/', '', $_GET['id']) : false;
 
         if (!$productId) {
@@ -73,23 +74,21 @@ class Index extends \Magento\Framework\App\Action\Action
             $filename = preg_replace('/[^A-Za-z0-9_-]/', '', $filename);
             $filename .= '.pdf';
             $path = '/var/www/html/pub/media/pdf/';
-            $path = $this->getStoreManager()->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-            exit($path);
-            //$result = $this->resultFactory->create(PdfResult::TYPE);
-            //return $result;
             if (!file_exists($path . $filename)) {
-                echo $path . $filename;
-                // $this->getProtocol() . '//'.
                 $url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                 $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf \'' . $url . '&html=yes\' \'' . $path . $filename . '\'';
-//                exit($command);
                 $bash = exec($command);
-                echo "<p>Result: $bash </p>";
         } else {
-                echo " exists";
-            }
-            echo "Downloaded";
-            exit();
+                //echo " exists";
+        }
+	ob_end_clean();
+        header('Content-Type: application/pdf');
+	header("Content-Transfer-Encoding: binary");
+	header('Pragma: public');
+	header("Content-disposition: attachment; filename=".$filename);
+	readfile($path.$filename);    
+
+//exit($path.$filename);
             // Force Download
             //return $result;
         }
