@@ -2,13 +2,13 @@
 $t = $this->helper('Continental\Banners\Helper\Data');
 ?>
 
-<div class="banner-image" style="background:url('<?= $t->getBlockBack(); ?>'); background-color:#000; width:100%;height:515px;">
+<div class="main-banner" style="background-image:url('<?= $t->getBlockBack(); ?>')";>
 	<div class="banner-container">
 		<div class="banner-block">
 			<h2>
 			<?= __($t->getBlockTitle()); ?>
  			</h2>
-			<?= __($t->getBlockText()); ?>
+			<p><?= __($t->getBlockText()); ?></p>
 			<a href="<?= $t->getBlockHref(); ?>" title="" class="btn btn-primary"><span>Learn More</span></a>
 		</div>
 	</div>

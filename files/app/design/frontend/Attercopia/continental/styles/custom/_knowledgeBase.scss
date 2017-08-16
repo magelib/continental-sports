@@ -1,0 +1,18 @@
+.kb-articles__list {
+	padding-left: 0;
+	list-style: none;
+	li.kb-articles__article {
+		margin-bottom: 24px;
+		margin-top: 0;
+	}
+	.kb__title {
+		@include font-size(20);
+		color: $fontDark;
+		margin-bottom: 12px;
+    width: 100%;
+    display: block;
+	}
+	.kb__description {
+		
+	}
+}
