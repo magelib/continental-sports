@@ -1,0 +1,15 @@
+<?php
+// get array of images
+$backgrounds = array();
+$count = 1;
+/* current logic is loop if random use:
+    $rand_keys = array_rand($backgrounds, 2);
+    <?= __($backgrounds[$rand_keys[0]]); ?>
+*/
+
+foreach ($backgrounds as $background):
+    ?>
+    <div>
+        Slide image <?= __($count); ?> is <?= __($background); ?>;
+    </div>
+<? endforeach; ?>

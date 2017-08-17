@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Continental\HomeBanners\Model\ResourceModel\Banners\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">continental_homebanners</argument>
+            <argument name="resourceModel" xsi:type="string">Continental\HomeBanners\Model\ResourceModel\Banners</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="continental_homebanners_grid_data_source" xsi:type="string">Continental\HomeBanners\Model\ResourceModel\Banners\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

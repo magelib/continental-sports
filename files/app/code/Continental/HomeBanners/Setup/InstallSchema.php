@@ -15,7 +15,7 @@
 * @copyright  Copyright (c) 2017 Attercopia.
 *
 */
-namespace Continental\Banners\Setup;
+namespace Continental\HomeBanners\Setup;
 
 use Magento\Framework\Setup\InstallSchemaInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
@@ -36,7 +36,7 @@ class InstallSchema implements InstallSchemaInterface
          *
          */
         $table = $installer->getConnection()
-            ->newTable($installer->getTable('continental_banners'))
+            ->newTable($installer->getTable('continental_homebanners'))
             ->addColumn(
                 'id',
                 \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
@@ -45,20 +45,27 @@ class InstallSchema implements InstallSchemaInterface
                 'Id'
             )
             ->addColumn(
-                'label',
+                'title',
                 \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                 null,
                 ['default' => null, 'nullable' => false],
                 'Name'
             )
             ->addColumn(
-                'value',
+                'text',
+                \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                null,
+                ['default' => null, 'nullable' => false],
+                'Stores'
+            )
+	    ->addColumn(
+                'image',
                 \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                 null,
                 ['default' => null, 'nullable' => false],
                 'Stores'
             )->addColumn(
-                'src',
+                'link',
                 \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
                 null,
                 ['default' => null, 'nullable' => false],
