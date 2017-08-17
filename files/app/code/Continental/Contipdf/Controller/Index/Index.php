@@ -79,8 +79,9 @@ class Index extends \Magento\Framework\App\Action\Action
                 $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf \'' . $url . '&html=yes\' \'' . $path . $filename . '\'';
                 $bash = exec($command);
         } else {
-                //echo " exists";
         }
+
+        // Force Download
 	ob_end_clean();
         header('Content-Type: application/pdf');
 	header("Content-Transfer-Encoding: binary");
@@ -88,9 +89,6 @@ class Index extends \Magento\Framework\App\Action\Action
 	header("Content-disposition: attachment; filename=".$filename);
 	readfile($path.$filename);    
 
-//exit($path.$filename);
-            // Force Download
-            //return $result;
         }
     }
 
@@ -115,14 +113,16 @@ class Index extends \Magento\Framework\App\Action\Action
         if (!file_exists($template)) exit("Cannot open template");//return false; # Log missing template
         $contents = file_get_contents($template);
 
-        //echo $contents;
         # Get product details
         $product = $this->getProduct($productId);
+
+	// Only show sku master for simple products
+	$skuMaster = ($this->showConfigurablesCount($product)) ? '' : $product->getSku();
 
         $replacements = array(
             'description' => $product->getDescription(),
             'title' => $product->getName(),
-            'sku-master' => $product->getSku(),
+            'sku-master' => $skuMaster,
             'mainimage' => '/pub/media/catalog/product/' . $product->getImage()
         );
 

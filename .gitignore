@@ -8,6 +8,7 @@ Docker*
 */*
 !files/app
 files/app/sftp-config.json
+files/app/etc/env.php
 .Xauthority
 .bash_history
 .viminfo
