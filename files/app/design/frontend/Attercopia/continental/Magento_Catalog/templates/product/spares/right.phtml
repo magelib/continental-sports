@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View*/
+
+$_product = $block->getProduct();
+
+
+?>
+<div class="page-title-wrapper">
+    <h1 class="page-title"><span class="base" data-ui-id="page-title-wrapper"><?=$_product->getName();?></span>    </h1>
+</div>
+
+<div class="product attribute sku">
+    <strong class="type"></strong>    <div class="value"><?=$_product->getSku();?></div>
+</div>
+
+
+<div class="product-buttons">
+  <a class="btn-pdf" href="/pdf/?id=<?=$_product->getId(); ?>"><span>Brochure</span></a>
+  <button class="btn-spares"><span style="visibility: hidden;"></span>Product</button>
+</div>

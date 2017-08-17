@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="2columns-right" >
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" layout="2columns-left" >
     <body>
         <attribute name="class" value="kbase"/>
         <referenceBlock name="sidebar.additional" remove="true" />
@@ -15,9 +15,9 @@
                         <block class="Magento\Framework\View\Element\RendererList" name="kb.category.article.type.details.renderers" as="kb.details.renderers">
                             <block class="Magento\Framework\View\Element\Template" as="kb.default"/>
                         </block>
-                        <block class="Mirasvit\Kb\Block\Article\ArticleList\Toolbar" name="kb.article_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
+                        <!-- <block class="Mirasvit\Kb\Block\Article\ArticleList\Toolbar" name="kb.article_list_toolbar" template="Magento_Catalog::product/list/toolbar.phtml">
                             <block class="Magento\Theme\Block\Html\Pager" name="article_list_toolbar_pager"/>
-                        </block>
+                        </block> -->
                         <action method="setToolbarBlockName">
                             <argument name="name" xsi:type="string">kb.article_list_toolbar</argument>
                         </action>
@@ -26,7 +26,7 @@
             </block>
         </referenceContainer>
 
-        <referenceContainer name="sidebar.main" htmlTag="div" htmlClass="kb__sidebar">
+        <referenceContainer name="sidebar.main" htmlTag="div" htmlClass="kb__sidebar" before="content">
             <block name="kb.search.form" class="Mirasvit\Kb\Block\Search\Form" template="search/form.phtml"/>
             <block name="kb.category.sidebar" class="Mirasvit\Kb\Block\Category\Sidebar" template="category/sidebar.phtml"/>
         </referenceContainer>

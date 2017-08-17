@@ -107,5 +107,28 @@ function($) {
     $('.subtract').click(function () {
         if ($(this).next().val() > 0) $(this).next().val(+$(this).next().val() - 1);
     });
+
+    // Toggle spares / product  DOM 
+
+    $('.btn-spares').click(function(){
+
+      $('.product-info-wrap').fadeToggle(500, 'linear');
+      $('.product-spares-wrap').fadeToggle(500, 'linear');
+
+        window.setTimeout(function(){
+            $('.product-spares-wrap').toggleClass('finished');
+        }, 500); //<-- Delay in milliseconds
+
+        window.setTimeout(function(){
+            $('body').toggleClass('spares-view');
+        }, 500); //<-- Delay in milliseconds
+
+    });
+
+    
+
+    
+
+
 });
 

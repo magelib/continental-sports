@@ -31,6 +31,10 @@
     z-index: 1;
     right: 0;
     background: #fff;
+    > div {
+    	transition: none;
+    	// position: relative;
+    }
 	.price-final_price .price-container .price-wrapper .price {
 		@include font-size(30);
 		color: $primary;
@@ -127,6 +131,7 @@
 	}
 }
 .product.media {
+	position: relative;
 	.fotorama__stage__frame .fotorama__img {
     position: absolute;
     top: 29%;
@@ -213,4 +218,7 @@
 .gallery-placeholder {
 	cursor: zoom-in;
 }
-
+.product-buttons {
+	width: 100%;
+	float: left;
+}
