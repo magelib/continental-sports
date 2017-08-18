@@ -17,19 +17,18 @@
         <referenceBlock name="head.components">
             <block class="Magento\Framework\View\Element\Js\Components" name="checkout_page_head_components" template="Magento_Catalog::js/components.phtml"/>
         </referenceBlock>
-        <referenceBlock name="page.main.title">
-            <arguments>
-                <argument name="css_class" xsi:type="string">product</argument>
-                <argument name="add_base_attribute" xsi:type="string">itemprop="name"</argument>
-            </arguments>
-        </referenceBlock>
+        
         <referenceBlock name="root">
             <arguments>
                 <argument name="add_attribute" xsi:type="string">itemscope itemtype="http://schema.org/Product"</argument>
             </arguments>
         </referenceBlock>
         <referenceContainer name="content">
-            <container name="product.info.main" htmlTag="div" htmlClass="product-info-main" before="-">
+
+            <!-- START PRODUCT INFO WRAP -->
+
+            <container name="product.info.wrap" htmlTag="div" htmlClass="product-info-wrap">
+                <container name="product.info.main" htmlTag="div" htmlClass="product-info-main" before="-">                
                 <container name="product.info.price" label="Product info auxiliary container" htmlTag="div" htmlClass="product-info-price" after="product.info.review">
                     <container name="product.info.stock.sku" label="Product auxiliary info" htmlTag="div" htmlClass="product-info-stock-sku">
                         <container name="product.info.type" before="-"/>
@@ -88,7 +87,7 @@
                             <argument name="price_type_code" xsi:type="string">tier_price</argument>
                             <argument name="zone" xsi:type="string">item_view</argument>
                         </arguments>
-                    </block>
+                    </block>                    
                 </container>                
                 <container name="alert.urls" as="alert_urls" label="Alert Urls" after="product.price.tier"/>            
                 <container name="product.info.extrahint" as="extrahint" label="Product View Extra Hint">
@@ -96,28 +95,61 @@
                         
                         <!-- <block class="Magento\Catalog\Block\Product\View" name="product.info.mailto" template="product/view/mailto.phtml"/> -->
                     </container>
-                </container>                
-            </container>
-            <container name="product.info.media" htmlTag="div" htmlClass="product media" after="product.info.main">
-                <block class="Magento\Catalog\Block\Product\View\Gallery" name="product.info.media.image" template="product/view/gallery.phtml"/>
-            </container>
-            <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.details" template="product/view/details.phtml" after="product.info.media">
-                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="product/view/attribute.phtml" group="detailed_info">
-                    <arguments>
-                        <argument name="at_call" xsi:type="string">getDescription</argument>
-                        <argument name="at_code" xsi:type="string">description</argument>
-                        <argument name="css_class" xsi:type="string">description</argument>
-                        <argument name="at_label" xsi:type="string">none</argument>
-                        <argument name="title" translate="true" xsi:type="string">Details</argument>
-                    </arguments>
+                </container>    
+                <!-- Product Buttons (Brochure & Spares) -->
+
+                    <block class="Magento\Catalog\Block\Product\View" name="product.info.btns" as="product.info.btns" template="product/view/productButtons.phtml"/>
+
+                <!-- END    -->            
+                </container>
+                <container name="product.info.media" htmlTag="div" htmlClass="product media" after="product.info.main">
+                    <block class="Magento\Catalog\Block\Product\View\Gallery" name="product.info.media.image" template="product/view/gallery.phtml"/>                   
+                   
+                </container>
+                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.details" template="product/view/details.phtml" after="product.info.media">
+                    <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="product/view/attribute.phtml" group="detailed_info">
+                        <arguments>
+                            <argument name="at_call" xsi:type="string">getDescription</argument>
+                            <argument name="at_code" xsi:type="string">description</argument>
+                            <argument name="css_class" xsi:type="string">description</argument>
+                            <argument name="at_label" xsi:type="string">none</argument>
+                            <argument name="title" translate="true" xsi:type="string">Details</argument>
+                        </arguments>
+                    </block>
+                    <!-- uncomment below to add tabs back in -->
+                    <!-- <block class="Magento\Catalog\Block\Product\View\Attributes" name="product.attributes" as="additional" template="product/view/attributes.phtml" group="detailed_info">
+                        <arguments>
+                            <argument translate="true" name="title" xsi:type="string">More Information</argument>
+                        </arguments>
+                    </block> -->
                 </block>
-                <!-- uncomment below to add tabs back in -->
-                <!-- <block class="Magento\Catalog\Block\Product\View\Attributes" name="product.attributes" as="additional" template="product/view/attributes.phtml" group="detailed_info">
-                    <arguments>
-                        <argument translate="true" name="title" xsi:type="string">More Information</argument>
-                    </arguments>
-                </block> -->
-            </block>
+            </container>
+
+            <!-- END PRODUCT INFO WRAP -->
+
+            <container name="product.spares.wrap" htmlTag="div" htmlClass="product-spares-wrap">
+
+                <!-- Product Spares Left -->
+
+                    <block class="Magento\Catalog\Block\Product\View" name="product.spares.left" as="product.spares.left" template="product/spares/left.phtml"/>
+
+                <!-- END    -->
+
+                <!-- Product Spares Right -->
+
+                <container name="product.spares.info.main" htmlTag="div" htmlClass="spares-info-main">
+
+                    
+
+                    <block class="Magento\Catalog\Block\Product\View" name="product.spares.right" as="product.spares.right" template="product/spares/right.phtml"/>
+
+                </container>
+
+                <!-- END    -->
+
+            </container>
+            
+            
             <block class="Magento\Cookie\Block\RequireCookie" name="require-cookie" template="Magento_Cookie::require_cookie.phtml">
                 <arguments>
                     <argument name="triggers" xsi:type="array">
@@ -125,13 +157,6 @@
                     </argument>
                 </arguments>
             </block>
-
-            <!-- Product PDF example template -->
-
-            <block class="Magento\Catalog\Block\Product\View" name="product.info.pdf" as="product.info.pdf" template="product/view/productpdf.phtml"/>
-
-            <!-- END    -->
-            
         </referenceContainer>
         <referenceContainer name="content.aside">
             <block class="Magento\Catalog\Block\Product\ProductList\Related" name="catalog.product.related" template="Magento_Catalog::product/list/items.phtml">
