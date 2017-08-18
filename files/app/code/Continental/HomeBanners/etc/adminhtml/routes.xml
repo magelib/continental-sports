@@ -3,7 +3,7 @@
     <!--Use router 'standard' for frontend route-->
     <router id="admin">
         <!--Define a custom route with id and frontName-->
-        <route id="banners" frontName="banners">
+        <route id="homebanners" frontName="homebanners">
             <!--The module which this route match to-->
             <module name="Continental_HomeBanners"/>
         </route>

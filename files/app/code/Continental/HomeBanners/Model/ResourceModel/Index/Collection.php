@@ -3,7 +3,7 @@
  * Copyright © 2017 Continental. All rights reserved.
  */
 
-namespace Continental\HomeBanners\Model\ResourceModel\Banners;
+namespace Continental\HomeBanners\Model\ResourceModel\Index;
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
@@ -14,6 +14,6 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      */
     protected function _construct()
     {
-        $this->_init('Continental\HomeBanners\Model\Banners', 'Continental\Banners\Model\ResourceModel\Banners');
+        $this->_init('Continental\HomeBanners\Model\Index', 'Continental\HomeBanners\Model\ResourceModel\Index');
     }
 }

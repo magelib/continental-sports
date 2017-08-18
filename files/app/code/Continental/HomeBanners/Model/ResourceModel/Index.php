@@ -5,7 +5,7 @@
 
 namespace Continental\HomeBanners\Model\ResourceModel;
 
-class Banners extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
+class Index extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
     /**
      * Model Initialization

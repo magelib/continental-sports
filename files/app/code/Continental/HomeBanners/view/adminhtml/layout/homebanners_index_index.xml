@@ -3,7 +3,7 @@
     <update handle="styles"/>
     <body>
         <referenceContainer name="content">
-            <uiComponent name="continental_banners_grid"/>
+            <uiComponent name="continental_index_grid"/>
         </referenceContainer>
     </body>
 </page>
