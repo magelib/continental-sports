@@ -3,24 +3,20 @@
     <!--Declare data source, columns list, button...-->
     <argument name="data" xsi:type="array">
         <item name="js_config" xsi:type="array">
-            <item name="provider" xsi:type="string">continental_index_grid.homebanners_index_grid_data_source</item>
-            <item name="deps" xsi:type="string">continental_index_grid.homebanners_index_grid_data_source</item>
-            <!--Declare the data source name which will be defined below-->
         </item>
         <item name="spinner" xsi:type="string">homebanners_index_columns</item>
         <!--Declare the listing of columns which will be defined below-->
         <item name="buttons" xsi:type="array">
             <item name="add" xsi:type="array">
-                <item name="name" xsi:type="string">add</item>
-                <item name="label" xsi:type="string" translate="true">Add New Banner</item>
+                <item name="name" xsi:type="string">back</item>
+                <item name="label" xsi:type="string" translate="true">Back</item>
                 <item name="class" xsi:type="string">primary</item>
                 <item name="url" xsi:type="string">*/*/add</item>
             </item>
             <!--The button on the top of the Grid-->
         </item>
     </argument>
-    <dataSource name="homebanners_index_grid_data_source">
-        <!--The data source-->
+<!--    <dataSource name="homebanners_index_grid_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
             <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
             <argument name="name" xsi:type="string">homebanners_index_grid_data_source</argument>
@@ -37,6 +33,7 @@
             </argument>
         </argument>
     </dataSource>
+-->
     <columns name="homebanners_index_columns">
         <!--The list of columns-->
         <selectionsColumn name="ids">
@@ -55,7 +52,7 @@
                 </item>
             </argument>
         </column>
-	<column name="image"><!-- class="Continental\HomeBanners\Ui\Component\Listing\Column\Thumbnail"> -->
+        <column name="image">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="filter" xsi:type="string">text</item>
