@@ -28,6 +28,10 @@
             <!-- START PRODUCT INFO WRAP -->
 
             <container name="product.info.wrap" htmlTag="div" htmlClass="product-info-wrap">
+                <container name="product.info.media" htmlTag="div" htmlClass="product media" before="product.info.main">
+                    <block class="Magento\Catalog\Block\Product\View\Gallery" name="product.info.media.image" template="product/view/gallery.phtml"/>                   
+                   
+                </container>
                 <container name="product.info.main" htmlTag="div" htmlClass="product-info-main" before="-">                
                 <container name="product.info.price" label="Product info auxiliary container" htmlTag="div" htmlClass="product-info-price" after="product.info.review">
                     <container name="product.info.stock.sku" label="Product auxiliary info" htmlTag="div" htmlClass="product-info-stock-sku">
@@ -102,11 +106,8 @@
 
                 <!-- END    -->            
                 </container>
-                <container name="product.info.media" htmlTag="div" htmlClass="product media" after="product.info.main">
-                    <block class="Magento\Catalog\Block\Product\View\Gallery" name="product.info.media.image" template="product/view/gallery.phtml"/>                   
-                   
-                </container>
-                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.details" template="product/view/details.phtml" after="product.info.media">
+                
+                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.details" template="product/view/details.phtml" after="product.info.main">
                     <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="product/view/attribute.phtml" group="detailed_info">
                         <arguments>
                             <argument name="at_call" xsi:type="string">getDescription</argument>
