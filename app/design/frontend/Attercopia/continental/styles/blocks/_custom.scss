@@ -1,0 +1,81 @@
+// Global Styling
+html {
+	font-size: 62.5%;
+}
+div, a, .minisearch label:before {
+	transition: 0.3s all ease-in-out;	
+}
+* {
+	box-sizing: border-box;
+}
+body {
+	color: $fontDark;
+	@include font-size(14);
+	font-family: $font;
+}
+a {
+	color: $primary;
+}
+.redBg {
+	background: $primary;
+	&:hover {
+		background: transparent;
+	}
+}
+.greyBg {
+	background: $secondary;
+	&:hover {
+		background: transparent;
+	}
+}
+h1,h2,h3,h4,h5,h6 {
+	font-family: $hfont;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+h1.page-title {
+	@include font-size(30);
+	font-family: $font;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.counter-number {
+	font-family: $font;
+	font-size: 12px;
+}
+.minicart-wrapper .action.showcart .counter.qty {
+	background: $primary !important;
+	position: absolute !important;
+  margin-left: -9px !important;
+  margin-top: -6px !important;
+  border-radius: 50px !important;
+}
+.minicart-wrapper .action.showcart .counter.qty {
+  height: 19px !important;
+  line-height: 19px !important;
+}
+.page-layout-2columns-right {
+
+	.column.main {
+		width: 80%;
+	}
+	.sidebar-additional {
+		width: 20%;
+	}
+	&.cms-home {
+		.columns {
+			// display: table;
+
+			> div {
+		    display: table-cell;
+			  vertical-align: top;
+			  float: none;
+			  height: 100%;
+			}
+		}
+		.sidebar-additional {
+			padding-left: 0;
+		}
+	}
+}
