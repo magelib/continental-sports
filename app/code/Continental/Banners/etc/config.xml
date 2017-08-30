@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Attercopia
+ * @copyright Copyright (c) 2017 Attercopia
+ * @package Continental_Banners
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Magento/Store/etc/config.xsd">
+    <default>
+        <continental_banners>
+            <general>
+                <enable>1</enable>
+                <block_label>Placeholder Block Label</block_label>
+                <text_align>center</text_align>
+            </general>
+        </continental_banners>
+    </default>
+</config>

@@ -1,0 +1,15 @@
+<?php
+$t = $this->helper('Continental\HomeBanners\Helper\Data');
+?>
+
+<div class="main-banner" style="background-image:url('<?= $t->getBlockBack(); ?>')";>
+	<div class="banner-container">
+		<div class="banner-block">
+			<h2>
+			<?= __($t->getBlockTitle()); ?>
+ 			</h2>
+			<p><?= __($t->getBlockText()); ?></p>
+			<a href="<?= $t->getBlockHref(); ?>" title="" class="btn btn-primary"><span>Learn More</span></a>
+		</div>
+	</div>
+</div>
