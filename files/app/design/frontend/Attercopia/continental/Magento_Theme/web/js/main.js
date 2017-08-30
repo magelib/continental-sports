@@ -125,7 +125,12 @@ function($) {
 
     });
 
-    
+    var imageH =  $(".fotorama__img").outerHeight();
+    $(".fotorama__stage").height(imageH);
+
+    console.log($(".fotorama__img").length);
+
+    console.log(imageH);
 
     
 

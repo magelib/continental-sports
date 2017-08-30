@@ -222,3 +222,73 @@
 	width: 100%;
 	float: left;
 }
+
+@media all and(max-width: $medium) {
+	.product-info-main {
+    box-shadow: none;
+    position: static;
+    float: left;
+    width: 100%;
+    .price-box {
+    	margin-bottom: 12px;
+    }
+    .box-tocart {
+	    margin-bottom: 0 !important;
+	    display: block !important;
+	    width: 380px;
+	    margin-left: auto;
+	    margin-right: auto;
+	    fieldset {
+	    	margin-top: 12px;
+	    }
+		}
+	}
+	.product.media .fotorama__stage__frame .fotorama__img {
+		transform: none;
+		    position: static;
+	}
+	.product.media {
+    margin-top: 48px;
+	}
+	.product-info-main .price-box {
+    float: left;
+	}
+	.product-add-form {
+		float: left;
+    width: 50%;
+	}
+	.price-table {
+    float: right;
+    margin-bottom: 24px;
+    width: 50%;
+	}
+	.product-options-wrapper .fieldset div.configurable {
+    display: inline-block;
+    width: 100%;
+		.control {
+	    float: left !important;
+	    width: 65% !important;
+		}
+	}
+}
+@media all and(max-width: $xsmall) {
+	.product-add-form {
+    width: 100%;
+	}
+	.price-table {
+    float: left;
+    width: 100%;
+	}
+	.product-info-main {
+		padding: 0;
+		.box-tocart {
+			width: 100%;
+		}
+		.product-buttons {
+			a, button {
+				width: 100%;
+				margin-bottom: 12px;
+			}
+		}
+	}
+}
