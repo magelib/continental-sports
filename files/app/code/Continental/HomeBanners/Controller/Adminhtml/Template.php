@@ -2,39 +2,21 @@
 
 namespace Continental\HomeBanners\Controller\Adminhtml;
 
-/**
- *  controller
- */
+namespace Sample\Gridpart2\Controller\Adminhtml;
 abstract class Template extends \Magento\Backend\App\Action
 {
     /**
-     * @var \Amasty\HidePrice\Model\RequestRepository
-     */
-    protected $requestRepository;
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $coreRegistry;
-
-    public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Registry $coreRegistry
-    ) {
-        parent::__construct($context);
-        $this->coreRegistry = $coreRegistry;
-    }
-
-    /**
-     * Initiate action
+     * Retrieve well-formed admin user data from the form input
      *
-     * @return $this
+     * @param array $data
+     * @return array
      */
-    protected function _initAction()
+
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
     {
-        $this->_view->loadLayout();
-
-        return $this;
+        return $this->_authorization->isAllowed('Sample_Gridpart2::gridpart2_template');
     }
-}
-
 

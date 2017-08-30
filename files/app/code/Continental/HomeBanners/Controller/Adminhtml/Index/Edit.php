@@ -1,35 +1,21 @@
 <?php
-/**
- *
- * Copyright © 2015 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
-namespace Continental\HomeBanners\Controller\Adminhtml\Template;
+namespace Continental\HomeBanners\Controller\Adminhtml\Index;
 
-class Edit extends \Continental\HomeBanners\Controller\Adminhtml\Template
+class Edit extends \Magento\Backend\App\Action
 {
     /**
-     * Core registry
-     *
-     * @var \Magento\Framework\Registry
-     */
-    protected $_coreRegistry = null;
-
-    /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\Registry $coreRegistry
-     */
-    public function __construct(\Magento\Backend\App\Action\Context $context, \Magento\Framework\Registry $coreRegistry)
-    {
-        $this->_coreRegistry = $coreRegistry;
-        parent::__construct($context);
-    }
-
-    /**
-     * Edit Newsletter Template
+     * Create new Banner  Template
      *
      * @return void
      */
+
+    /*
+    public function execute()
+    {
+       echo "Placeholder";
+    }
+    */
+
     public function execute()
     {
         $model = $this->_objectManager->create('Continental\HomeBanners\Model\Template');
@@ -66,4 +52,3 @@ class Edit extends \Continental\HomeBanners\Controller\Adminhtml\Template
         $this->_view->renderLayout();
     }
 }
-
