@@ -15,6 +15,7 @@ use Magento\ConfigurableProduct\Api\LinkManagementInterface;
 #use Continental\Contipdf;
 class Index extends \Magento\Framework\App\Action\Action
 {
+    private $basepath;
     private $content;
 
     protected $productRepository;
@@ -50,6 +51,7 @@ class Index extends \Magento\Framework\App\Action\Action
          * // return \Magento\Framework\View\Result\Page
          */
 
+	$this->basepath = $_SERVER['DOCUMENT_ROOT'] . '/';
     }
 
     function execute()
@@ -73,7 +75,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $filename = str_replace(' - ', '-', $filename);
             $filename = preg_replace('/[^A-Za-z0-9_-]/', '', $filename);
             $filename .= '.pdf';
-            $path = '/var/www/html/pub/media/pdf/';
+            $path = $this->basepath . 'media/pdf/';
             if (!file_exists($path . $filename)) {
                 $url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                 $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf \'' . $url . '&html=yes\' \'' . $path . $filename . '\'';
@@ -109,7 +111,8 @@ class Index extends \Magento\Framework\App\Action\Action
         if ($productId === false) return false;
 
         # Get template
-        $template = '/var/www/html/app/code/Continental/Contipdf/view/frontend/templates/pdf_template.phtml';
+#        $template = '/var/www/html/app/code/Continental/Contipdf/view/frontend/templates/pdf_template.phtml';
+	$template = $this->basepath . '../app/code/code/Continental/Contipdf/view/frontend/templates/pdf_template.phtml';
         if (!file_exists($template)) exit("Cannot open template");//return false; # Log missing template
         $contents = file_get_contents($template);
 
