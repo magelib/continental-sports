@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-    <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
-        <body>
-            <referenceContainer name="sidebar.additional" htmlTag="div" htmlClass="blog__sidebar-main">
-	        		 <block class="Mirasvit\Blog\Block\Sidebar\Recent" name="blog.sidebar.recent" template="sidebar/recent.phtml"/>
-            </referenceContainer>
-        </body>
-    </page>
