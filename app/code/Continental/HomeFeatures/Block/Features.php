@@ -15,8 +15,4 @@ class Features extends \Magento\Framework\View\Element\Template
 	{
 		parent::__construct($context);
 	}
-
-	public function testyBob() {
-		echo "Steak";
-	}
 }
