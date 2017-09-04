@@ -19,10 +19,10 @@ return array (
     array (
       'default' => 
       array (
-        'host' => 'db',
-        'dbname' => 'continental',
-        'username' => 'continental_user',
-        'password' => 'kxI-rn2KuV',
+        'host' => 'localhost',
+        'dbname' => 'continental-staging',
+        'username' => 'conti_user_staging',
+        'password' => 'jkefjevievoeiwoe',
         'active' => '1',
       ),
     ),
