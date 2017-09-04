@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Attercopia
+ * @copyright Copyright (c) 2017 Atterrcopia
+ * @package Continental_Spares
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="continental_spares">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="dataScope" xsi:type="string">data.product</item>
+                <item name="provider" xsi:type="string">product_form.product_form_data_source</item>
+                <item name="label" xsi:type="string" translate="true">Spares</item>
+                <item name="sortOrder" xsi:type="number">100</item>
+            </item>
+        </argument>
+        <columns name="continental_spares_columns">
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeDefaultWidth" xsi:type="string">55</item>
+                    <item name="indexField" xsi:type="string">post_id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <column name="post_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                </item>
+            </argument>
+        </column>
+        </columns>
+    </fieldset>
+</form>
