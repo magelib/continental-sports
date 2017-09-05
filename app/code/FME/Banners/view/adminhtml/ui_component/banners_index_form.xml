@@ -86,7 +86,7 @@
                     <item name="readonly" xsi:type="boolean">true</item>
                     <item name="label" xsi:type="string" translate="true">Text</item>
                     <item name="formElement" xsi:type="string">wysiwyg</item>
-                    <item name="template" xsi:type="string">ui/form/field</item>
+		    <item name="template" xsi:type="string">ui/form/field</item>
                     <item name="wysiwyg" xsi:type="boolean">true</item>
                     <item name="source" xsi:type="string">banners</item>
                     <item name="sortOrder" xsi:type="number">11</item>
@@ -176,12 +176,5 @@
             </item>
         </argument>
     </field>
-       
-      
-        
-      
-
-     
-        
     </fieldset>
 </form>
