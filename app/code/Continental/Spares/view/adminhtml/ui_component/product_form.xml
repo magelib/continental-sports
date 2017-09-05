@@ -15,6 +15,7 @@
                 <item name="provider" xsi:type="string">product_form.product_form_data_source</item>
                 <item name="label" xsi:type="string" translate="true">Spares</item>
                 <item name="sortOrder" xsi:type="number">100</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
             </item>
         </argument>
 
