@@ -1,31 +1,56 @@
-<?php
-    $bannersBlock = $this->getLayout()->createBlock('\FME\Banners\Block\Banners');
-    $banners = $bannersBlock->getFrontBanners();
-    $arrCount = count($banners);
-    $bannerIndex = rand(0, $arrCount - 1) + 1;
+<script>
+    require([
+        "jquery"
+    ], function ($) {
+        var Banners = [];
+        <?php
+            $bannersBlock = $this->getLayout()->createBlock('\FME\Banners\Block\Banners');
+            $banners = $bannersBlock->getFrontBanners();
+            $arrCount = count($banners);
+            $bannerIndex = rand(0, $arrCount - 1) + 1;
 
-    if ($arrCount > 0) {
-        foreach ($banners as $index => $bannerObj) {
-            if ($index === $bannerIndex) {
-                $banner = $bannerObj;
+            if ($arrCount > 0) {
+                foreach ($banners as $index => $bannerObj) {
+	            $title = trim($bannerObj->getTitle() );
+		    if (preg_match('/^<p>(.*)<\/p>$/', $title, $matches))  {
+     		        $title =  $matches[1];
+		    }		
+                    if ($index === $bannerIndex) {
+                        $banner = $bannerObj;
+			$pubTitle = $title;
+                    }
+
+
+                    echo PHP_EOL;
+                    echo '    Banners[' . $index . '] = { ';
+                    echo ' image:"' . $bannerObj->getBannerimage()  . '", title:"' . $title  . '", ';
+                    echo 'text:"'. $bannerObj->getBannertext() .'", target:"' . $bannerObj->getTarget() .'", style:"';
+                    echo ($bannerObj->getTextcolour() == 0) ? '#333333' : '';
+                    echo '" }';
+                }
             }
-        }
-    }
-   
-    if (!empty($banner) ):?>
 
-    <?php $style = ($banner->getTextcolour() == 0) ? ' style="color:#333333;"' : ''; ?>
+            if (!empty($banner) ):?>
 
+
+        <?php $style = ($banner->getTextcolour() == 0) ? ' style="color:#333333;"' : ''; ?>
+    });
+</script>
 <div class="main-banner" style="background-image:url('/pub/media/<?= $banner->getBannerimage(); ?>')" ;>
     <div class="banner-container">
         <div class="banner-block">
             <h2<?= $style; ?>>
-                <?= __($banner->getTitle()); ?>
+                <?php
+                    $t = $banner->getTitle();
+
+                ?>
+                <?= __($pubTitle); ?>
             </h2>
 
-            <p<?= $style; ?>><?= __($banner->getTitle()); ?></p>
+            <p<?= $style; ?>><?= __($banner->getBannertext()); ?></p>
             <a href="<?= $banner->getTarget(); ?>" title="" class="btn btn-primary"><span>Learn More</span></a>
         </div>
     </div>
 </div>
 <?php endif; ?>
+

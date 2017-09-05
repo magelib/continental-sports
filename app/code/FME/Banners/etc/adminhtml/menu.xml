@@ -8,7 +8,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         
-        <update id="FME_Extensions::fmeextensions" title="Home Banners" module="Magento_Backend" sortOrder="300" resource="FME_Extensions::fmeextensions"/>
+        <update id="FME_Extensions::fmeextensions" title="Homepage Banners" module="Magento_Backend" sortOrder="50" resource="FME_Extensions::fmeextensions"/>
         <add id="FME_Banners::banners" title="Banners" module="FME_Banners" sortOrder="50" parent="FME_Extensions::fmeextensions" action="banners/index/index" resource="FME_Banners::banners"/>
         
     </menu>

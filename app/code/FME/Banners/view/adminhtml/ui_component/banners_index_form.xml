@@ -65,10 +65,13 @@
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="label" xsi:type="string" translate="true">Title</item>
-                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="formElement" xsi:type="string">wysiwyg</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="wysiwyg" xsi:type="boolean">true</item>
                     <item name="source" xsi:type="string">banners</item>
                     <item name="sortOrder" xsi:type="number">10</item>
                     <item name="dataScope" xsi:type="string">title</item>
+		    <item name="rows" xsi:type="number">2</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
@@ -76,19 +79,23 @@
             </argument>
         </field>
 
-        <field name="bannertext">
+	<field name="bannertext">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="readonly" xsi:type="boolean">true</item>
                     <item name="label" xsi:type="string" translate="true">Text</item>
-                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="formElement" xsi:type="string">wysiwyg</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="wysiwyg" xsi:type="boolean">true</item>
                     <item name="source" xsi:type="string">banners</item>
                     <item name="sortOrder" xsi:type="number">11</item>
+		    <item name="rows" xsi:type="number">8</item>
                     <item name="dataScope" xsi:type="string">bannertext</item>
                 </item>
             </argument>
         </field>
+
 
          <field name="textcolour">
             <argument name="data" xsi:type="array">
