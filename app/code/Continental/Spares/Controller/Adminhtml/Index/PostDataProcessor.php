@@ -4,7 +4,7 @@
  * Copyright © 2015 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace FME\Spares\Controller\Adminhtml\Index;
+namespace Continental\Spares\Controller\Adminhtml\Index;
 
 class PostDataProcessor
 {

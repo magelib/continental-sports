@@ -3,7 +3,7 @@
  * Copyright © 2017 Attercopia. All rights reserved.
  */
 
-namespace Attercopia\Spares\Model\ResourceModel;
+namespace Continental\Spares\Model\ResourceModel;
 
 class Spares extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
@@ -14,7 +14,7 @@ class Spares extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('continental_spares', 'id');
+        $this->_init('continental_spares', 'spares_id');
 
 
     }

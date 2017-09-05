@@ -83,7 +83,7 @@ class Save extends \Magento\Backend\App\Action
             /** @var \Magento\Cms\Model\Block $model */
             $model = $this->_objectManager->create('Continental\Spares\Model\Spares')->load($id);
             if (!$model->getId() && $id) {
-                $this->messageManager->addError(__('This Banner no longer exists.'));
+                $this->messageManager->addError(__('This Spare no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
             }
 

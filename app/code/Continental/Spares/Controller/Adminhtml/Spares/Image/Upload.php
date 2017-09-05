@@ -41,7 +41,7 @@ class Upload extends \Magento\Backend\App\Action
      */
     protected function _isAllowed()
     {
-        return $this->_authorization->isAllowed('FME_Banners::banners');
+        return $this->_authorization->isAllowed('Continental_Spares::spares');
     }
 
     /**
@@ -51,7 +51,7 @@ class Upload extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-
+        error_log("Executing image upload".PHP_EOL, 3, $_SERVER['DOCUMENT_ROOT'] . '/donaldtrump.log');
         try {
             $result = $this->imageUploader->saveFileToTmpDir('image');
 
