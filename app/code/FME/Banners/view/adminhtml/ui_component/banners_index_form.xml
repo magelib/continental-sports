@@ -65,9 +65,8 @@
                 <item name="config" xsi:type="array">
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="label" xsi:type="string" translate="true">Title</item>
-                    <item name="formElement" xsi:type="string">wysiwyg</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
                     <item name="template" xsi:type="string">ui/form/field</item>
-                    <item name="wysiwyg" xsi:type="boolean">true</item>
                     <item name="source" xsi:type="string">banners</item>
                     <item name="sortOrder" xsi:type="number">10</item>
                     <item name="dataScope" xsi:type="string">title</item>
@@ -85,9 +84,8 @@
                     <item name="dataType" xsi:type="string">text</item>
                     <item name="readonly" xsi:type="boolean">true</item>
                     <item name="label" xsi:type="string" translate="true">Text</item>
-                    <item name="formElement" xsi:type="string">wysiwyg</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
 		    <item name="template" xsi:type="string">ui/form/field</item>
-                    <item name="wysiwyg" xsi:type="boolean">true</item>
                     <item name="source" xsi:type="string">banners</item>
                     <item name="sortOrder" xsi:type="number">11</item>
 		    <item name="rows" xsi:type="number">8</item>
@@ -121,6 +119,24 @@
                 </item>
             </argument>
         </field>
+
+        <field name="linktext">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="readonly" xsi:type="boolean">true</item>
+                    <item name="label" xsi:type="string" translate="true">Link Text</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="source" xsi:type="string">banners</item>
+                    <item name="sortOrder" xsi:type="number">13</item>
+                    <item name="rows" xsi:type="number">8</item>
+                    <item name="dataScope" xsi:type="string">linktext</item>
+                </item>
+            </argument>
+        </field>
+
+
         <field name="target">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -129,7 +145,7 @@
                     <item name="label" xsi:type="string" translate="true">Target</item>
                     <item name="formElement" xsi:type="string">input</item>
                     <item name="source" xsi:type="string">banners</item>
-                    <item name="sortOrder" xsi:type="number">13</item>
+                    <item name="sortOrder" xsi:type="number">14</item>
                     <item name="dataScope" xsi:type="string">target</item>
                      
                 </item>

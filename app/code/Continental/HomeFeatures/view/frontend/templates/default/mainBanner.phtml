@@ -7,7 +7,7 @@
             $bannersBlock = $this->getLayout()->createBlock('\FME\Banners\Block\Banners');
             $banners = $bannersBlock->getFrontBanners();
             $arrCount = count($banners);
-            $bannerIndex = rand(0, $arrCount - 1) + 1;
+	    $bannerIndex = 1;
 
             if ($arrCount > 0) {
                 foreach ($banners as $index => $bannerObj) {
@@ -20,24 +20,26 @@
 			$pubTitle = $title;
                     }
 
-
                     echo PHP_EOL;
                     echo '    Banners[' . $index . '] = { ';
                     echo ' image:"' . $bannerObj->getBannerimage()  . '", title:"' . $title  . '", ';
+	            echo 'linktext:"' , $bannerObj->getLinktext() . '", '; 		
                     echo 'text:"'. $bannerObj->getBannertext() .'", target:"' . $bannerObj->getTarget() .'", style:"';
                     echo ($bannerObj->getTextcolour() == 0) ? '#333333' : '';
                     echo '" };';
                 }
             }
 ?>
-
  var key = Math.floor(Math.random() * Banners.length) + 1;
+ key = (key > <?php echo $arrCount; ?>) ? 1 : key;
+
  var banner = Banners[key];
 	$(document).ready(function() {
-	$(".main-banner").css("background-image","url('/pub/media" + banner.image +"')");
-	$(".main-banner h2").html(banner.title);
-	$(".main-banner .bannerText").html(banner.text);
-	$(".main-banner a").attr("href",banner.target);
+    	    $(".main-banner").css("background-image","url('/pub/media" + banner.image +"')");
+	    $(".main-banner h2").html(banner.title);
+	    $(".main-banner .bannerText").html(banner.text);
+	    $(".main-banner a").attr("href",banner.target);
+	    $(".main-banner a span").html(banner.linktext);
 	});
 });
 </script>
@@ -46,7 +48,6 @@
 
 
         <?php $style = ($banner->getTextcolour() == 0) ? ' style="color:#333333;"' : ''; ?>
-    });
 <div class="main-banner">
     <div class="banner-container">
         <div class="banner-block">
