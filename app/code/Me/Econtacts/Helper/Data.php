@@ -198,7 +198,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $error = false;
 
 	if ( empty($post['name']) ) {
-		$post['name'] $post['firstname'] . ' ' . $post['lastname'];
+		$post['name'] =  $post['firstname'] . ' ' . $post['lastname'];
 	}
 
         if (!\Zend_Validate::is(trim($post['name']), 'NotEmpty')) {

@@ -105,7 +105,8 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'label' => __('Name'),
                 'title' => __('Name'),
                 'required' => $canModify ? true : false,
-                'disabled' => $canModify ? false : true
+                'disabled' => $canModify ? false : true,
+		'value' => 'Cannot'
             ]
         );
 
@@ -134,48 +135,30 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         );
 
         $fieldset->addField(
-            'comment',
+            'company',
+            'text',
+            [
+                'name' => 'company',
+                'label' => __('Company'),
+                'title' => __('Company'),
+                'required' => $canModify ? true : false,
+                'disabled' => $canModify ? false : true
+            ]
+        );
+
+
+        $fieldset->addField(
+            'message',
             'textarea',
             [
-                'name' => 'comment',
-                'label' => __('Comment'),
-                'title' => __('Comment'),
+                'name' => 'message',
+                'label' => __('Message'),
+                'title' => __('Message'),
                 'required' => $canModify ? true : false,
                 'disabled' => $canModify ? false : true,
                 'style' => 'height:20em'
             ]
         );
-
-        /* Check is single store mode */
-        if (!$this->_storeManager->isSingleStoreMode()) {
-            $field = $fieldset->addField(
-                'store_id',
-                'multiselect',
-                [
-                    'name' => 'stores[]',
-                    'label' => __('Store View'),
-                    'title' => __('Store View'),
-                    'required' => $canModify ? true : false,
-                    'disabled' => $canModify ? false : true,
-                    'values' => $this->_systemStore
-                        ->getStoreValuesForForm(false, true)
-                ]
-            );
-            $renderer = $this->getLayout()->createBlock(
-                'Magento\Backend\Block\Store\Switcher\Form\Renderer\Fieldset\Element'
-            );
-            $field->setRenderer($renderer);
-        } else {
-            $fieldset->addField(
-                'store_id',
-                'hidden',
-                [
-                    'name' => 'stores[]',
-                    'value' => $this->_storeManager->getStore(true)->getId()
-                ]
-            );
-            $model->setStoreId($this->_storeManager->getStore(true)->getId());
-        }
 
         $fieldset->addField(
             'answered',
@@ -201,6 +184,9 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'config' => $this->_wysiwygConfig->getConfig()
             ]
         );
+
+	// Hacky override as using custom fields
+	$fieldset->setValue('name', 'Olive Oil');
 
         $form->setValues($model->getData());
         $form->setUseContainer(true);
