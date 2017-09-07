@@ -9,7 +9,7 @@ return array (
     'Continental_Contipdf' => 1,
     'Continental_Forms' => 1,
     'Continental_General' => 1,
-    'Continental_HomeBanners' => 1,
+    'Continental_HomeBanners' => 0,
     'Continental_HomeFeatures' => 1,
     'Continental_Nav' => 1,
     'Continental_Products' => 1,
