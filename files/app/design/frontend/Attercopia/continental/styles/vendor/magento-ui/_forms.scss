@@ -16,7 +16,7 @@ $form-field-label-asterisk__margin         : 0 0 0 $indent__xs !default;
 $form-element-input__background            : $color-white !default;
 $form-element-input__border-color          : $color-gray76 !default;
 $form-element-input__border                : 1px solid $form-element-input__border-color !default;
-$form-element-input__border-radius         : 1px !default;
+$form-element-input__border-radius         : 6px !default;
 $form-element-input__height                : 32px !default;
 $form-element-input__width                 : 100% !default;
 $form-element-input__margin                : 0 !default;
@@ -39,7 +39,7 @@ $form-element-validation__border-error     : lighten($form-validation-note__colo
 @mixin lib-form-element-input($_type) {
     $_background                : $color-white;
     $_border                    : 1px solid $form-element-input__border-color;
-    $_border-radius             : 1px;
+    $_border-radius             : 6px;
     $_height                    : $form-element-input__height;
     $_width                     : 100%;
     $_margin                    : 0;

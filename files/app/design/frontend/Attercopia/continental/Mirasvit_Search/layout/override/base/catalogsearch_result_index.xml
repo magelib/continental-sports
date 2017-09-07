@@ -6,7 +6,7 @@
 
         <move element="search.result" destination="searchindex.result" as="catalogsearch_fulltext"/>
 
-        <referenceContainer name="content">
+        <referenceContainer name="content" >
             <block class="Mirasvit\Search\Block\Result" name="searchindex.result" template="result.phtml" cacheable="false">
                 <block class="Mirasvit\Search\Block\Index\Magento\Catalog\Category"
                        name="magento_catalog_category"
