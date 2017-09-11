@@ -9,7 +9,7 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\ConfigurableProduct\Api\LinkManagementInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\State;
-
+use Magento\Framework\Registry;
 
 class Details extends \Magento\Framework\View\Element\Template
 {
@@ -28,22 +28,58 @@ class Details extends \Magento\Framework\View\Element\Template
      * @var LinkManagementInterface
      */
     protected $linkManagement;
+    /***
+     * @var Registry
+     */
+    protected $registry;
 
+    /**
+     * @var Product
+     */
+    protected $product;
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         LinkManagementInterface $linkManagement,
         ProductRepositoryInterface $productRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        Registry $registry
     ) {
 	parent::__construct($context);
         $this->linkManagement = $linkManagement;
         $this->productRepository = $productRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->registry = $registry;
     }
 
-    public function showConfigurableCount($product = null)
+    /**
+     * @return Product
+     */
+    private function getProduct()
     {
+        if (is_null($this->product)) {
+            $this->product = $this->registry->registry('product');
+
+            if (!$this->product->getId()) {
+                throw new LocalizedException(__('Failed to initialize product'));
+            }
+        }
+
+        return $this->product;
+    }
+
+    /***
+     *  Return sku
+     * @return mixed
+     */
+    public function getProductSku()
+    {
+        return $this->getProduct()->getSku();
+    }
+
+    public function showConfigurableCount()
+    {
+        $product = $this->getProduct();
         if ($product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
             $_children = $product->getTypeInstance()->getUsedProducts($product);
             $count = count($_children);
@@ -52,9 +88,9 @@ class Details extends \Magento\Framework\View\Element\Template
         return false;
     }
 
-
-    protected function showConfigurables($product = null)
+    protected function showConfigurables()
     {
+        $product = $this->getProduct();
         $sku = $product->getsku();
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter('type_id', 'configurable')
@@ -73,7 +109,45 @@ class Details extends \Magento\Framework\View\Element\Template
                     $this->getTierPrices($childprod->getSku());
 
                 }
+
 		echo 'require(["jquery"], function($){';
+                ?>
+                function calcDiscount(d) {
+                    var fullPrice = $("#product-price-1").data("price-amount");
+                    var c = 100-((parseFloat(d)/parseFloat(fullPrice))*100);
+                    return  Math.abs(parseFloat(c).toFixed(2));
+                }
+
+                function makeTable(sku) {
+                    var t = "";
+                    $.each( window.configurables[sku], function( i, val ) {
+                    t += "<div class=\"trow\">";
+                    if ( typeof (val) != "undefined") {
+                    d = calcDiscount(val);
+                        t += "<span>" + i + "</span><span>" + d + "%</span><span>&pound;" + parseFloat(val).toFixed(2) + "</span>";
+                    }
+                    t += "</div>";
+                    });
+
+                    $(".price-table div.tbody").html(t);
+                }
+                window.sku = "";
+                jQuery('.sku div').on("DOMSubtreeModified",function(){
+                var sku = $(".sku div.value").html();
+                if (sku.length) {
+                    if (window.sku == "") {
+                        window.sku = sku;
+                        makeTable(sku);
+                    } else {
+                        if (window.sku != sku) {
+                            window.sku = sku;
+                                makeTable(sku);
+                        }
+                    }
+                }
+                });
+                <?php
+
 		echo '});';
                 echo '</script>';
             }
@@ -92,18 +166,18 @@ class Details extends \Magento\Framework\View\Element\Template
 
             foreach($tier_price as $price){
                 if ( empty($tierPrices[$sku]) ) {
-                    printf(' window.configurables["%s"] = [];', $sku);
+                    printf(' window.configurables["%s"] = [];%s', $sku, PHP_EOL);
                     $tierPrices[$sku] = true;
                 }
-
-                printf(' window.configurables["%s"][%s] = "%s";%s', $sku, $price->getQty(), $price->getValue(), PHP_EOL);
+                printf(' window.configurables["%s"][%s] = "%s";%s', $sku, $price->getQty(), round($price->getValue(), 2), PHP_EOL);
 
             }
         }
     }
 
-    public function childProducts($product)
+    public function childProducts()
     {
+        $product = $this->getProduct();
         $this->showConfigurables($product);
     }
 }

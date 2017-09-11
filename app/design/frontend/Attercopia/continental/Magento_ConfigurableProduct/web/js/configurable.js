@@ -220,7 +220,6 @@ define([
                 }, this));
             }
         },
-
         /**
          * Event handler for configuring an option.
          * @private
@@ -341,7 +340,6 @@ define([
             if (options) {
                 for (i = 0; i < options.length; i++) {
                     allowedProducts = [];
-
                     if (prevConfig) {
                         for (j = 0; j < options[i].products.length; j++) {
                             // prevConfig.config can be undefined
@@ -512,8 +510,27 @@ define([
             var galleryObject = element.data('gallery');
 
             this.options.mediaGalleryInitial = galleryObject.returnCurrentImages();
-        }
+
+            //test prod load
+            this._setDefaultConfiguration(0);
+        },
+        _setDefaultConfiguration: function (elementId) {
+         console.log("Complete");
+    }
     });
+
+// preselect items
+    function preSelect(elementIndex) {
+        var v = $("select:nth(" + elementIndex + ")  option:nth(1)").val();
+        var nxt = elementIndex + 1; var n = "select:nth(" + elementIndex +  ")";
+        var x = "select:nth(" + nxt +  ")"; $(n).val(v); $(n).trigger("change");
+        if ($(x).length) { preSelect(nxt); }
+    }
+    setTimeout(
+        function() {
+            preSelect(0);
+        }, 1200
+    );
 
     return $.mage.configurable;
 });
