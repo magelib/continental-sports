@@ -118,19 +118,34 @@ class Details extends \Magento\Framework\View\Element\Template
                     return  Math.abs(parseFloat(c).toFixed(2));
                 }
 
-                function makeTable(sku) {
-                    var t = "";
-                    $.each( window.configurables[sku], function( i, val ) {
-                    t += "<div class=\"trow\">";
+                function makeRow(val, i) {
+                    var html = "";
+                    html += "<div class=\"trow\">";
                     if ( typeof (val) != "undefined") {
-                    d = calcDiscount(val);
-                        t += "<span>" + i + "</span><span>" + d + "%</span><span>&pound;" + parseFloat(val).toFixed(2) + "</span>";
+                        d = calcDiscount(val);
+                        html += "<span>" + i + "</span><span>" + d + "%</span><span>&pound;" + parseFloat(val).toFixed(2) + "</span>";
+                        window.prodCount++;
                     }
-                    t += "</div>";
-                    });
-
-                    $(".price-table div.tbody").html(t);
+                    html += "</div>";
+                    console.log(window.prodCount);
+                    return html;
                 }
+
+                function makeTable(sku) {
+                    var t2 = "";
+                    var t = "";
+                    window.prodCount = 0;
+                    $.each( window.configurables[sku], function( i, val ) {
+                        if (window.prodCount < 2) {
+                            t += makeRow(val, i);
+                        } else {
+                            t2 += makeRow(val, i);
+                        }
+                    });
+                    $(".price-table div.tbody").html(t);
+                    $(".price-table div.tbody.extra-fields").html(t2);
+                }
+
                 window.sku = "";
                 jQuery('.sku div').on("DOMSubtreeModified",function(){
                 var sku = $(".sku div.value").html();
