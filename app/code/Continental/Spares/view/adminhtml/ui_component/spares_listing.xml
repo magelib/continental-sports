@@ -267,6 +267,16 @@
                 </item>
             </argument>
         </column>
+        <column name="spareimage" class="Continental\Spares\Ui\Component\Listing\Column\SpareImage">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/thumbnail</item>
+                <item name="label" xsi:type="string" translate="true">Spare</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </column>
+
         <column name="link">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
@@ -278,7 +288,7 @@
                         </item>
                     </item>
                     <item name="label" xsi:type="string" translate="true">Link</item>
-                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
                 </item>
             </argument>
         </column>         
@@ -295,7 +305,7 @@
         <actionsColumn name="actions" class="Continental\Spares\Ui\Component\Listing\Column\Actions">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="resizeEnabled" xsi:type="boolean">false</item>
+                    <item name="resizeEnabled" xsi:type="boolean">false</item>\
                     <item name="resizeDefaultWidth" xsi:type="string">107</item>
                     <item name="indexField" xsi:type="string">spares_id</item>
                 </item>

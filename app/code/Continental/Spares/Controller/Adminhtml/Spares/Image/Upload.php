@@ -51,9 +51,8 @@ class Upload extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-        error_log("Executing image upload".PHP_EOL, 3, $_SERVER['DOCUMENT_ROOT'] . '/donaldtrump.log');
         try {
-            $result = $this->imageUploader->saveFileToTmpDir('image');
+            $result = $this->imageUploader->saveFileToTmpDir('sparesimage');
 
             $result['cookie'] = [
                 'name' => $this->_getSession()->getName(),

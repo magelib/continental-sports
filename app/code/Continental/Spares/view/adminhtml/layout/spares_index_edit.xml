@@ -9,6 +9,9 @@
     <update handle="styles"/>
     <update handle="editor"/>
     <body>
+	<referenceContainer name="content">
+		 <block class="Continental\Spares\Block\Spares" name="image.widget" template="image_editor.phtml"/> 
+        </referenceContainer>
         <referenceContainer name="content">
             <uiComponent name="spares_form"/>
         </referenceContainer>

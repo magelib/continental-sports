@@ -73,9 +73,9 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
 
              $temp = $block->getData();
                 $img = [];
-                $img[0]['name'] = $temp['sparesimage'];
-                $img[0]['url'] = $baseurl.$temp['sparesimage'];
-               $temp['sparesimage'] = $img;
+                $img[0]['name'] = $temp['spareimage'];
+                $img[0]['url'] = $baseurl.$temp['spareimage'];
+               $temp['spareimage'] = $img;
         }
 
         $data = $this->dataPersistor->get('continental_spares');
@@ -92,7 +92,7 @@ class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
         if (empty($this->loadedData)) {
             return $this->loadedData;
         } else {
-            if ($block->getData('sparesimage') != null) {
+            if ($block->getData('spareimage') != null) {
                 $t2[$block->getId()] = $temp;
                 return $t2;
             } else {

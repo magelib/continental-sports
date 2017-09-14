@@ -10,8 +10,7 @@
 ?>
 <?php $_product = $block->getProduct(); ?>
 <?php $buttonTitle = __('Add to Basket'); ?>
-<?php 
-$prodBlock = $this->getLayout()->createBlock('\Continental\Products\Block\Details');
+<?php $prodBlock = $this->getLayout()->createBlock('\Continental\Products\Block\Details');
 
 echo $prodBlock->childProducts($_product);
 

@@ -132,7 +132,7 @@
                 </item>
             </argument>
         </field>
-	<field name="sparesimage">
+	<field name="spareimage">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
                 <item name="dataType" xsi:type="string">string</item>
@@ -145,7 +145,7 @@
                 <item name="formElement" xsi:type="string">fileUploader</item>
                 <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item> 
                <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item> 
-               <item name="dataScope" xsi:type="string">sparesimage</item>
+               <item name="dataScope" xsi:type="string">spareimage</item>
                 <item name="required" xsi:type="boolean">false</item>
                 <item name="sortOrder" xsi:type="number">18</item>
                 <item name="uploaderConfig" xsi:type="array">
