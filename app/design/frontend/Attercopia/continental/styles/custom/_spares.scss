@@ -43,14 +43,17 @@
 /* post Jay changes */
 .spares_table_wrapper {
   float:left;
-  border: 1px solid black;
   h1 {
      margin-bottom:5px;
 }
   table {
-	margin-left:80px;
 	width:600px;
+		td {
+ 			line-height:80px;
+ 			padding:0;
+ 		}
 }
+
   input {
 	width:20px;
         border-radius: 4px;

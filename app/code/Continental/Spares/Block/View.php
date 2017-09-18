@@ -83,6 +83,7 @@ class View extends \Magento\Framework\View\Element\Template
     }
 
     public function sparesListing() {
+/*
         $related = $this->getRelatedProducts();
         $tbl = '';
         foreach ($related as $index=>$data) {
@@ -130,7 +131,7 @@ class View extends \Magento\Framework\View\Element\Template
         return rtrim($js,',');
     }
 
-    public function getRelatedProducts()
+    public function _getRelatedProducts()
     {
         if (!$this->getProduct()->hasRelatedProducts()) {
             $products = [];

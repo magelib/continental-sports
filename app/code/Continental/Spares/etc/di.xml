@@ -58,25 +58,4 @@
             <argument name="filterPool" xsi:type="object" shared="false">SparesGridFilterPool</argument>
         </arguments>
     </virtualType>
-
-    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool">
-        <arguments>
-            <argument name="modifiers" xsi:type="array">
-                <item name="custom-tab-with-content" xsi:type="array">
-                    <item name="class" xsi:type="string">Continental\Spares\Ui\DataProvider\Product\Form\Modifier\CustomTab</item>
-                    <item name="sortOrder" xsi:type="number">10</item>
-                </item>
-            </argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="Example" type="Continental\Spares\Ui\DataProvider\Product\Form\Modifier">
-        <arguments>
-            <argument name="modifiers" xsi:type="array">
-                <item name="advancedInventory" xsi:type="array">
-                    <item name="class" xsi:type="string">Magento\CatalogInventory\Ui\DataProvider\Product\Form\Modifier\AdvancedInventory</item>
-                    <item name="sortOrder" xsi:type="number">20</item>
-                </item>
-            </argument>
-        </arguments>
-    </virtualType>
 </config>
