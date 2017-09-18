@@ -1,137 +1,21 @@
 <?php
-/**
- * Copyright © 2015 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Continental\Spares\Model\ResourceModel\Spares\Grid;
 
-use Magento\Framework\Api\Search\SearchResultInterface;
-use Magento\Framework\Search\AggregationInterface;
-use Continental\Spares\Model\ResourceModel\Spares\Collection as QuoteCollection;
-
-/**
- * Class Collection
- * Collection for displaying grid of sales documents
- */
-class Collection extends QuoteCollection implements SearchResultInterface
+class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
-    /**
-     * @var AggregationInterface
-     */
-    protected $aggregations;
+    protected function _construct()
+    {
+        $this->_init('Continental\Spares\Model\YourModel', 'Magento\Sales\Model\ResourceModel\Order');
+}
 
-    
-    public function __construct(
-        \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
-        \Magento\Framework\Event\ManagerInterface $eventManager,
-        $mainTable,
-        $eventPrefix,
-        $eventObject,
-        $resourceModel,
-        $model = 'Magento\Framework\View\Element\UiComponent\DataProvider\Document',
-        $connection = null,
-        \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
-    ) {
-        parent::__construct(
-            $entityFactory,
-            $logger,
-            $fetchStrategy,
-            $eventManager,
-            $connection,
-            $resource
+    protected function filterOrder($payment_method)
+    {
+        $this->sales_order_table = "main_table";
+        $this->sales_order_payment_table = $this->getTable("sales_order_payment");
+        $this->getSelect()->join(array('payment' => $this->sales_order_payment_table), $this->sales_order_table . '.entity_id= payment.parent_id',
+            array('payment_method' => 'payment.method', 'order_id' => $this->sales_order_table . '.entity_id'
+            )
         );
-        $this->_eventPrefix = $eventPrefix;
-        $this->_eventObject = $eventObject;
-        $this->_init($model, $resourceModel);
-        $this->setMainTable($mainTable);
-    }
-
-    /**
-     * @return AggregationInterface
-     */
-    public function getAggregations()
-    {
-        return $this->aggregations;
-    }
-
-    /**
-     * @param AggregationInterface $aggregations
-     * @return $this
-     */
-    public function setAggregations($aggregations)
-    {
-        $this->aggregations = $aggregations;
-    }
-
-
-    /**
-     * Retrieve all ids for collection
-     * Backward compatibility with EAV collection
-     *
-     * @param int $limit
-     * @param int $offset
-     * @return array
-     */
-    public function getAllIds($limit = null, $offset = null)
-    {
-        return $this->getConnection()->fetchCol($this->_getAllIdsSelect($limit, $offset), $this->_bindParams);
-    }
-
-    /**
-     * Get search criteria.
-     *
-     * @return \Magento\Framework\Api\SearchCriteriaInterface|null
-     */
-    public function getSearchCriteria()
-    {
-        return null;
-    }
-
-    /**
-     * Set search criteria.
-     *
-     * @param \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria
-     * @return $this
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null)
-    {
-        return $this;
-    }
-
-    /**
-     * Get total count.
-     *
-     * @return int
-     */
-    public function getTotalCount()
-    {
-        return $this->getSize();
-    }
-
-    /**
-     * Set total count.
-     *
-     * @param int $totalCount
-     * @return $this
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function setTotalCount($totalCount)
-    {
-        return $this;
-    }
-
-    /**
-     * Set items list.
-     *
-     * @param \Magento\Framework\Api\ExtensibleDataInterface[] $items
-     * @return $this
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function setItems(array $items = null)
-    {
-        return $this;
+        $this->getSelect()->where("payment_method=" . $payment_method);
     }
 }

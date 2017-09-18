@@ -38,12 +38,11 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         $productData = array();
         $currentProduct = $this->getCurrentProduct();
 
-        $relatedProducts = $currentProduct->getRelatedProducts();//->addCategoriesFilter(array('in' => $this->getCategoryId('Spares')));
+        $relatedProducts = $currentProduct->getRelatedProducts();
         
         foreach ($relatedProducts as $relatedProduct) {
             $product = $this->_productRepository->getById( $relatedProduct->getId() );
             $categoryIds = $relatedProduct->getCategoryIds();
-           // echo "SKU " . $relatedProduct->getSku() . '->' . $product->getImage() .  '->' . $product->getPrice() .  '->' . $relatedProduct->getId() . '<br />';
             if (in_array($this->getCategoryId('Spares'), $categoryIds)) {
                 $productData[] = array(
                     'sku' => $relatedProduct->getSku(),
@@ -56,9 +55,8 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         
         if (!empty($relatedProducts)) {
             return $productData;
-//            return $relatedProducts;
         } else {
-           // echo "Testing: Nome";
+
             return false;
         }
     }
@@ -73,10 +71,5 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         }
         return false;
     }
-    /*
-     * $productCollection = $this->productCollectionFactory->create();
-$productCollection->addAttributeToSelect('*');
-$productCollection->addCategoriesFilter(array('in' => $catalog_ids));
-     */
 }
 ?>
