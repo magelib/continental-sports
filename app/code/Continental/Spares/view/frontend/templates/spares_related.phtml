@@ -1,0 +1,20 @@
+<div class="spares_table_wrapper">
+    <table>
+    <?php
+    $related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
+    $collection = $related->getRelatedProducts();
+    foreach ($collection as $index => $relatedProduct): ?>
+        <tr>
+            <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>" /></td>
+            <td><?= $relatedProduct['sku'] ?></td>
+            <td>&pound;<?= $relatedProduct['price'] ?></td>
+            <td>
+                <button class="action tocart primary" data-mage-init='{"redirectUrl": {"url": "<?php /* @escapeNotVerified */ echo $relatedProduct['addtocarturl'] ?>"}}' type="button" title="<?php /* @escapeNotVerified */ echo __('Add to Cart') ?>">
+                    <span><?php /* @escapeNotVerified */ echo __('Add to Cart') ?></span>
+                </button>
+
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+</div>
