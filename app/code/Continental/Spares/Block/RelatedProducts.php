@@ -48,7 +48,8 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
                     'sku' => $relatedProduct->getSku(),
                     'image' => $product->getImage(),
                     'price' => number_format($product->getPrice(), 2),
-                    'addtocarturl' => $addToCartUrl =  $this->_listProdcut->getAddToCartUrl($product)
+                    'addtocarturl' =>  $this->_listProdcut->getAddToCartUrl($product),
+                    'title' =>  $product->getName()
                 );
             }
         }

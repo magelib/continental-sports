@@ -8,24 +8,94 @@
     </thead>
     </tr>
     <?php
-        $related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
-        $collection = $related->getRelatedProducts();
-        foreach ($collection as $index => $relatedProduct): ?>
-    <tr>
-        <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>" /></td>
-        <td><?= $relatedProduct['sku'] ?></td>
-        <td>Name</td>
-        <td><button class="modalOpenSpare">Add Image Co-ordinates</button></td>
-    </tr>
+    $related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
+    $collection = $related->getRelatedProducts();
+    foreach ($collection as $index => $relatedProduct): ?>
+        <tr>
+            <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>"/></td>
+            <td><?= $relatedProduct['sku'] ?></td>
+            <td><?= $relatedProduct['title'] ?></td>
+            <td>
+                <button class="modalOpenSpare">Add Image Co-ordinates</button>
+            </td>
+        </tr>
     <?php endforeach; ?>
 
 </table>
+
+<div id="popup-mpdal" style="display:none;">
+    <?php
+    $_product = $block->getProduct();
+    $spares = $this->getLayout()->createBlock('\Continental\Spares\Block\Spares');
+    $uploader = $this->getLayout()->createBlock('\Magento\Backend\Block\Media\Uploader');
+    if (!$spares->getLayoutImge($_product)): ?>
+    <h3>Please add a template image to continue.</h3>
+        <div id="<?php echo $uploader->getHtmlId() ?>" class="uploader"
+             data-mage-init='{
+        "Magento_Backend/js/media-uploader" : {
+            "maxFileSize": <?php /* @escapeNotVerified */
+             echo $uploader->getFileSizeService()->getMaxFileSize() ?>,
+            "maxWidth":<?php /* @escapeNotVerified */
+             echo \Magento\Framework\File\Uploader::MAX_IMAGE_WIDTH ?> ,
+            "maxHeight": <?php /* @escapeNotVerified */
+             echo \Magento\Framework\File\Uploader::MAX_IMAGE_HEIGHT ?>,
+             "uploaderConfig.url": "<?php /* @escapeNotVerified */
+             echo "baconbutty" ?>"
+        }
+    }'
+            >
+            <div class="fileinput-button form-buttons button">
+                <span><?php /* @escapeNotVerified */
+                    echo __('Browse Files...') ?></span>
+                <input id="fileupload" type="file" name="<?php /* @escapeNotVerified */
+                echo $uploader->getConfig()->getFileField() ?>"
+                       data-url="<?php /* @escapeNotVerified */
+                       echo $uploader->getConfig()->getUrl() ?>" multiple="multiple"/>
+            </div>
+            <div class="clear"></div>
+            <script id="<?php echo $uploader->getHtmlId() ?>-template" type="text/x-magento-template"
+                    data-template="uploader">
+                <div id="<%- data.id %>" class="file-row">
+                    <span class="file-info"><%- data.name %> (<%- data.size %>)</span>
+                    <div class="progressbar-container">
+                        <div class="progressbar upload-progress" style="width: 0%;"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </script>
+        </div>
+
+    <?php else: ?>
+        <img src="" />
+    <?php endif; ?>
+</div>
 <script>
-require(['jquery','jquery/ui','Magento_Ui/js/modal/modal'], function($){
-$(".modalOpenSpare").click(function() {
-    $('<div />').html('Modal Window Content').modal({title: 'Locate Spare',autoOpen: false,closed: function () {
-// on close
-    }, buttons: [{text: 'Confirm',attr: {'data-action': 'confirm'},'class': 'action-primary',click: alert("testing")}]});
-    });
-});
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function ($,
+                  modal) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Spares Locator',
+                buttons: [{
+                    text: $.mage.__('Continue'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#popup-mpdal'));
+            $(".modalOpenSpare").on('click', function () {
+                $("#popup-mpdal").modal("openModal");
+            });
+
+        }
+    );
 </script>
