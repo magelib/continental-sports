@@ -1,1 +1,31 @@
-<h1>Spares Template</h1>
+<table class="data-grid">
+    <thead>
+    <tr>
+        <th class="data-grid-th">Image</th>
+        <th class="data-grid-th">Sku</th>
+        <th class="data-grid-th">Name</th>
+        <th class="data-grid-th"></th>
+    </thead>
+    </tr>
+    <?php
+        $related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
+        $collection = $related->getRelatedProducts();
+        foreach ($collection as $index => $relatedProduct): ?>
+    <tr>
+        <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>" /></td>
+        <td><?= $relatedProduct['sku'] ?></td>
+        <td>Name</td>
+        <td><button class="modalOpenSpare">Add Image Co-ordinates</button></td>
+    </tr>
+    <?php endforeach; ?>
+
+</table>
+<script>
+require(['jquery','jquery/ui','Magento_Ui/js/modal/modal'], function($){
+$(".modalOpenSpare").click(function() {
+    $('<div />').html('Modal Window Content').modal({title: 'Locate Spare',autoOpen: false,closed: function () {
+// on close
+    }, buttons: [{text: 'Confirm',attr: {'data-action': 'confirm'},'class': 'action-primary',click: alert("testing")}]});
+    });
+});
+</script>
