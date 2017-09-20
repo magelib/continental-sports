@@ -65,9 +65,7 @@ class Upload extends \Magento\Backend\App\Action
             echo $file_name;
             $this->messageManager->addSuccess(__('File has been successfully uploaded'));
             //$sampleModel = $this->sparesFactory->create();
-            $model = $this->_objectManager->create('Continental\Spares\Model\Locator');
-            exit("ok");
-
+            $sampleModel = $this->_objectManager->create('Continental\Spares\Model\Locator');
             /* now we need to update the database... */
             /*
             $sampleModel = $this->sparesFactory->create();
@@ -85,7 +83,7 @@ class Upload extends \Magento\Backend\App\Action
             $sampleModel->setMaster_product_sku('sku test');
             $sampleModel->setSpareimage($file_name);
             $sampleModel->save();
-
+            exit("ok");
         }
         else
         {
