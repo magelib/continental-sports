@@ -94,6 +94,10 @@
             var popup = modal(options, $('#popup-mpdal'));
             $(".modalOpenSpare").on('click', function () {
                 $("#popup-mpdal").modal("openModal");
+                $("#fileupload").data("url", "baconbutties");
+                setTimeout(function() {
+                alert( $("#fileupload").data("url") );
+                }, 2000);
             });
 
         }

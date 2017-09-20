@@ -139,7 +139,7 @@ class ImageUploader
      */
     public function getBaseTmpPath()
     {
-
+        
         return $this->baseTmpPath;
     }
 
@@ -224,8 +224,8 @@ class ImageUploader
     public function saveFileToTmpDir($fileId)
     {
         $baseTmpPath = $this->getBaseTmpPath();
-
-
+       
+        
         $uploader = $this->uploaderFactory->create(['fileId' => $fileId]);
         $uploader->setAllowedExtensions($this->getAllowedExtensions());
         $uploader->setAllowRenameFiles(true);
