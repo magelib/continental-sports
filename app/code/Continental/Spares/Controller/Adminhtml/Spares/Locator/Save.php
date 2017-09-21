@@ -62,8 +62,8 @@ class Save extends \Magento\Backend\App\Action
         $this->sparesFactory = $sparesFactory;
         $this->directory_list = $directory_list;
         $this->registry = $registry;
-        $this->request;
-        $this->spares;
+        $this->request = $request;
+        $this->spares = $spares;
     }
 
     /**
@@ -85,30 +85,30 @@ class Save extends \Magento\Backend\App\Action
     public function execute()
     {
         $productId = $this->getRequest()->getParam('id');
-        $co_ords1 = $this->getRequest()->getParam('co_ords1');
-        $co_ords2 = $this->getRequest()->getParam('co_ords2');
-
-        echo $co_ords1 . ' ' . $co_ords2 . ' ' . $productId;
+        $co_ords1 = $this->formatLocation( $this->getRequest()->getParam('co_ords1') );
+        $co_ords2 = $this->formatLocation( $this->getRequest()->getParam('co_ords2') );
+        $sparesimage = $this->getRequest()->getParam('sparesimage');
 
         $_product = $this->productRepository->getById($productId);
 
         // Use for post $postData = $this->getRequest()->getPostValue();
-    echo "update";
+        // Fields with numbers didn't work....??
 
         $model = $this->spares;
-        var_dump($model);
-        exit();
-
-        /*$model->setMaster_product_sku($_product->getSku());
+/*        $model->setMaster_product_sku($_product->getSku());
         $model->setCo_ords1($co_ords1);
-        $model->setCo_ords1($co_ords2);
-        */
+        $model->setCo_ords2($co_ords2);
+        $model->save();*/
+
+
         $data = array(
             'master_product_sku' => $_product->getSku(),
-            'co_ords1' => $co_ords1,
-            'co_ords2' => $co_ords2
+            'location' => $co_ords1,
+            'dimensions' => $co_ords2,
+            'spareimage' => $sparesimage
             );
 
+        // test
         $model->setData($data);
 
         $model->save();
@@ -124,5 +124,13 @@ class Save extends \Magento\Backend\App\Action
         $resultRedirect->setUrl($this->_redirect->getRefererUrl());
         return $resultRedirect;
 
+    }
+
+    private function formatLocation($coord) {
+        if (preg_match('/,/', $coord)) {
+            list($x, $y) = explode(',', $coord);
+            return sprintf("%d,%d", number_format($x), number_format($y));
+        }
+        return $coord;
     }
 }
