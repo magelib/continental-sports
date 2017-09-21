@@ -40,7 +40,7 @@ class Save extends \Magento\Backend\App\Action
      * Save constructor.
      *
      * @param     \Magento\Backend\App\Action\Context $context,
-     * @param     \Continental\Spares\Model\LocatorFactory $sparesFactory,
+     * @param     \Continental\Spares\Model\SparesFactory $sparesFactory,
      * @param     \Magento\Framework\App\Filesystem\DirectoryList $directory_list,
      * @param     \Magento\Framework\Registry $registry,
      * @param     \Magento\Framework\App\Request\Http $request,
@@ -50,7 +50,7 @@ class Save extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Catalog\Model\ProductRepository $productRepository,
-        \Continental\Spares\Model\LocatorFactory $sparesFactory,
+        \Continental\Spares\Model\SparesFactory $sparesFactory,
         \Magento\Framework\App\Filesystem\DirectoryList $directory_list,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\Request\Http $request,
@@ -76,19 +76,6 @@ class Save extends \Magento\Backend\App\Action
         return $this->_authorization->isAllowed('Continental_Spares::spares');
     }
 
-    private function getProduct()
-    {
-        if (is_null($this->product)) {
-            $this->product = $this->registry->registry('product');
-
-            if (!$this->product->getId()) {
-                throw new LocalizedException(__('Failed to initialize product'));
-            }
-        }
-
-        return $this->product;
-    }
-
     /**
      * Save data controller action
      *
@@ -98,7 +85,6 @@ class Save extends \Magento\Backend\App\Action
     public function execute()
     {
         $productId = $this->getRequest()->getParam('id');
-
         $co_ords1 = $this->getRequest()->getParam('co_ords1');
         $co_ords2 = $this->getRequest()->getParam('co_ords2');
 
@@ -110,6 +96,9 @@ class Save extends \Magento\Backend\App\Action
     echo "update";
 
         $model = $this->spares;
+        var_dump($model);
+        exit();
+
         /*$model->setMaster_product_sku($_product->getSku());
         $model->setCo_ords1($co_ords1);
         $model->setCo_ords1($co_ords2);

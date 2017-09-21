@@ -28,19 +28,25 @@
     $_product = $block->getProduct();
     $spares = $this->getLayout()->createBlock('\Continental\Spares\Block\Spares');
     $uploader = $this->getLayout()->createBlock('\Magento\Backend\Block\Media\Uploader');
+
     if (!$spares->getLayoutImge($_product)): ?>
         <h3>Please add a template image to continue.</h3>
+    <?php else: ?>
+    <?php $mediaUrl = $this->getUrl('spares/spares_image/upload/id/'. $_product->getId() ); ?>
         <div id="<?php echo $uploader->getHtmlId() ?>" class="uploader"
              data-mage-init='{
         "Magento_Backend/js/media-uploader" : {
+            "template": "ui/form/element/uploader/uploader",
+            "previewTmpl": "Magento_Catalog/image-preview",
             "maxFileSize": <?php /* @escapeNotVerified */
              echo $uploader->getFileSizeService()->getMaxFileSize() ?>,
             "maxWidth":<?php /* @escapeNotVerified */
              echo \Magento\Framework\File\Uploader::MAX_IMAGE_WIDTH ?> ,
             "maxHeight": <?php /* @escapeNotVerified */
              echo \Magento\Framework\File\Uploader::MAX_IMAGE_HEIGHT ?>,
-             "uploaderConfig.url": "<?php /* @escapeNotVerified */
-             echo "baconbutty" ?>"
+             "uploaderConfig": {
+                    "url": "<?php echo $mediaUrl; ?>"
+               }
         }
     }'
             >
@@ -50,7 +56,7 @@
                 <input id="fileupload" type="file" name="<?php /* @escapeNotVerified */
                 echo $uploader->getConfig()->getFileField() ?>"
                        data-url="<?php /* @escapeNotVerified */
-                       echo $uploader->getConfig()->getUrl() ?>" multiple="multiple"/>
+                       echo $mediaUrl; ?>" multiple="multiple"/>
             </div>
             <div class="clear"></div>
             <script id="<?php echo $uploader->getHtmlId() ?>-template" type="text/x-magento-template"
@@ -66,9 +72,9 @@
             </script>
         </div>
 
-    <?php else: ?>
+
         <!-- images editor start -->
-        <?php $image = 'http://www.continentalsports.co.uk/img/spares/13-large_spares.jpg'; ?>
+    <?php $image = 'http://www.continentalsports.co.uk/img/spares/13-large_spares.jpg'; ?>
 
         <div class="imageCanvas">
             <div class="canvasWrapper">
@@ -90,7 +96,7 @@
                     <input type="text" name="co_ords2" value=""/></p>
                 <p>
                     <input type="hidden" name="sparesimage" value="<?php echo $image; ?>"/></p>
-                    <button>Save</button>
+                <button>Save</button>
                 </p>
             </form>
 
