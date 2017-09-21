@@ -1,0 +1,139 @@
+<?php
+/**
+ * Copyright © 2017 Attercopia. All rights reserved.
+ */
+namespace Continental\Spares\Controller\Adminhtml\Spares\Locator;
+
+use Magento\Framework\Controller\ResultFactory;
+use Continental\Spares\Model\LocatorFactory;
+use Continental\Spares\Model\Spares;
+
+/**
+ * Class Save - saves Spares Location
+ */
+class Save extends \Magento\Backend\App\Action
+{
+    /***
+     * @var \Magento\Framework\Registry
+     */
+    protected $registry;
+
+    /***
+     * @var LocatorFactory
+     */
+    protected $sparesFactory;
+    /***
+     * @var
+     */
+    protected $request;
+    /**
+     * @var $spares
+     */
+    protected $spares;
+
+    /***
+     * @var \Magento\Catalog\Model\ProductRepository
+     */
+    protected $productRepository;
+
+    /**
+     * Save constructor.
+     *
+     * @param     \Magento\Backend\App\Action\Context $context,
+     * @param     \Continental\Spares\Model\LocatorFactory $sparesFactory,
+     * @param     \Magento\Framework\App\Filesystem\DirectoryList $directory_list,
+     * @param     \Magento\Framework\Registry $registry,
+     * @param     \Magento\Framework\App\Request\Http $request,
+     * @param     \Continental\Spares\Model\Locator $locator
+     */
+
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Catalog\Model\ProductRepository $productRepository,
+        \Continental\Spares\Model\LocatorFactory $sparesFactory,
+        \Magento\Framework\App\Filesystem\DirectoryList $directory_list,
+        \Magento\Framework\Registry $registry,
+        \Magento\Framework\App\Request\Http $request,
+        \Continental\Spares\Model\Spares $spares
+    )
+    {
+        parent::__construct($context);
+        $this->productRepository = $productRepository;
+        $this->sparesFactory = $sparesFactory;
+        $this->directory_list = $directory_list;
+        $this->registry = $registry;
+        $this->request;
+        $this->spares;
+    }
+
+    /**
+     * Check admin permissions for this controller
+     *
+     * @return boolean
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed('Continental_Spares::spares');
+    }
+
+    private function getProduct()
+    {
+        if (is_null($this->product)) {
+            $this->product = $this->registry->registry('product');
+
+            if (!$this->product->getId()) {
+                throw new LocalizedException(__('Failed to initialize product'));
+            }
+        }
+
+        return $this->product;
+    }
+
+    /**
+     * Save data controller action
+     *
+     * @return \Magento\Framework\Controller\ResultInterface
+     */
+
+    public function execute()
+    {
+        $productId = $this->getRequest()->getParam('id');
+
+        $co_ords1 = $this->getRequest()->getParam('co_ords1');
+        $co_ords2 = $this->getRequest()->getParam('co_ords2');
+
+        echo $co_ords1 . ' ' . $co_ords2 . ' ' . $productId;
+
+        $_product = $this->productRepository->getById($productId);
+
+        // Use for post $postData = $this->getRequest()->getPostValue();
+    echo "update";
+
+        $model = $this->spares;
+        /*$model->setMaster_product_sku($_product->getSku());
+        $model->setCo_ords1($co_ords1);
+        $model->setCo_ords1($co_ords2);
+        */
+        $data = array(
+            'master_product_sku' => $_product->getSku(),
+            'co_ords1' => $co_ords1,
+            'co_ords2' => $co_ords2
+            );
+
+        $model->setData($data);
+
+        $model->save();
+
+        exit("Stpop 1");
+        // Redirect
+        $resultRedirect = $this->resultRedirectFactory->create();
+        try{
+            $this->messageManager->addSuccess(__('Save sucessful.'));
+        }catch (\Exception $e) {
+            $this->messageManager->addError($e->getMessage());
+        }
+        $resultRedirect->setUrl($this->_redirect->getRefererUrl());
+        return $resultRedirect;
+
+    }
+}

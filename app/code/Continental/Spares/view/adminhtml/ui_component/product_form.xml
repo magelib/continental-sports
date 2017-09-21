@@ -35,7 +35,7 @@
                     <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item>
                     <item name="dataScope" xsi:type="string">continental_sparesimages</item>
                     <item name="required" xsi:type="boolean">false</item>
-                    <item name="sortOrder" xsi:type="number">16</item>
+                    <item name="sortOrder" xsi:type="number">6</item>
                     <item name="uploaderConfig" xsi:type="array">
                     <item name="url" xsi:type="url" path="spares/spares_image/upload"/>
                     </item>

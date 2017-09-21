@@ -20,6 +20,10 @@ class Upload extends \Magento\Backend\App\Action
     protected $baseTmpPath;
     protected $sparesModel;
     protected $filesystem;
+    protected $registry;
+    protected $product;
+    protected $request;
+
     /**
      * Upload constructor.
      *
@@ -29,11 +33,15 @@ class Upload extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Continental\Spares\Model\LocatorFactory $sparesFactory,
-        \Magento\Framework\App\Filesystem\DirectoryList $directory_list
+        \Magento\Framework\App\Filesystem\DirectoryList $directory_list,
+        \Magento\Framework\Registry $registry,
+        \Magento\Framework\App\Request\Http $request
     ) {
         parent::__construct($context);
         $this->sparesFactory = $sparesFactory;
         $this->directory_list = $directory_list;
+        $this->registry = $registry;
+        $this->request;
     }
 
     /**
@@ -44,6 +52,19 @@ class Upload extends \Magento\Backend\App\Action
     protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('Continental_Spares::spares');
+    }
+
+    private function getProduct()
+    {
+        if (is_null($this->product)) {
+            $this->product = $this->registry->registry('product');
+
+            if (!$this->product->getId()) {
+                throw new LocalizedException(__('Failed to initialize product'));
+            }
+        }
+
+        return $this->product;
     }
 
     /**
@@ -63,15 +84,24 @@ class Upload extends \Magento\Backend\App\Action
         if (move_uploaded_file($file_tmp,$media.$file_name))
         {
             echo $file_name;
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');//get current product
+
+            // This won't work as ajax call
+            $productId = (int) $this->request->getParam('id');
+            echo $productId;
+            exit();
+//            echo $product->getSku();
+            //echo $this->getProduct()->getSku();
             $this->messageManager->addSuccess(__('File has been successfully uploaded'));
             //$sampleModel = $this->sparesFactory->create();
             $sampleModel = $this->_objectManager->create('Continental\Spares\Model\Locator');
+
+            // Check for existing image and ignore if same name
             /* now we need to update the database... */
-            /*
-            $sampleModel = $this->sparesFactory->create();
-            echo "model setup";
-            /*
             // Load the item with ID is 1
+            /*
+             * $sModel = $sampleModel->loadByAttribute('master_product_sku', 'Other');
             $item = $sampleModel->load(1);
             var_dump($item->getData());
             // Get sample collection
@@ -79,7 +109,7 @@ class Upload extends \Magento\Backend\App\Action
             // Load all data of collection
             var_dump($sampleCollection->getData());
 */
-
+            // Save into database
             $sampleModel->setMaster_product_sku('sku test');
             $sampleModel->setSpareimage($file_name);
             $sampleModel->save();
