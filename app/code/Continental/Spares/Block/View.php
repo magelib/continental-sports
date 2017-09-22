@@ -121,11 +121,9 @@ class View extends \Magento\Framework\View\Element\Template
         $collection = $this->collectionFactory->create()->addFieldToFilter('master_product_sku', array( 'like'=> $this->getProductSku() ) );
         foreach($collection as $spare) {
          $d = $spare->getData();
-            $js .= sprintf("{ sparesimage: %s, title: %s, sku: %s, price: %s  },",
+            $js .= sprintf("{ sparesimage: %s, sku: %s  },",
                 $d['spareimage'],
-                $d['title'],
-                $d['sku'],
-                $d['price']
+                $d['sku']
             );
         }
         return rtrim($js,',');

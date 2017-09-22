@@ -37,4 +37,12 @@ class Spares extends \Magento\Framework\View\Element\Template
     public function getLayoutImge($product) {
         return true;
     }
+
+    public function getSparesLocations() {
+        /* get location, dimension, sku master
+        1. Show Image
+        2. Highlight hotsports
+        3. on mouse over highlight product / show in popup box
+*/
+    }
 }

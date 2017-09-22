@@ -1,6 +1,23 @@
 <div class="spares_table_wrapper">
     <table>
     <?php
+
+    $helper = $this->helper('Continental\Spares\Helper\Listing');
+
+    $x = $helper->getSparesLocationCollection();
+    $count = 0;
+    foreach ($x as $item) {
+        $spare = $item->getData();
+        print_r($spare);
+    }
+
+    //$z = $helper->getSparesCollectionFilter('23010106-master-test');
+    $z = $helper->filterSpares('master_product_sku', '23010106-master-test');
+    echo "Found " . count($z);
+
+
+
+
     $related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
     $collection = $related->getRelatedProducts();
     foreach ($collection as $index => $relatedProduct): ?>

@@ -32,7 +32,7 @@
     if (!$spares->getLayoutImge($_product)): ?>
         <h3>Please add a template image to continue.</h3>
     <?php else: ?>
-    <?php $mediaUrl = $this->getUrl('spares/spares_image/upload/id/'. $_product->getId() ); ?>
+    <?php $mediaUrl = $this->getUrl('spares/spares_image/upload/id/' . $_product->getId()); ?>
         <div id="<?php echo $uploader->getHtmlId() ?>" class="uploader"
              data-mage-init='{
         "Magento_Backend/js/media-uploader" : {
@@ -50,13 +50,15 @@
         }
     }'
             >
-            <div class="fileinput-button form-buttons button">
+            <div class="image image-placeholder">
+                <div class="fileinput-button form-buttons button">
                 <span><?php /* @escapeNotVerified */
                     echo __('Browse Files...') ?></span>
-                <input id="fileupload" type="file" name="<?php /* @escapeNotVerified */
-                echo $uploader->getConfig()->getFileField() ?>"
-                       data-url="<?php /* @escapeNotVerified */
-                       echo $mediaUrl; ?>" multiple="multiple"/>
+                    <input id="fileupload" type="file" name="<?php /* @escapeNotVerified */
+                    //echo $uploader->getConfig()->getFileField() ?>"
+                           data-url="<?php /* @escapeNotVerified */
+                           echo $mediaUrl; ?>" multiple="multiple"/>
+                </div>
             </div>
             <div class="clear"></div>
             <script id="<?php echo $uploader->getHtmlId() ?>-template" type="text/x-magento-template"
@@ -89,11 +91,13 @@
                     </label>
                     <input type="text" name="co_ords1" value=""/>
                 </p>
+
                 <p>
                     <label>
                         <span>Dimensions:</span>
                     </label>
                     <input type="text" name="co_ords2" value=""/></p>
+
                 <p>
                     <input type="hidden" name="sparesimage" value="<?php echo $image; ?>"/></p>
                 <button>Save</button>

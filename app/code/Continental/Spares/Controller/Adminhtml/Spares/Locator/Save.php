@@ -88,6 +88,7 @@ class Save extends \Magento\Backend\App\Action
         $co_ords1 = $this->formatLocation( $this->getRequest()->getParam('co_ords1') );
         $co_ords2 = $this->formatLocation( $this->getRequest()->getParam('co_ords2') );
         $sparesimage = $this->getRequest()->getParam('sparesimage');
+        $sku = $this->getRequest()->getParam('sku');
 
         $_product = $this->productRepository->getById($productId);
 
@@ -103,9 +104,10 @@ class Save extends \Magento\Backend\App\Action
 
         $data = array(
             'master_product_sku' => $_product->getSku(),
-            'location' => $co_ords1,
-            'dimensions' => $co_ords2,
-            'spareimage' => $sparesimage
+            'location'      => $co_ords1,
+            'dimensions'    => $co_ords2,
+            'spareimage'    => $sparesimage,
+            'sku'           => $sku
             );
 
         // test
