@@ -36,6 +36,11 @@ class Listing extends AbstractHelper
      */
     protected $_productRepository;
 
+    /***
+     * @var \Magento\Catalog\Block\Product\ListProduct
+     */
+    protected $_listProduct;
+
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Catalog\Model\ProductRepository $productRepository,
@@ -43,13 +48,15 @@ class Listing extends AbstractHelper
         \Continental\Spares\Model\Spares $spares,
         \Magento\Framework\Api\Filter $filter,
         \Magento\Framework\Api\Search\FilterGroup $filterGroup,
-        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria) {
+        \Magento\Framework\Api\SearchCriteriaInterface $searchCriteria,
+        \Magento\Catalog\Block\Product\ListProduct $listProduct) {
         $this->_sparesFactory = $sparesFactory;
         $this->_spares = $spares;
         $this->_filter = $filter;
         $this->_filterGroup = $filterGroup;
         $this->_searchCriteria = $searchCriteria;
         $this->_productRepository = $productRepository;
+        $this->_listProduct = $listProduct;
     }
 
     public function getSparesImageData($mastersku) {
@@ -81,11 +88,8 @@ class Listing extends AbstractHelper
     public function filterSpares($field, $value) {
         $this->setFilter($field, $value);
         //query the repository for the object(s)
-        //$collection = $this->_sparesFactory->create()->getCollection($this->_searchCriteria);
-        //return $this->_sparesFactory->create()->getCollection()->addFieldToSelect('*')->addFieldToFilter($field, $value);
-        //return $this->_sparesFactory->create()->getCollection()->addFieldToSelect('*')->addFieldToFilter('master_product_sku', '23010106-master')->getData();
-        return $this->_sparesFactory->create()->getCollection()->addFieldToSelect('*')->addFieldToFilter($field, $value)->getData();
-
+        return $this->_sparesFactory->create()->getCollection()->addFieldToSelect('*')->addFieldToFilter($field, $value);
+        //->getData()
         //return  $collection->getData();
     }
 
@@ -94,5 +98,18 @@ class Listing extends AbstractHelper
         //query the repository for the object(s)
         $result = $this->_productRepository->getList($this->_searchCriteria);
         return  $result->getItems();
+    }
+
+    public function getLocation($val) {
+        return explode(',', $val);
+    }
+
+    public function getDimensions($val) {
+        return explode(',', $val);
+    }
+
+    public function getProductBySku($sku)
+    {
+        return $product = $this->_productRepository->get($sku);
     }
 }
