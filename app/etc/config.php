@@ -11,6 +11,7 @@ return array (
     'Continental_General' => 1,
     'Continental_HomeFeatures' => 1,
     'Continental_Nav' => 1,
+    'Continental_Poa' => 1,
     'Continental_Products' => 1,
     'Continental_Spares' => 1,
     'Magento_Directory' => 1,
