@@ -15,6 +15,7 @@ return array (
     'Continental_Products' => 1,
     'Continental_Spares' => 1,
     'Magento_Directory' => 1,
+    'Ebizmarts_Mandrill' => 1,
     'FME_Banners' => 1,
     'Magento_Eav' => 1,
     'Magento_AdvancedPricingImportExport' => 1,
