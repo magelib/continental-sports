@@ -21,6 +21,7 @@ class General extends \Magento\Backend\Block\Widget\Form
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Mirasvit\Kb\Helper\Form\Article\Category $formCategoryHelper,
+        \Mirasvit\Kb\Helper\Form\Article\File $formFilesHelper,
         \Magento\Backend\Model\UrlInterface $backendUrl,
         \Mirasvit\Kb\Helper\Data $kbData,
         \Magento\Framework\Data\FormFactory $formFactory,
@@ -31,6 +32,7 @@ class General extends \Magento\Backend\Block\Widget\Form
     ) {
         $this->objectManager      = $objectManager;
         $this->formCategoryHelper = $formCategoryHelper;
+        $this->formFilesHelper    = $formFilesHelper;
         $this->backendUrl         = $backendUrl;
         $this->kbData             = $kbData;
         $this->formFactory        = $formFactory;
@@ -107,6 +109,16 @@ class General extends \Magento\Backend\Block\Widget\Form
             'value' => $article->getPosition(),
 
         ]);
+
+        $files = array(array("value" => "Test1", "label" => "Test1"), array("value" => "Test3", "label" => "Test3"));
+
+        $fieldset->addField('select_field', 'multiselect', array(
+            'label' => 'Documents',
+            'name' => 'documents',
+            'values' => $files,
+            'onChange'  => 'showHideField()',
+        ));
+
         $this->addStoreField($fieldset, $article);
 
         $fieldset->addField('user_id', 'select', [
