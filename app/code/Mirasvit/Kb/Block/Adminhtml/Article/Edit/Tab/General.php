@@ -24,7 +24,6 @@ class General extends \Magento\Backend\Block\Widget\Form
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Mirasvit\Kb\Helper\Document $documentHelper,
         \Mirasvit\Kb\Helper\Form\Article\Category $formCategoryHelper,
-        \Mirasvit\Kb\Helper\Form\Article\File $formFilesHelper,
         \Magento\Backend\Model\UrlInterface $backendUrl,
         \Mirasvit\Kb\Helper\Data $kbData,
         \Magento\Framework\Data\FormFactory $formFactory,
@@ -35,7 +34,6 @@ class General extends \Magento\Backend\Block\Widget\Form
     ) {
         $this->objectManager      = $objectManager;
         $this->formCategoryHelper = $formCategoryHelper;
-        $this->formFilesHelper    = $formFilesHelper;
         $this->backendUrl         = $backendUrl;
         $this->kbData             = $kbData;
         $this->formFactory        = $formFactory;
