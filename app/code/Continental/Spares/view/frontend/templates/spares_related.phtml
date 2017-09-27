@@ -14,6 +14,7 @@
 
                 $x = $helper->filterSpares('master_product_sku', $block->getProduct()->getSku());
                 $count = 0;
+		if (count($x) > 0) {
                 foreach ($x as $item): ?>
                     <?php $spare = $item->getData(); ?>
                     <?php
@@ -24,6 +25,7 @@
                         html += '<a class="map-section" style="width:<?= $helper->getLocation($spare['location'])[0] ?>px; height:<?= $helper->getDimensions($spare['dimensions'])[0] ?>px;top:<?=  $helper->getLocation($spare['location'])[0] ?>px;left:<?= $helper->getDimensions($spare['dimensions'])[0]; ?>px;" href="#"></a>';
                     <?php
                 endforeach;
+		}
                 ?>
                 $(".image-map").append(html);
             });
@@ -31,7 +33,7 @@
     <?php
     $related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
     $collection = $related->getRelatedProducts();
-
+    if ($collection) {
     foreach ($collection as $index => $relatedProduct): ?>
         <tr>
             <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>" /></td>
@@ -52,6 +54,6 @@
                 </form>
             </td>
         </tr>
-        <?php endforeach; ?>
+        <?php endforeach; } ?>
     </table>
 </div>
