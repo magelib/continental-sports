@@ -18,8 +18,11 @@ namespace Mirasvit\Kb\Block\Adminhtml\Article\Edit\Tab;
 
 class General extends \Magento\Backend\Block\Widget\Form
 {
+    protected $documentHelper;
+
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Mirasvit\Kb\Helper\Document $documentHelper,
         \Mirasvit\Kb\Helper\Form\Article\Category $formCategoryHelper,
         \Mirasvit\Kb\Helper\Form\Article\File $formFilesHelper,
         \Magento\Backend\Model\UrlInterface $backendUrl,
@@ -39,6 +42,7 @@ class General extends \Magento\Backend\Block\Widget\Form
         $this->registry           = $registry;
         $this->context            = $context;
         $this->wysiwygConfig      = $wysiwygConfig;
+        $this->documentHelper     = $documentHelper;
 
         $this->articleManagement          = $this->getArticleMagagement();
         $this->articleFormHelper          = $this->getArticleFormHelper();
@@ -116,8 +120,25 @@ class General extends \Magento\Backend\Block\Widget\Form
             'label' => 'Documents',
             'name' => 'documents',
             'values' => $files,
-            'onChange'  => 'showHideField()',
+            'onChange'  => '',
         ));
+
+        $fieldset->addField('upload', 'button', array(
+            'label' => '',
+            'name'  => 'new-documents',
+            'value' => 'Add document',
+            'class' => 'action-default'
+        ));
+        $this->documentHelper->debugGetDocuments();
+        /*
+         * $selectField->setAfterElementHtml('
+                        <script>
+                        function showHideField() {
+                            $("field_to_hide").toggle()
+                        }
+                        </script>
+                    ');
+         */
 
         $this->addStoreField($fieldset, $article);
 

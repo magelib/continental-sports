@@ -13,8 +13,6 @@
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
-
-
 namespace Mirasvit\Kb\Model\ResourceModel;
 
 /**
@@ -61,7 +59,7 @@ class File extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param null                                                       $resourcePrefix
      */
     public function __construct(
-        \Mirasvit\Kb\Model\fileFactory $fileFactory,
+        \Mirasvit\Kb\Model\File\CollectionFactory $fileFactory,
         \Mirasvit\Kb\Model\ResourceModel\Article\CollectionFactory $articleCollectionFactory,
         \Mirasvit\Core\Api\UrlRewriteHelperInterface $urlRewrite,
         \Magento\Framework\App\CacheInterface $cacheManager,

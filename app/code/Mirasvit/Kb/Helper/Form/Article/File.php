@@ -2,8 +2,6 @@
 
 namespace Mirasvit\Kb\Helper\Form\Article;
 
-use Mirasvit\Kb\Model\ResourceModel\File\CollectionFactory as FileCollectionFactory;
-use Mirasvit\Kb\Model\FileFactory;
 use Magento\Catalog\Model\Locator\LocatorInterface;
 use Magento\Framework\DB\Helper as DbHelper;
 
