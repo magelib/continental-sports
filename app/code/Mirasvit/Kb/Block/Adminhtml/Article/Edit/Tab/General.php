@@ -112,22 +112,22 @@ class General extends \Magento\Backend\Block\Widget\Form
 
         ]);
 
-        $files = array(array("value" => "Test1", "label" => "Test1"), array("value" => "Test3", "label" => "Test3"));
-
         $fieldset->addField('select_field', 'multiselect', array(
-            'label' => 'Documents',
-            'name' => 'documents',
-            'values' => $files,
-            'onChange'  => '',
+            'label'             => 'Documents',
+            'name'              => 'documents',
+            'values'            => $this->documentHelper->optionArray(),
+            'after_element_html' => $this->documentHelper->uploadForm()
+            // multi select doesn't like after_element_js ??
         ));
 
         $fieldset->addField('upload', 'button', array(
             'label' => '',
             'name'  => 'new-documents',
             'value' => 'Add document',
-            'class' => 'action-default'
+            'class' => 'action-default',
+            'after_element_js'  => $this->documentHelper->afterElementMultiSelect( $article->getDocuments() ) . $this->documentHelper->afterDocs()
         ));
-        $this->documentHelper->debugGetDocuments();
+
         /*
          * $selectField->setAfterElementHtml('
                         <script>
@@ -145,12 +145,13 @@ class General extends \Magento\Backend\Block\Widget\Form
             'name'   => 'user_id',
             'value'  => $article->getUserId(),
             'values' => $this->kbData->toAdminUserOptionArray(),
-
         ]);
+
         $tags = [];
         foreach ($article->getTags() as $tag) {
             $tags[] = $tag->getName();
         }
+
         $fieldset->addField('tags', 'text', [
             'label' => __('Tags'),
             'name'  => 'tags',
