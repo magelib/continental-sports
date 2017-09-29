@@ -27,6 +27,10 @@ class Save extends \Mirasvit\Kb\Controller\Adminhtml\Article
     {
         if ($data = $this->getRequest()->getParams()) {
             $model = $this->_initModel();
+            /* documents */
+            if (!empty($data['documents'])) {
+                $data['documents'] = implode(',', $data['documents']);
+            }
 
             if (!empty($data['categories'])) {
                 $data['category_ids'] = explode(',', $data['categories']);

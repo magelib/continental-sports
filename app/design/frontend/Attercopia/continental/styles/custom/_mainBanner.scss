@@ -16,8 +16,10 @@
 	float: right;
 	color: $white;
   text-align: right;
-  margin-top: 7%;
-  margin-bottom: 27%;
+  margin-top: 6%;
+  margin-bottom: 25%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 15px;
   h2 {
   	@include font-size(48);
   	margin: 0;

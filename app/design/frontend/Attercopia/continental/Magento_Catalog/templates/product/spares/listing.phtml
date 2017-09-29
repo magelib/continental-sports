@@ -1,0 +1,59 @@
+<?php
+$spares = $this->getLayout()->createBlock('\Continental\Spares\Block\View');
+$spares->sparesListing();
+?>
+
+<script type="text/javascript">
+/*    require(
+        [
+            'jquery',
+            'ko',
+            'uiComponent'
+        ],
+        function ($,ko, Component) {
+            "use strict";
+            return Component.extend({
+
+                getListSpares : function(){
+                    return {[
+                        {sparesimage: "asdsa.jpg", title: "title here", sku: "werewr", price: "2"},
+                        {sparesimage: "asds22a.jpg", title: "title 2 here", sku: "werewr 2", price: "4"}
+                        ]};
+        }
+    });
+    }
+    );
+    /*
+    <?php echo $spares->getJsData(); ?>
+     */
+</script>
+<?php if ($sparesList = $spares->sparesListing()): ?>
+<h1>Listing</h1>
+<div class="spares_table_wrapper">
+    <table id="sparesTable">
+        <thead>
+        <th>&nbsp;</th>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Price</th>
+        <th>Qty</th>
+        </thead>
+        <tbody>
+            <?php echo $sparesList ?>
+        </tbody>
+
+        <!--        <tbody data-bind="foreach: getListSpares()">
+        <tr>
+            <td><img data-bind="src: sparesimage" /></td>
+            <td data-bind="text: title"></td>
+            <td data-bind="text: sku"></td>
+            <td>&pound;<span data-bind="text: price"></td>
+            <td><input type="text" value="1" name="qty" id="qty" /></td>
+            <td><button>Add to basket</button></td>
+        </tr>
+        </tbody>
+-->
+    </table>
+    <?php endif; ?>
+</div>
+

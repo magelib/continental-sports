@@ -1,0 +1,202 @@
+<table class="data-grid">
+    <thead>
+    <tr>
+        <th class="data-grid-th">Image</th>
+        <th class="data-grid-th">Sku</th>
+        <th class="data-grid-th">Name</th>
+        <th class="data-grid-th"></th>
+        <th class="data-grid-th"></th>
+    </thead>
+    </tr>
+    <?php
+    $related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
+    $collection = $related->getRelatedProducts();
+    foreach ($collection as $index => $relatedProduct): ?>
+        <tr>
+            <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>"/></td>
+            <td><?= $relatedProduct['sku'] ?></td>
+            <td><?= $relatedProduct['title'] ?></td>
+            <td>
+                <button class="modalOpenSpare">Add Image Co-ordinates</button>
+            </td>
+            <td>
+                <button class="modalOpenSpare">Edit</button>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+
+</table>
+
+<div id="popup-mpdal" style="display:none;">
+    <?php
+    $_product = $block->getProduct();
+    $spares = $this->getLayout()->createBlock('\Continental\Spares\Block\Spares');
+    $uploader = $this->getLayout()->createBlock('\Magento\Backend\Block\Media\Uploader');
+
+    if (!$spares->getLayoutImge($_product)): ?>
+        <h3>Please add a template image to continue.</h3>
+    <?php else: ?>
+    <?php $mediaUrl = $this->getUrl('spares/spares_image/upload/id/' . $_product->getId()); ?>
+        <div id="<?php echo $uploader->getHtmlId() ?>" class="uploader"
+             data-mage-init='{
+        "Magento_Backend/js/media-uploader" : {
+            "template": "ui/form/element/uploader/uploader",
+            "previewTmpl": "Magento_Catalog/image-preview",
+            "maxFileSize": <?php /* @escapeNotVerified */
+             echo $uploader->getFileSizeService()->getMaxFileSize() ?>,
+            "maxWidth":<?php /* @escapeNotVerified */
+             echo \Magento\Framework\File\Uploader::MAX_IMAGE_WIDTH ?> ,
+            "maxHeight": <?php /* @escapeNotVerified */
+             echo \Magento\Framework\File\Uploader::MAX_IMAGE_HEIGHT ?>,
+             "uploaderConfig": {
+                    "url": "<?php echo $mediaUrl; ?>"
+               }
+        }
+    }'
+            >
+            <div class="image image-placeholder">
+                <div class="fileinput-button form-buttons button">
+                <span><?php /* @escapeNotVerified */
+                    echo __('Browse Files...') ?></span>
+                    <input id="fileupload" type="file" name="<?php /* @escapeNotVerified */
+                    //echo $uploader->getConfig()->getFileField() ?>"
+                           data-url="<?php /* @escapeNotVerified */
+                           echo $mediaUrl; ?>" multiple="multiple"/>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <script id="<?php echo $uploader->getHtmlId() ?>-template" type="text/x-magento-template"
+                    data-template="uploader">
+                <div id="<%- data.id %>" class="file-row">
+                    <span class="file-info"><%- data.name %> (<%- data.size %>)</span>
+
+                    <div class="progressbar-container">
+                        <div class="progressbar upload-progress" style="width: 0%;"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </script>
+        </div>
+
+
+        <!-- images editor start -->
+    <?php $image = 'http://www.continentalsports.co.uk/img/spares/13-large_spares.jpg'; ?>
+
+        <div class="imageCanvas">
+            <div class="canvasWrapper">
+                <canvas id="canvas" width="600" height="600"></canvas>
+            </div>
+
+            <form class="sparesLocator"
+                  action="<?php echo $this->getUrl('spares/spares_locator/save/id/' . $_product->getId()); ?>">
+                <p>
+                    <label>
+                        <span>Start Co-ordinates:</span>
+                    </label>
+                    <input type="text" name="co_ords1" value=""/>
+                </p>
+
+                <p>
+                    <label>
+                        <span>Dimensions:</span>
+                    </label>
+                    <input type="text" name="co_ords2" value=""/></p>
+
+                <p>
+                    <input type="hidden" name="sparesimage" value="<?php echo $image; ?>"/></p>
+                <button>Save</button>
+                </p>
+            </form>
+
+        </div>
+
+        <script>
+            require(["jquery"], function ($) {
+
+                var canvas = document.getElementById('canvas');
+                var ctx = canvas.getContext('2d');
+                var rect = {};
+                var drag = false;
+                var imageObj = null;
+
+                function init() {
+                    imageObj = new Image();
+                    imageObj.onload = function () {
+                        ctx.drawImage(imageObj, 0, 0);
+                    };
+                    imageObj.src = "<?php echo $image; ?>";
+                    canvas.addEventListener('mousedown', mouseDown, false);
+                    canvas.addEventListener('mouseup', mouseUp, false);
+                    canvas.addEventListener('mousemove', mouseMove, false);
+                }
+
+                function mouseDown(e) {
+                    rect.startX = e.pageX - this.offsetLeft;
+                    rect.startY = e.pageY - this.offsetTop;
+                    drag = true;
+                }
+
+                function mouseUp() {
+                    drag = false;
+                }
+
+                function mouseMove(e) {
+                    if (drag) {
+                        ctx.clearRect(0, 0, 600, 600);
+                        ctx.drawImage(imageObj, 0, 0);
+                        rect.w = (e.pageX - this.offsetLeft) - rect.startX;
+                        rect.h = (e.pageY - this.offsetTop) - rect.startY;
+
+                        otop = e.pageY - $("#canvas").offset().top - rect.h;
+                        oleft = e.pageX - $("#canvas").offset().left - rect.w;
+
+                        ctx.strokeStyle = '#373330';
+                        ctx.strokeRect(oleft, otop, rect.w, rect.h);
+                        ctx.fillStyle = "rgba(225,225,225,0.2";
+                        ctx.fillRect(rect.startX, rect.startY, rect.w, rect.h);
+
+                        // save co-ordinates
+                        $("input[name='co_ords1']").val(oleft + "," + otop);
+                        $("input[name='co_ords2']").val(rect.w + "," + rect.h);
+                    }
+                }
+
+                init();
+            });
+        </script>
+        <!-- images editor end -->
+    <?php endif; ?>
+</div>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function ($,
+                  modal) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Spares Locator',
+                buttons: [{
+                    text: $.mage.__('Close'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#popup-mpdal'));
+            $(".modalOpenSpare").on('click', function () {
+                $("#popup-mpdal").modal("openModal");
+                $("#fileupload").data("url", "baconbutties");
+                setTimeout(function () {
+                }, 2000);
+            });
+
+        }
+    );
+</script>

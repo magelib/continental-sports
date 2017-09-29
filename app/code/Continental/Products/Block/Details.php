@@ -61,7 +61,7 @@ class Details extends \Magento\Framework\View\Element\Template
             $this->product = $this->registry->registry('product');
 
             if (!$this->product->getId()) {
-                throw new LocalizedException(__('Failed to initialize product'));
+                //throw new LocalizedException(__('Failed to initialize product'));
             }
         }
 
@@ -77,9 +77,11 @@ class Details extends \Magento\Framework\View\Element\Template
         return $this->getProduct()->getSku();
     }
 
-    public function showConfigurableCount()
+    public function showConfigurableCount($product = null)
     {
-        $product = $this->getProduct();
+        if ($product === null) {
+            $product = $this->getProduct();
+        }
         if ($product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE) {
             $_children = $product->getTypeInstance()->getUsedProducts($product);
             $count = count($_children);

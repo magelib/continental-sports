@@ -1,27 +1,19 @@
 <?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
-        <arguments>
-            <argument name="collections" xsi:type="array">
-                <item name="spares_listing_data_source" xsi:type="string">Continental\Spares\Model\ResourceModel\Spares\Grid\Collection</item>
-            </argument>
-        </arguments>
-    </type>
 
-    <type name="Continental\Spares\Model\ResourceModel\Spares\Grid\Collection">
-        <arguments>
-            <argument name="mainTable" xsi:type="string">continental_spares</argument>
-            <argument name="eventPrefix" xsi:type="string">spares_grid_collection</argument>
-            <argument name="eventObject" xsi:type="string">spares_grid_collection</argument>
-            <argument name="resourceModel" xsi:type="string">Continental\Spares\Model\ResourceModel\Spares</argument>
-        </arguments>
-    </type>
     <type name="Continental\Spares\Controller\Adminhtml\Spares\Image\Upload">
         <arguments>
-            <argument name="imageUploader" xsi:type="object">SparesImageUpload</argument>
+            <argument name="imageUploader" xsi:type="object">SpareImageUpload</argument>
         </arguments>
-    </type>
-    <virtualType name="SparesImageUpload" type="Continental\Spares\Model\ImageUploader">
+    </type>/
+
+    <virtualType name="SpareImageUpload" type="Continental\Spares\Model\ImageUploader">
         <arguments>
             <argument name="baseTmpPath" xsi:type="string">spares</argument>
             <argument name="basePath" xsi:type="string">spares</argument>
@@ -33,6 +25,7 @@
             </argument>
         </arguments>
     </virtualType>
+
     <virtualType name="SparesGridFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
         <arguments>
             <argument name="appliers" xsi:type="array">
@@ -46,16 +39,6 @@
         <arguments>
             <argument name="collection" xsi:type="object" shared="false">Continental\Spares\Model\ResourceModel\Spares\Collection</argument>
             <argument name="filterPool" xsi:type="object" shared="false">SparesGridFilterPool</argument>
-        </arguments>
-    </virtualType>
-    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool">
-        <arguments>
-            <argument name="modifiers" xsi:type="array">
-                <item name="spares-tab-with-content" xsi:type="array">
-                    <item name="class" xsi:type="string">Continental\Spares\Ui\DataProvider\Product\Form\Modifier\SparesTab</item>
-                    <item name="sortOrder" xsi:type="number">10</item>
-                </item>
-            </argument>
         </arguments>
     </virtualType>
 </config>
