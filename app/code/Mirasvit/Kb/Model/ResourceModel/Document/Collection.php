@@ -28,8 +28,6 @@ class Collection extends AbstractCollection
      */
     protected function _construct()
     {
-        /*$this->_init('Mirasvit\Kb\Model\Document', 'Mirasvit\Kb\Model\ResourceModel\Document');
-        $this->_map['fields']['document_id'] = 'main_table.document_id';*/
         $this->_init('Mirasvit\Kb\Model\Document', 'Mirasvit\Kb\Model\ResourceModel\Document', 'document_id');
     }
 }
