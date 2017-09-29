@@ -1,3 +1,8 @@
+<?php
+    $related    = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
+    $collection = $related->getRelatedProducts();
+    $showSpares = is_array($collection) ? true : false;
+    if ($showSpares): ?>
 <table class="data-grid">
     <thead>
     <tr>
@@ -8,9 +13,9 @@
         <th class="data-grid-th"></th>
     </thead>
     </tr>
-    <?php
-    $related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
-    $collection = $related->getRelatedProducts();
+<?php endif; ?>
+<?php
+    if ($showSpares) {
     foreach ($collection as $index => $relatedProduct): ?>
         <tr>
             <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>"/></td>
@@ -24,6 +29,10 @@
             </td>
         </tr>
     <?php endforeach; ?>
+    <?php } else {
+	echo "No spares are available for this product";
+}
+ ?>
 
 </table>
 
