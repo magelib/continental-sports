@@ -95,7 +95,6 @@ class Details extends \Magento\Framework\View\Element\Template
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter('type_id', 'configurable')
             ->create();
-
         $configurableProducts = $this->productRepository->getList($searchCriteria);
         
 
