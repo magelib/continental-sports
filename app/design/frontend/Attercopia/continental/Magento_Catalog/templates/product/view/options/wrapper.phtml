@@ -19,8 +19,8 @@ if ($block->hasRequiredOptions()) {
 <!-- Tiered Pricing -->
 <?php
 	$products = $this->getLayout()->createBlock('\Continental\Products\Block\Details');
-	$products->childProducts();
-?>
+	if ($products->childProducts()):?>
+<h2>Testing 2</h2>
 <div class="price-table">
 	<div class="thead">
 		<span>Qty</span>
@@ -43,3 +43,4 @@ if ($block->hasRequiredOptions()) {
 	</div>
 	<button class="expand-table hidden"">more <small>▼</small></button>
 </div>
+<?php endif; ?>
