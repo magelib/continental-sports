@@ -195,6 +195,6 @@ class Details extends \Magento\Framework\View\Element\Template
     public function childProducts()
     {
         $product = $this->getProduct();
-        $this->showConfigurables($product);
+        return $this->showConfigurables($product);
     }
 }
