@@ -17,6 +17,10 @@
 	.value[itemprop="description"] p{
 		@include font-size(18);
 	}
+	&.sku strong {
+	display:block;
+	float:left;
+	}
 	&.sku .value {
 		@include font-size(16);
 		font-style: italic;
@@ -262,6 +266,11 @@
     margin-bottom: 24px;
     width: 50%;
 	}
+.product-options-wrapper {
+	    .swatch-attribute .color { 
+		margin-top:10px;
+	     }
+}
 	.product-options-wrapper .fieldset div.configurable {
     display: inline-block;
     width: 100%;

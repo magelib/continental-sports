@@ -12,6 +12,7 @@ class Configurable
         $jsonResult = json_decode($result, true);
 
         $jsonResult['skus'] = [];
+
         foreach ($subject->getAllowProducts() as $simpleProduct) {
             $jsonResult['skus'][$simpleProduct->getId()] = $simpleProduct->getSku();
         }

@@ -7,11 +7,11 @@ define([
     'use strict';
 
     return function(targetModule){
-        // alert("test when called");
+
         var reloadPrice = targetModule.prototype._reloadPrice;
         var reloadPriceWrapper = wrapper.wrap(reloadPrice, function(original){
             //do extra stuff
-
+            alert("reloadPrice Called here...");
             //call original method
             var result = original();
 
@@ -20,6 +20,8 @@ define([
 
             if(simpleSku != '') {
                 $('div.product-info-main .sku .value').html(simpleSku);
+            } else {
+                alert("set sku to master product");
             }
 
 
