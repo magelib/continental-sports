@@ -12,6 +12,7 @@
  * @var $block \Magento\Catalog\Block\Product\View\Gallery
  */
 ?>
+<!-- temporarilyy hidden -->
 <div class="gallery-placeholder _block-content-loading" data-gallery-role="gallery-placeholder">
     <div data-role="loader" class="loading-mask">
         <div class="loader">
@@ -19,15 +20,22 @@
                  alt="<?php /* @escapeNotVerified */ echo __('Loading...') ?>">
         </div>
     </div>
-</div>
+</div><!--
+-->
 <!--Fix for jumping content. Loader must be the same size as gallery.-->
 <script>
+	function setDimensions(height, width) {
+	    return { width:"500", height:"500"};
+	}
+    var w = <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'width'); ?>;
+    var h = <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'height'); ?>;
+
+    d = setDimensions(w,h);
     var config = {
-            "width": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'width'); ?>,
-            "thumbheight": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_small', 'height')
-                        ?: $block->getImageAttribute('product_page_image_small', 'width'); ?>,
+            "width": w ,
+            "thumbheight": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_small', 'height') ?: $block->getImageAttribute('product_page_image_small', 'width'); ?>,
             "navtype": "<?php /* @escapeNotVerified */  echo $block->getVar("gallery/navtype"); ?>",
-            "height": <?php /* @escapeNotVerified */ echo $block->getImageAttribute('product_page_image_medium', 'height'); ?>
+            "height": h
         },
         thumbBarHeight = 0,
         loader = document.querySelectorAll('[data-gallery-role="gallery-placeholder"] [data-role="loader"]')[0];
@@ -36,7 +44,8 @@
         thumbBarHeight = config.thumbheight;
     }
 
-    loader.style.paddingBottom = ( config.height / config.width * 100) + "%";
+    //loader.style.paddingBottom = ( config.height / config.width * 100) + "%";
+    alert("huh,m " + config.height);
 </script>
 <script type="text/x-magento-init">
     {
