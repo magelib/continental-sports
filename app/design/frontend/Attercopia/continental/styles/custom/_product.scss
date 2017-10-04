@@ -1,5 +1,24 @@
 // Product page
 
+.page-bottom {
+	.fullDescription {
+		text-transform: none;
+	}
+	.product.attribute.description {
+		width:1100px;
+		padding:5px;
+		margin-bottom:25px;
+	}
+}
+
+
+.fotorama__stage {
+	max-height:500px;
+	.fotorama__img {
+	margin-top:100px;
+	}
+}
+
 .catalog-product-view .column.main {
 	position: relative;
 }
@@ -221,6 +240,9 @@
 }
 .gallery-placeholder {
 	cursor: zoom-in;
+	/* 
+	max-height:580px;
+	*/
 }
 .product-buttons {
 	width: 100%;

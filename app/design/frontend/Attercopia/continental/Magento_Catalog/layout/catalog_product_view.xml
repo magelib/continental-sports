@@ -80,7 +80,7 @@
                 </block>
                 <container name="product.info.extrahint" as="extrahint" label="Product View Extra Hint">
                     <container name="product.info.social" label="Product social links container" htmlTag="div" htmlClass="product-social-links" after="product.info.overview">
-<referenceBlock name="product.info.mailto" remove="true"/>
+                    <referenceBlock name="product.info.mailto" remove="true"/>
                         <block class="Magento\Catalog\Block\Product\View" name="product.info.addto" as="addto" template="product/view/addto.phtml">
 			 <block class="Magento\Catalog\Block\Product\View" name="product.info.btns" as="product.info.btns" template="product/view/productButtons.phtml"/>
                         </block>
@@ -97,32 +97,21 @@
                     </arguments>
                 </block>
             </container>
-            <container name="product.info.media" htmlTag="div" htmlClass="product media" after="product.info.main">
-                <block class="Magento\Catalog\Block\Product\View\Gallery" name="product.info.media.image" template="product/view/gallery.phtml"/>
-            </container>
-            <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.details" template="product/view/details.phtml" after="product.info.media">
-                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="product/view/attribute.phtml" group="detailed_info">
-                    <arguments>
-                        <argument name="at_call" xsi:type="string">getDescription</argument>
-                        <argument name="at_code" xsi:type="string">description</argument>
-                        <argument name="css_class" xsi:type="string">description</argument>
-                        <argument name="at_label" xsi:type="string">none</argument>
-                        <argument name="title" translate="true" xsi:type="string">Details</argument>
-                    </arguments>
-                </block>
-            </block>
+
+            <referenceBlock name="product.info.details" remove="true"/>
+
             <block class="Magento\Cookie\Block\RequireCookie" name="require-cookie" template="Magento_Cookie::require_cookie.phtml">
             </block>
 <!-- moved elements for spares here -->
 	</container>
-	<container name="product.spares.wrap" htmlTag="div" htmlClass="product-spares-wrap">	
+	<container name="product.spares.wrap" htmlTag="div" htmlClass="product-spares-wrap">
 	 	<block class="Magento\Catalog\Block\Product\View" name="product.spares.left" as="product.spares.left" template="product/spares/left.phtml"/>
 		<container name="product.spares.info.main" htmlTag="div" htmlClass="spares-info-main">
                     <block class="Magento\Catalog\Block\Product\View" name="product.spares.right" as="product.spares.right" template="product/spares/right.phtml"/>
                 </container>
-		<block class="Magento\Catalog\Block\Product\View" name="product.spares.right2" template="product/spares/listing.phtml"/>
 	</container>
         </referenceContainer>
+
         <referenceContainer name="content.aside">
             <referenceBlock name="catalog.product.related" remove="true"/>
             <block class="Magento\Catalog\Block\Product\View\Additional" name="product.info.additional" as="product_additional_data"/>
@@ -133,5 +122,23 @@
         <referenceBlock name="product.info.addtocart.additional">
             <block class="Magento\Catalog\Block\ShortcutButtons\InCatalog" name="addtocart.shortcut.buttons.additional"/>
         </referenceBlock>
+
+        <referenceContainer name="page.bottom.container">
+                <block class="Magento\Framework\View\Element\Text" name="your.block.name" before="product.info.description">
+                    <arguments>
+                        <argument name="text" xsi:type="string"><![CDATA[<h3 class="fullDescription">Full Description</h3>]]></argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="product/view/attribute.phtml" group="detailed_info">
+                    <arguments>
+                        <argument name="at_call" xsi:type="string">getDescription</argument>
+                        <argument name="at_code" xsi:type="string">description</argument>
+                        <argument name="css_class" xsi:type="string">description</argument>
+                        <argument name="at_label" xsi:type="string">none</argument>
+                        <argument name="title" translate="true" xsi:type="string">Details</argument>
+                    </arguments>
+                </block>
+        </referenceContainer>
+
     </body>
 </page>
