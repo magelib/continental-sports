@@ -124,11 +124,11 @@
         </referenceBlock>
 
         <referenceContainer name="page.bottom.container">
-            <container name="continental.review" htmlTag="div" htmlClass="review">
-                <action method="setText">
-                    <argument translate="true" name="text" xsi:type="string">Full Description</argument>
-                </action>
-            </container>
+                <block class="Magento\Framework\View\Element\Text" name="your.block.name" before="product.info.description">
+                    <arguments>
+                        <argument name="text" xsi:type="string"><![CDATA[<h3 class="fullDescription">Full Description</h3>]]></argument>
+                    </arguments>
+                </block>
                 <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="product/view/attribute.phtml" group="detailed_info">
                     <arguments>
                         <argument name="at_call" xsi:type="string">getDescription</argument>
