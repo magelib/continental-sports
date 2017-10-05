@@ -37,8 +37,8 @@
     foreach ($collection as $index => $relatedProduct): ?>
         <tr>
             <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>" /></td>
-            <td><?= $relatedProduct['sku'] ?></td>
-            <td>&pound;<?= $relatedProduct['price'] ?></td>
+            <td class="rowText"><?= $relatedProduct['sku'] ?></td>
+            <td class="rowText">&pound;<?= $relatedProduct['price'] ?></td>
             <td>
                 <?php
                 $addToCartUrl = $block->getAddToCartUrl($helper->getProductBySku($relatedProduct['sku']));

@@ -5,14 +5,29 @@ namespace Continental\HomeFeatures\Block;
 * Features block
 */
 
-// use Magento\Customer\Model\Url;
-// use Magento\Framework\App\Http\Context;
-// use Magento\Framework\View\Element\Template;
-
 class Features extends \Magento\Framework\View\Element\Template
 {
-	public function __construct(\Magento\Framework\View\Element\Template\Context $context)
-	{
-		parent::__construct($context);
-	}
+    /***
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     */
+    public function __construct(\Magento\Framework\View\Element\Template\Context $context)
+    {
+        parent::__construct($context);
+    }
+
+    /***
+     * Return Feature headings
+     * @param $index
+     * @return string
+     */
+    public function getTitle($index)
+    {
+       /* placeholder function until clarification with form */
+        $features = array(
+           "left" => "Technical",
+           "right" => "Spares"
+        );
+
+        return isset($features[$index]) ? $features[$index] : '';
+    }
 }

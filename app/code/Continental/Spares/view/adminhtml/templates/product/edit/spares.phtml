@@ -39,6 +39,7 @@
 <div id="popup-mpdal" style="display:none;">
     <?php
     $_product = $block->getProduct();
+    echo "Testing " . $_product->getSku();
     $spares = $this->getLayout()->createBlock('\Continental\Spares\Block\Spares');
     $uploader = $this->getLayout()->createBlock('\Magento\Backend\Block\Media\Uploader');
 
@@ -102,14 +103,14 @@
                     <label>
                         <span>Start Co-ordinates:</span>
                     </label>
-                    <input type="text" name="co_ords1" value=""/>
+                        <input type="text" name="co_ords1" value="<?= $spares->getLocation(); ?>"/>
                 </p>
 
                 <p>
                     <label>
                         <span>Dimensions:</span>
                     </label>
-                    <input type="text" name="co_ords2" value=""/></p>
+                    <input type="text" name="co_ords2" value="<?= $spares->getDimensions(); ?>" /></p>
 
                 <p>
                     <input type="hidden" name="sparesimage" value="<?php echo $image; ?>"/></p>

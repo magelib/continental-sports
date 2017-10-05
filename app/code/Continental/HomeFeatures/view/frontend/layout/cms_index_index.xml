@@ -2,12 +2,8 @@
     <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
         <body>
         	<referenceContainer name="header.container">
-        			<!-- Custom banner -->
-<!--			<container name="main-banner" htmlClass="main-banner" htmlTag="div"> -->
-
-	      <block class="Continental\Banners\Block\Homepage" template="Continental_HomeFeatures::default/mainBanner.phtml"/>
-                </referenceContainer>
-
+	            <block class="Continental\Banners\Block\Homepage" template="Continental_HomeFeatures::default/mainBanner.phtml"/>
+            </referenceContainer>
 
             <referenceContainer name="main">
 	     		<block class="Continental\HomeFeatures\Block\Features" template="Continental_HomeFeatures::default/features.phtml"/>
