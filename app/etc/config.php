@@ -134,7 +134,7 @@ return array (
     'Mirasvit_SearchReport' => 1,
     'Mirasvit_SearchSphinx' => 1,
     'Mirasvit_SearchUltimate' => 1,
-    'Pulsestorm_Testbed' => 1,
+    'Pulsestorm_Testbed' => 0,
     'Staempfli_Pdf' => 1,
     'Swissup_Core' => 1,
     'Swissup_FontAwesome' => 1,
