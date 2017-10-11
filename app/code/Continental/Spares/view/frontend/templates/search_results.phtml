@@ -1,2 +1,77 @@
-<h1>Correct template loaded for results</h1>
-Customer searched for <?php $this->getRequest()->getParam('query'); ?>
+<?php
+$helper = $this->helper('\Continental\Spares\Helper\Listing');
+$collection = $helper->getSparesProductCollection();
+?>
+
+<h2>Spares search results</h2>
+<!-- //only show if results -->
+<?php if (count($collection) < 1): ?>
+Sorry, nothing found for <em><?= $helper->showQuery() ?></em>
+<?php else: ?>
+    Search results for <em><?= $helper->showQuery() ?></em>:
+<ol>
+    <?php
+
+    foreach ($collection as $product) : ?>
+        <!-- do something with $product -->
+        <li class="item product product-item">
+            <div class="product-item-info" data-container="product-grid">
+                <a href="<?= $product->getProductUrl() ?>"
+                   class="product photo product-item-photo" tabindex="-1">
+
+<span class="product-image-container" style="width:240px;">
+    <span class="product-image-wrapper" style="padding-bottom: 125%;">
+
+        <img class="product-image-photo"
+             src="/media/catalog/product/<?= $product->getThumbnail() ?>"
+             width="240" height="300" alt=" <?= $product->getName() ?>"></span>
+</span>
+                </a>
+
+                <div class="product details product-item-details">
+
+                    <div class="product-information no-description">
+                        <div class="product-item-wrapper">
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link"
+                                   href="<?= $product->getProductUrl() ?>">
+                                    <?= $product->getName() ?><span><?= $product->getSku()?></span>
+                                </a>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="price-box price-final_price" data-role="priceBox" data-product-id="11">
+
+                        <span class="con-price-from">Price:</span>
+<span class="price-container price-final_price tax weee">
+
+    <span id="product-price-11" data-price-amount="47" data-price-type="finalPrice" class="price-wrapper ">
+
+        <span class="price">&pound;<?= $helper->formatPrice($product->getPrice()); ?></span>    </span>
+        </span>
+
+                    </div>
+                    <div class="swatch-opt-11"></div>
+
+
+                    <div class="product-item-inner">
+                        <div class="product actions product-item-actions">
+                            <div class="actions-primary">
+
+                            </div>
+
+                            <a class="btn btn-secondary" title="View Item"
+                               href="<?= $product->getProductUrl() ?>">
+                                <span>View Item</span>
+                            </a>
+
+                            <div data-role="add-to-links" class="actions-secondary">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    <?php endforeach; ?>
+</ol>
+<?php endif; ?>

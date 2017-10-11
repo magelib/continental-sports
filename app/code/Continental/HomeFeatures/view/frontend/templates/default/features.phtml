@@ -17,8 +17,8 @@
 <div class="home-feature-box">
   <div class="feature-box-top">
     <h2><?= $block->getTitle("right"); ?></h2>
-    <form>
-      <input type="text" placeholder="Search our spares"/>
+    <form action="/spares/" method="get">
+      <input type="text" name="query" id="query" placeholder="Search our spares"/>
       <button type="submit" class="">
           <i class="fa fa-search"></i>
       </button>

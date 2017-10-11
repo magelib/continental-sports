@@ -41,6 +41,11 @@ class Listing extends AbstractHelper
      */
     protected $_listProduct;
 
+    /***
+     * @var \Magento\Framework\App\Request\Http
+     */
+    protected $_request;
+
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Catalog\Model\ProductRepository $productRepository,
@@ -52,18 +57,27 @@ class Listing extends AbstractHelper
         \Magento\Catalog\Block\Product\ListProduct $listProduct,
         \Continental\Spares\Model\LocatorFactory $locatorFactory,
         \Magento\Catalog\Model\ProductFactory $productFactory,
-	    \Magento\Catalog\Model\CategoryFactory $categoryFactory
+	    \Magento\Catalog\Model\CategoryFactory $categoryFactory,
+        \Magento\Framework\App\Request\Http $request
     ) {
-        $this->_sparesFactory 	= $sparesFactory;
-        $this->_spares		= $spares;
-        $this->_filter 		= $filter;
-        $this->_filterGroup 	= $filterGroup;
-        $this->_searchCriteria 	  = $searchCriteria;
-        $this->_productRepository = $productRepository;
-        $this->_listProduct 	  = $listProduct;
-        $this->_locatorFactory    = $locatorFactory;
-        $this->_productFactory    = $productFactory;
-	    $this->_categoryFactory = $categoryFactory;
+        $this->_sparesFactory 	    = $sparesFactory;
+        $this->_spares		        = $spares;
+        $this->_filter 		        = $filter;
+        $this->_filterGroup 	    = $filterGroup;
+        $this->_searchCriteria 	    = $searchCriteria;
+        $this->_productRepository   = $productRepository;
+        $this->_listProduct 	    = $listProduct;
+        $this->_locatorFactory      = $locatorFactory;
+        $this->_productFactory      = $productFactory;
+	    $this->_categoryFactory     = $categoryFactory;
+        $this->_request             = $request;
+    }
+
+    public function formatPrice($price) {
+        return number_format($price, 2);
+    }
+    public function showQuery() {
+        return $this->_request->getParam('query');
     }
 
     public function getSparesImageData($mastersku) {
@@ -98,15 +112,10 @@ class Listing extends AbstractHelper
      * @return mixed
      */
     public function filterSpareImages($mastersku, $field = 'master_product_sku') {
-        //$this->setFilter($field, $mastersku);
-        //query the repository for the object(s)
         return $this->_sparesFactory->create()->getCollection()->addFieldToSelect('*')
             ->addFieldToFilter($field, $mastersku)
             ->addFieldToFilter('spareimage', ['neq' => ''])
             ->addFieldToFilter('spareimage', ['neq' => 'NULL']);
-        //$collection = $this->_locatorFactory->create()->getCollection();
-        //echo count($collection);
-        //return $collection;
     }
 
     public function filterSpares($field, $value) {
@@ -115,19 +124,32 @@ class Listing extends AbstractHelper
         return $this->_sparesFactory->create()->getCollection()->addFieldToSelect('*')
             ->addFieldToFilter($field, $value)
             ->addFieldToFilter($field, ['neq' => 'NULL']);
-        //->getData()
-        //return  $collection->getData();
+    }
+
+    public function getCategory()
+    {
+        $categoryId = $this->getCategoryId('Spares');
+        $category = $this->_categoryFactory->create()->load($categoryId);
+        return $category;
+    }
+    public function getSparesProductCollection()
+    {
+        return $this->getCategory()->getProductCollection()->addAttributeToSelect('*')
+            ->addFieldToFilter(
+                'name',
+                array('like' => '%'.$this->_request->getParam('query').'%')
+            );
     }
 
     /***
      *
      */
     public function sparesSearch() {
-        $collection = $this->_productFactory->create->getCollection;
+        $collection = $this->_productFactory->create->getCollection();
         $collection->addAttributeToSelect('*');
         $collection->addCategoriesFilter(
             array(
-                'eq' => getCategoryId('Spares')
+                'eq' => $this->getCategoryId('Spares')
             )
         );
         $collection->getSelect()->assemble();
