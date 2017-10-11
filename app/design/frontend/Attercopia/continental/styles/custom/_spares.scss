@@ -1,0 +1,82 @@
+.product-spares-wrap {
+	display: none;
+	position: absolute;
+	top: 0;
+	transition: none;
+	&.finished {
+		position: relative;
+	}
+}
+.product-info-main {
+	transition: none;
+}
+.spares-view {
+	.product-info-wrap {
+		position: absolute;
+		top: 0;
+	}
+}
+.spares-info-main {
+  box-shadow: 0px 20px 72px 13px rgba(0, 0, 0, 0.04);
+  padding: 48px;
+	float: right;
+  background: #fff;
+  width: 40%;
+}
+.spares-media {
+  float: left;
+  margin-bottom: 25px;
+  width: 60%;
+}
+.spares-info-main h1 {
+	margin: 0;
+	 line-height: 1.42857;
+}
+
+.image-map {
+	position: relative;
+}
+.map-section {
+	position: absolute;
+	background-color: rgba(51,51,51,0.6);
+}
+/* post Jay changes */
+.spares_table_wrapper {
+  float:left;
+  h1 {
+     margin-bottom:5px;
+}
+  table {
+	width:600px;
+		td.rowText {
+ 			line-height:60px;
+ 			padding:0;
+ 		}
+		img {
+			height:60px;
+		}
+}
+
+  input {
+	width:20px;
+        border-radius: 4px;
+	height:22px;
+	margin-top:-2px;
+	padding:0;
+	text-align:center;
+}
+    button {
+	padding:1px;
+	font-size:12px;
+	color:#fff;
+	background-color:red;
+}
+  tr {
+    &:nth-child(even) {
+      background: #CCC;
+    }
+    &:nth-child(odd) {
+      background: #FFF;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+<?php
+//@codingStandardsIgnoreFile
+/** @var \Mirasvit\Blog\Block\Post\View $block */
+
+//$core = $this->getLayout()->createBlock('\Continental\General\Block\Core');
+$core = $this->helper('Continental\General\Helper\Core');
+
+$post = $block->getPost();
+?>
+
+<div class="blog__post-view">
+
+    <?= $this->getPostMetaHeader()->toHtml() ?>
+    <hr />
+    <?php if ($post->getFeaturedImageUrl()): ?>
+        <img src="<?= $post->getFeaturedImageUrl() ?>"  alt="<?= $post->getName() ?>" class="blog__post-featured-image"/>
+    <?php endif ?>
+    <hr />
+        <?= $block->getPostContent() ?>
+    <hr />
+
+    <?= $this->getChildHtml('blog.post.related.posts') ?>
+
+    <?= $this->getChildHtml('blog.post.related.products') ?>
+
+    <?= $this->getChildHtml('blog.post.comments') ?>
+</div>

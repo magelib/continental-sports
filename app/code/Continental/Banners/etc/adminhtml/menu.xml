@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Continental_Banners::Banners" title="Homepage Banners" module="Continental_Banners" sortOrder="51" resource="Continental_Banners::Banners"/>
+        <add id="Continental_Banners::post" title="Banners" module="Continental_Banners" sortOrder="10" action="banners/" resource="Continental_Banners::post" parent="Continental_Banners::Banners"/>
+        <add id="Continental_Banners::hello_configuration" title="Configuration" module="Continental_Banners" sortOrder="99" parent="Continental_Banners::Banners" action="adminhtml/system_config/edit/section/Banners" resource="Continental_Banners::Banners_configuration"/>
+    </menu>
+</config>

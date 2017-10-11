@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+<type name="Magento\Paypal\Model\Express">
+    <plugin sortOrder="1" name="restrictByCustomer" type="Continental\Poa\Plugin\DisableBraintree"/>
+</type>
+</config>

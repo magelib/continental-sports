@@ -1,0 +1,46 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+$required = '';
+if ($block->hasRequiredOptions()) {
+    $required = ' data-hasrequired="' . __('* Required Fields') . '"';
+}
+?>
+<div class="product-options-wrapper" id="product-options-wrapper"<?php /* @escapeNotVerified */ echo $required; ?>>
+    <div class="fieldset" tabindex="0">
+        <?php echo $block->getChildHtml('', true);?>
+    </div>
+</div>
+
+<!-- Tiered Pricing -->
+<?php
+	$products = $this->getLayout()->createBlock('\Continental\Products\Block\Details');
+	if ($products->childProducts()):?>
+<h2>Testing 2</h2>
+<div class="price-table">
+	<div class="thead">
+		<span>Qty</span>
+		<span>Discount</span>
+		<span>Base Price</span>
+	</div>
+	<div class="tbody">
+		<div class="trow">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="tbody extra-fields" style="display: none;">
+		<div class="trow">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<button class="expand-table hidden"">more <small>▼</small></button>
+</div>
+<?php endif; ?>

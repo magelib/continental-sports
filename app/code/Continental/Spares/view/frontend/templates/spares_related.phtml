@@ -1,0 +1,59 @@
+<div class="spares_table_wrapper">
+    <?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $listBlock = $objectManager->get('\Magento\Catalog\Block\Product\ListProduct');
+    ?>
+    <table>
+        <script>
+            require([
+                "jquery"
+            ], function ($) {
+                var html = '';
+                <?php
+                $helper = $this->helper('Continental\Spares\Helper\Listing');
+
+                $x = $helper->filterSpares('master_product_sku', $block->getProduct()->getSku());
+                $count = 0;
+		if (count($x) > 0) {
+                foreach ($x as $item): ?>
+                    <?php $spare = $item->getData(); ?>
+                    <?php
+                        if ( preg_match('/\.[A-Za-z]{3}/', trim($spare['spareimage']))) {
+                            echo '$(".image-map img").attr("src","' . $spare['spareimage'] . '");';
+                        }
+                    ?>
+                        html += '<a class="map-section" style="width:<?= $helper->getLocation($spare['location'])[0] ?>px; height:<?= $helper->getDimensions($spare['dimensions'])[0] ?>px;top:<?=  $helper->getLocation($spare['location'])[0] ?>px;left:<?= $helper->getDimensions($spare['dimensions'])[0]; ?>px;" href="#"></a>';
+                    <?php
+                endforeach;
+		}
+                ?>
+                $(".image-map").append(html);
+            });
+        </script>
+    <?php
+    $related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
+    $collection = $related->getRelatedProducts();
+    if ($collection) {
+    foreach ($collection as $index => $relatedProduct): ?>
+        <tr>
+            <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>" /></td>
+            <td class="rowText"><?= $relatedProduct['sku'] ?></td>
+            <td class="rowText">&pound;<?= $relatedProduct['price'] ?></td>
+            <td>
+                <?php
+                $addToCartUrl = $block->getAddToCartUrl($helper->getProductBySku($relatedProduct['sku']));
+                ?>
+
+                <form data-role="tocart-form" action="<?php echo $addToCartUrl; ?>" method="post">
+                    <?php echo $block->getBlockHtml('formkey')?>
+                    <div class="btn">
+                        <button type="submit" title="Add to Cart" class="action tocart primary">
+                            <span>Add to Cart</span>
+                        </button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        <?php endforeach; } ?>
+    </table>
+</div>

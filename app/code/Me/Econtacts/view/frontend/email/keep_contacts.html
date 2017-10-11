@@ -1,0 +1,75 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{var store.getFrontendName()}}: Keep Contacts @-->
+<!--@vars {
+"var comment":"Comment",
+"var email":"Sender Email",
+"var name":"Sender Name",
+"var telephone":"Sender Telephone",
+"var answer|raw":"Answer",
+"var incl_comment":"Include original comment",
+"var incl_info":"Include original info"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting"><strong>{{trans "Dear %name!" name=$name}}</strong></p>
+        </td>
+    </tr>
+    {{depend answer}}
+    <tr class="email-information">
+        <td>
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{var answer|raw}}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    {{/depend}}
+    {{depend incl_info}}
+    <tr>
+        <td>
+            <p style="margin-top: 15px;"><strong>{{trans 'Contact information:'}}</strong></p>
+            <p>{{trans "Name: %name" name=$name}}</p>
+            <p>{{trans "Email: %email" email=$email}}</p>
+            <p>{{trans "Phone Number: %telephone" telephone=$telephone}}</p>
+        </td>
+    </tr>
+    {{/depend}}
+    {{depend incl_comment}}
+    <tr class="email-information">
+        <td>
+            <p style="margin-bottom: 15px;  margin-top: 15px;"><strong>{{trans 'Your comment:'}}</strong></p>
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{var comment}}
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    {{/depend}}
+    <tr>
+        <td>
+            <p style="margin-top: 15px;">
+                {{trans 'If you have questions, you can email us at <a href="mailto:%store_email">%store_email</a>' store_email=$store_email |raw}}{{depend store_phone}} {{trans 'or call us at <a href="tel:%store_phone">%store_phone</a>' store_phone=$store_phone |raw}}{{/depend}}.
+                {{depend store_hours}}
+                {{trans 'Our hours are <span class="no-link">%store_hours</span>.' store_hours=$store_hours |raw}}
+                {{/depend}}
+            </p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

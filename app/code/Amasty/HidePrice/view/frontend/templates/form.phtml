@@ -1,0 +1,75 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_HidePrice
+ */
+?>
+<?php if ($this->helper('Amasty\HidePrice\Helper\Data')->getModuleConfig('frontend/link') == 'AmastyHidePricePopup') :?>
+<form class="amhideprice-form" id="amhideprice-form" action="" method="post" style="display: none;">
+    <input name="form_key" type="hidden" value="<?php echo $block->escapeHtml($block->getFormKey()) ?>" />
+    <input name="product_id" type="hidden" value="" />
+    <fieldset class="fieldset">
+        <legend class="legend amhideprice-form-ledend">
+            <span><?php /* @escapeNotVerified */ echo __('Get a Quote for') ?></span>
+            <span style="font-weight: bolder;" class="product-name"></span>
+        </legend>
+        <br>
+        <div class="field required">
+            <label for="name" class="label">
+                <span><?php /* @escapeNotVerified */ echo __('Customer Name') ?></span>
+            </label>
+
+            <div class="control">
+                <input type="text" name="name" class="input-text"
+                       data-validate="{required:true}">
+            </div>
+        </div>
+        <div class="field required">
+            <label for="email" class="label">
+                <span><?php /* @escapeNotVerified */ echo __('Customer Email') ?></span>
+            </label>
+
+            <div class="control">
+                <input type="email"
+                       name="email"
+                       autocomplete="email"
+                       value="" class="input-text"
+                       data-validate="{required:true, 'validate-email':true}"
+                       aria-required="true">
+            </div>
+        </div>
+        <div class="field required">
+            <label for="phone" class="label">
+                <span><?php /* @escapeNotVerified */ echo __('Phone Number') ?></span>
+            </label>
+
+            <div class="control">
+                <input type="text" name="phone" class="input-text "
+                       data-validate="{required:true}">
+            </div>
+        </div>
+        <div class="field">
+            <label for="comment" class="label">
+                <span><?php /* @escapeNotVerified */ echo __('Comment') ?></span>
+            </label>
+
+            <div class="control">
+                <textarea title="<?php echo __('Comment') ?>"
+                          type="textarea"
+                          name="comment" class="input-text"
+                          data-validate="{'validate-no-html-tags':true}"></textarea>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit" class="action submit primary"
+                    title="<?php /* @escapeNotVerified */ echo __('Submit') ?>">
+                <span><?php /* @escapeNotVerified */ echo __('Submit') ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+<?php endif;?>
