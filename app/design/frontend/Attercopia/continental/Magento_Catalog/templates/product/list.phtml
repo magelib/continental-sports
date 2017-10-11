@@ -72,13 +72,14 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                         <?php else: ?>
                             <div class="product-information no-description">
                         <?php endif; ?>
-                            <strong class="product name product-item-name">
-                                <a class="product-item-link"
-                                   href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
+                            <div class="product-item-wrapper">
+                                <strong class="product name product-item-name">
+                                <a class="product-item-link" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
                                     <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
                                     <span><?php /* @escapeNotVerified */ echo $_product->getSku() ?></span>
                                 </a>                                
                             </strong>
+                                </div>
                              <?php if ($_product->getShortDescription()):?>
                                 <div class="product description product-item-description">                    
                                     <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>

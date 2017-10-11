@@ -11,8 +11,9 @@
         <th class="data-grid-th">Name</th>
         <th class="data-grid-th"></th>
         <th class="data-grid-th"></th>
-    </thead>
     </tr>
+    </thead>
+
 <?php endif; ?>
 <?php
     if ($showSpares) {
@@ -39,8 +40,15 @@
 <div id="popup-mpdal" style="display:none;">
     <?php
     $_product = $block->getProduct();
+
+    $sparesImages = $related->getSparesMasterImages($_product->getSku());
     $spares = $this->getLayout()->createBlock('\Continental\Spares\Block\Spares');
     $uploader = $this->getLayout()->createBlock('\Magento\Backend\Block\Media\Uploader');
+    if ($sparesImages) {
+        $image = $sparesImages->getFirstItem()->getSpareimage();
+    } else {
+        $image = 'http://www.continentalsports.co.uk/img/spares/blank.jpg';
+    }
 
     if (!$spares->getLayoutImge($_product)): ?>
         <h3>Please add a template image to continue.</h3>
@@ -87,9 +95,9 @@
             </script>
         </div>
 
+        <!-- get images -->
 
         <!-- images editor start -->
-    <?php $image = 'http://www.continentalsports.co.uk/img/spares/13-large_spares.jpg'; ?>
 
         <div class="imageCanvas">
             <div class="canvasWrapper">
@@ -102,14 +110,14 @@
                     <label>
                         <span>Start Co-ordinates:</span>
                     </label>
-                    <input type="text" name="co_ords1" value=""/>
+                        <input type="text" name="co_ords1" value="<?= $sparesImages->getFirstItem()->getLocation(); ?>"/>
                 </p>
 
                 <p>
                     <label>
                         <span>Dimensions:</span>
                     </label>
-                    <input type="text" name="co_ords2" value=""/></p>
+                    <input type="text" name="co_ords2" value="<?= $sparesImages->getFirstItem()->getDimensions(); ?>" /></p>
 
                 <p>
                     <input type="hidden" name="sparesimage" value="<?php echo $image; ?>"/></p>
@@ -149,6 +157,15 @@
                     drag = false;
                 }
 
+                function DrawBox(x,y,w,h) {
+                    alert(x + ", " + y + ", " + w + ", " + h);
+                    ctx.clearRect(0, 0, 600, 600);
+                    ctx.drawImage(imageObj, 0, 0);
+                    ctx.strokeStyle = '#373330';
+                    ctx.fillStyle = "rgba(225,225,225,0.2";
+                    ctx.strokeRect(x, y, w, h);
+                }
+
                 function mouseMove(e) {
                     if (drag) {
                         ctx.clearRect(0, 0, 600, 600);
@@ -167,10 +184,13 @@
                         // save co-ordinates
                         $("input[name='co_ords1']").val(oleft + "," + otop);
                         $("input[name='co_ords2']").val(rect.w + "," + rect.h);
+
                     }
                 }
 
                 init();
+
+                DrawBox(<?= $sparesImages->getFirstItem()->getLocation(); ?>,<?= $sparesImages->getFirstItem()->getDimensions(); ?>);
             });
         </script>
         <!-- images editor end -->
