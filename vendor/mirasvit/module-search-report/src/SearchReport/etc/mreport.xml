@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="../../../../module-report/src/Report/etc/mreport.xsd">
+
+    <table name="mst_search_report_log">
+        <columns>
+            <column name="period_filter" label="Period filter" fields="created_at" type="date" class="Mirasvit\Report\Model\Query\Column\Date\Range"/>
+
+            <column name="hour_of_day" label="Hour of day" fields="created_at" class="Mirasvit\Report\Model\Query\Column\Date\Hour"/>
+
+            <column name="day" label="Day" fields="created_at" class="Mirasvit\Report\Model\Query\Column\Date\Day"/>
+
+            <column name="week" label="Week" fields="created_at" class="Mirasvit\Report\Model\Query\Column\Date\Week"/>
+
+            <column name="month" label="Month" fields="created_at" class="Mirasvit\Report\Model\Query\Column\Date\Month"/>
+
+            <column name="quarter" label="Quarter" fields="created_at" class="Mirasvit\Report\Model\Query\Column\Date\Quarter"/>
+
+            <column name="year" label="Year" fields="created_at" class="Mirasvit\Report\Model\Query\Column\Date\Year"/>
+
+            <column name="results" label="Number of Results" fields="results"
+                    type="number" expr="ROUND(AVG(%1), 0)"/>
+
+            <column name="searches" label="Total Searches / Popularity" fields="log_id"
+                    type="number"  expr="COUNT(%1)" />
+
+            <column name="unique_searches" label="Unique Searches" fields="query"
+                    type="number"  expr="COUNT(DISTINCT(%1))"/>
+
+            <column name="users" label="Users" fields="session"
+                    type="number"  expr="COUNT(DISTINCT(%1))"/>
+
+            <column name="engagement" label="Engagement, %" fields="clicks"
+                    type="number"  expr="ROUND(SUM(case when %1>0 then 1 else null end) * 100 / COUNT(log_id), 1)"/>
+
+            <column name="query" label="Query" fields="query"
+                    type="text"  expr="%1"/>
+
+            <column name="misspell_query" label="Fallback query" fields="misspell_query"
+                    type="text"  expr="GROUP_CONCAT(DISTINCT(%1))"/>
+
+            <column name="fallback_query" label="Misspell query" fields="fallback_query"
+                    type="text"  expr="GROUP_CONCAT(DISTINCT(%1))"/>
+        </columns>
+    </table>
+</config>
