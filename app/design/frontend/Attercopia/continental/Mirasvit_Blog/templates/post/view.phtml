@@ -4,7 +4,6 @@
 
 //$core = $this->getLayout()->createBlock('\Continental\General\Block\Core');
 $core = $this->helper('Continental\General\Helper\Core');
-echo $core->strip_additional_para('<p>This is a test</p><p>This shouldn\'t appear</p>');
 
 $post = $block->getPost();
 ?>
@@ -12,13 +11,13 @@ $post = $block->getPost();
 <div class="blog__post-view">
 
     <?= $this->getPostMetaHeader()->toHtml() ?>
-
+    <hr />
     <?php if ($post->getFeaturedImageUrl()): ?>
         <img src="<?= $post->getFeaturedImageUrl() ?>"  alt="<?= $post->getName() ?>" class="blog__post-featured-image"/>
     <?php endif ?>
-
-    <?= $block->getPostContent() ?>
-
+    <hr />
+        <?= $block->getPostContent() ?>
+    <hr />
 
     <?= $this->getChildHtml('blog.post.related.posts') ?>
 

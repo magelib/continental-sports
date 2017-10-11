@@ -3,17 +3,33 @@ namespace Continental\Spares\Block;
 
 class RelatedProducts extends \Magento\Framework\View\Element\Template
 {
+    /***
+     * @var \Magento\Framework\Registry
+     */
     protected $_registry;
 
+    /***
+     * @var \Magento\Catalog\Model\CategoryFactory
+     */
     protected $_categoryFactory;
+
+    /***
+     * @var \Magento\Catalog\Model\ProductRepository
+     */
+    protected $_productRepository;
+
+    /**
+     * @var \Continental\Spares\Helper\Listing
+     */
+    protected $_listingHelper;
 
     public function __construct(
         \Magento\Catalog\Model\CategoryFactory $categoryFactory,
-
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Catalog\Model\ProductRepository $productRepository,
         \Magento\Catalog\Block\Product\ListProduct $listProduct,
+        \Continental\Spares\Helper\Listing $listingHelper,
         array $data = []
     )
     {
@@ -22,6 +38,7 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         $this->_productRepository = $productRepository;
         $this->_listProdcut = $listProduct;
         parent::__construct($context, $data);
+        $this->_listingHelper = $listingHelper;
     }
 
     public function _prepareLayout()
@@ -43,7 +60,7 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         foreach ($relatedProducts as $relatedProduct) {
             $product = $this->_productRepository->getById( $relatedProduct->getId() );
             $categoryIds = $relatedProduct->getCategoryIds();
-            if (in_array($this->getCategoryId('Spares'), $categoryIds)) {
+            if (in_array($this->_listingHelper->getCategoryId('Spares'), $categoryIds)) {
                 $productData[] = array(
                     'sku' => $relatedProduct->getSku(),
                     'image' => $product->getImage(),
@@ -62,15 +79,36 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         }
     }
 
-    public function getCategoryId($categoryTitle)
-    {
-        $collection = $this->_categoryFactory->create()->getCollection()->addAttributeToFilter('name', $categoryTitle)->setPageSize(1);
+    public function getAllSparesMasterImages($mastersku) {
 
-        if ($collection->getSize())
-        {
-            return $collection->getFirstItem()->getId();
+    }
+
+    /***
+     * Get spare for selected image
+     * @param $mastersku
+     * @return mixed
+     */
+    public function getSparesMasterImages($mastersku)
+    {
+        return $this->_listingHelper->filterSpareImages($mastersku);
+    }
+
+    /***
+     * * Get all available images
+     * @param $mastersku
+     */
+
+    public function testGetSparesMasterImages($mastersku)
+    {
+        echo "Looking for $mastersku<br />Here we go...";
+        $collection = $this->_listingHelper->filterSpareImages($mastersku);
+        $collection->getSelect()->assemble();
+        $collection->getSelect()->__toString();
+        echo $collection->getSelect();
+        foreach ($collection as $thing) {
+            echo $thing->getSpareimage();
         }
-        return false;
+        return $collection;
     }
 }
 ?>
