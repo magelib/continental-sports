@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Continental::top_level" module="Continental_Documents" resource="Magento_Backend::content" sortOrder="60" title="Continental"/>
+		<add action="continental_documents/documents/index" id="Continental::continental_documents_documents" module="Continental_Documents" parent="Continental::top_level" resource="Magento_Backend::content" sortOrder="9999" title="Technical Document Manager" />
+        <add id="Continental::fme_banners" title="Home Page Banners" module="FME_Banners" sortOrder="50" parent="Continental::top_level" action="banners/index/index" resource="FME_Banners::banners"/>
+        <add id="Continental::Mirasvit_Kb" title="Knowledge Base" module="Mirasvit_Kb" sortOrder="70" resource="Mirasvit_Kb::kb" parent="Continental::top_level" action="kbase/article" />
+	</menu>
+</config>

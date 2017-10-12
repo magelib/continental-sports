@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+	<route method="POST" url="/V1/continental-documents/documents">
+		<service class="Continental\Documents\Api\DocumentsRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Continental_Documents::Documents_save"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/continental-documents/search">
+		<service class="Continental\Documents\Api\DocumentsRepositoryInterface" method="getList"/>
+		<resources>
+			<resource ref="Continental_Documents::Documents_view"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/continental-documents/:documentsId">
+		<service class="Continental\Documents\Api\DocumentsRepositoryInterface" method="getById"/>
+		<resources>
+			<resource ref="Continental_Documents::Documents_view"/>
+		</resources>
+	</route>
+	<route method="PUT" url="/V1/continental-documents/:documentsId">
+		<service class="Continental\Documents\Api\DocumentsRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Continental_Documents::Documents_update"/>
+		</resources>
+	</route>
+	<route method="DELETE" url="/V1/continental-documents/:documentsId">
+		<service class="Continental\Documents\Api\DocumentsRepositoryInterface" method="deleteById"/>
+		<resources>
+			<resource ref="Continental_Documents::Documents_delete"/>
+		</resources>
+	</route>
+</routes>

@@ -25,6 +25,11 @@ class Document {
         $this->urlInterface = $urlInterface;
     }
 
+
+    public function getAllDocuments($ids) {
+        $docIds = explode(',', $ids);
+        print_r($docIds);
+    }
     /*
      *   @TODO Refactor this to find bug in code - shouldn't be needed as we are using Magento's Model
      */

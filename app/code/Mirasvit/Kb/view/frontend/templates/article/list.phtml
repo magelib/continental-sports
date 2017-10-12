@@ -13,6 +13,7 @@ $collection = $block->getArticleCollection();
 
     <ol class="kb-articles__list">
         <?php foreach ($collection as $article): ?>
+            DEBUG-<LIST>
             <li class="kb-articles__article">
                 <a class="kb__title" href="<?= $article->getUrl() ?>"><?= $article->getName(); ?></a>
 
@@ -43,6 +44,7 @@ $collection = $block->getArticleCollection();
             </li>
         <?php endforeach; ?>
     </ol>
+    <!--
     <div class="doc-section">
         <div class="doc-section-head">
             <div>
@@ -79,6 +81,7 @@ $collection = $block->getArticleCollection();
             </div>
         </div>
     </div>
+    -->
     <?= $block->getToolbarHtml() ?>
 <?php else: ?>
     <p><?= __('There are no articles available for this category'); ?></p>

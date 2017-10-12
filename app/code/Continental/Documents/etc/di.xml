@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Continental\Documents\Api\DocumentsRepositoryInterface" type="Continental\Documents\Model\DocumentsRepository"/>
+	<preference for="Continental\Documents\Api\Data\DocumentsInterface" type="Continental\Documents\Model\Documents"/>
+	<preference for="Continental\Documents\Api\Data\DocumentsSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="Continental\Documents\Model\ResourceModel\Documents\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">continental_documents_documents</argument>
+			<argument name="resourceModel" xsi:type="string">Continental\Documents\Model\ResourceModel\Documents\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="continental_documents_documents_grid_data_source" xsi:type="string">Continental\Documents\Model\ResourceModel\Documents\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+</config>
