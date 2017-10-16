@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Continental\Documents\Setup;
 
 use Magento\Framework\Setup\InstallSchemaInterface;
@@ -9,41 +8,75 @@ use Magento\Framework\Setup\SchemaSetupInterface;
 
 class InstallSchema implements InstallSchemaInterface
 {
-
-    /**
-     * {@inheritdoc}
-     */
-    public function install(
-        SchemaSetupInterface $setup,
-        ModuleContextInterface $context
-    ) {
+        
+        
+        
+    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {
+                
+                
         $installer = $setup;
         $installer->startSetup();
-
-        $table_continental_documents_documents = $setup->getConnection()->newTable($setup->getTable('continental_documents_documents'));
-
-        
-        $table_continental_documents_documents->addColumn(
-            'documents_id',
-            \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
-            null,
-            array('identity' => true,'nullable' => false,'primary' => true,'unsigned' => true,),
-            'Entity ID'
-        );
-        
-
-        
-        $table_continental_documents_documents->addColumn(
-            'description',
-            \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-            null,
-            [],
-            'description'
-        );
-        
-
-        $setup->getConnection()->createTable($table_continental_documents_documents);
-
-        $setup->endSetup();
+                
+                
+        /**
+                        * Create table 'documents'
+                */
+                
+        $table = $installer->getConnection()->newTable($installer->getTable('continental_documents'))
+                                ->addColumn(
+                                    'documents_id',
+                                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                                    null,
+                                    ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                                    'Documents ID'
+                                )
+                                ->addColumn(
+                                    'title',
+                                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                                    255,
+                                    ['nullable' => true, 'default' => null],
+                                    'Title'
+                                )
+                                ->addColumn(
+                                    'documentfile',
+                                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                                    255,
+                                    [],
+                                    'Document'
+                                )
+                                ->addColumn(
+                                    'sort_order',
+                                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                                    null,
+                                    ['nullable' => false, 'unsigned' => true, 'default' => '0'],
+                                    'Sort Order'
+                                )
+                                ->addColumn(
+                                    'status',
+                                    \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+                                    null,
+                                    ['nullable' => false, 'unsigned' => true, 'default' => '1'],
+                                    'Date'
+                                )
+                                ->addColumn(
+                                    'created_time',
+                                    \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                                    null,
+                                    ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT],
+                                    'Creation Time'
+                                )
+                                ->addColumn(
+                                    'update_time',
+                                    \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                                    null,
+                                    ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
+                                    'Update Time'
+                                );
+                
+                
+        $installer->getConnection()->createTable($table);
+                
+        $installer->endSetup();
     }
 }

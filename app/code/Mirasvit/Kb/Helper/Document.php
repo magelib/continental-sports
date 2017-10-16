@@ -45,14 +45,14 @@ class Document {
     }
 
     public function getDocuments($where = null) {
-        /*$c = $this->documentFactory->create();
-        $c->getCollection();
-        return false;*/
-
         $connection = $this->resourceConnection->getConnection();
-        $documentTable = $this->resourceConnection->getTableName('mst_kb_documents');
-        $sql = "SELECT * FROM " . $documentTable;//". WHERE id = " . $themeId . ";";
+
+        $documentTable = $this->resourceConnection->getTableName('continental_documents');
+
+        $sql = "SELECT * FROM " . $documentTable;
+
         $result = $connection->fetchAll($sql);
+
         return $result;
     }
 
@@ -60,7 +60,7 @@ class Document {
         $arr = array();
         $x = $this->getDocuments();
         foreach ($x as $item) {
-            $arr[] = array('value' => $item['document_id'], 'label' => $item['name']);
+            $arr[] = array('value' => $item['documents_id'], 'label' => $item['title']);
         }
         return $arr;
     }

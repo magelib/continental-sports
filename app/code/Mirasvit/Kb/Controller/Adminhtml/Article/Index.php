@@ -26,7 +26,6 @@ class Index extends \Mirasvit\Kb\Controller\Adminhtml\Article
      */
     public function execute()
     {
-        exit("testing article");
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
