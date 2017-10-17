@@ -8,6 +8,7 @@ return array (
     'BelVG_Tierpricesext' => 1,
     'Continental_Banners' => 0,
     'Continental_Contipdf' => 1,
+    'Continental_Documents' => 1,
     'Continental_Forms' => 1,
     'Continental_General' => 1,
     'Continental_HomeFeatures' => 1,
