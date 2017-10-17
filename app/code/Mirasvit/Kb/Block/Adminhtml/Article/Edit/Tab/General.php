@@ -109,34 +109,15 @@ class General extends \Magento\Backend\Block\Widget\Form
             'label' => __('Sort Order'),
             'name'  => 'position',
             'value' => $article->getPosition(),
-
+            'after_element_js'  => $this->documentHelper->afterElementMultiSelect( $article->getDocuments() ) . $this->documentHelper->afterDocs()
         ]);
 
         $fieldset->addField('select_field', 'multiselect', array(
             'label'             => 'Documents',
             'name'              => 'documents',
             'values'            => $this->documentHelper->optionArray(),
-            'after_element_html' => $this->documentHelper->uploadForm()
             // multi select doesn't like after_element_js ??
         ));
-
-        $fieldset->addField('upload', 'button', array(
-            'label' => '',
-            'name'  => 'new-documents',
-            'value' => 'Add document',
-            'class' => 'action-default',
-            'after_element_js'  => $this->documentHelper->afterElementMultiSelect( $article->getDocuments() ) . $this->documentHelper->afterDocs()
-        ));
-
-        /*
-         * $selectField->setAfterElementHtml('
-                        <script>
-                        function showHideField() {
-                            $("field_to_hide").toggle()
-                        }
-                        </script>
-                    ');
-         */
 
         $this->addStoreField($fieldset, $article);
 
@@ -144,7 +125,7 @@ class General extends \Magento\Backend\Block\Widget\Form
             'label'  => __('Author'),
             'name'   => 'user_id',
             'value'  => $article->getUserId(),
-            'values' => $this->kbData->toAdminUserOptionArray(),
+            'values' => $this->kbData->toAdminUserOptionArray()
         ]);
 
         $tags = [];
