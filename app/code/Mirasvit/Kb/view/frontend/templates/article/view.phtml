@@ -35,7 +35,6 @@ $helper = $this->helper('\Mirasvit\Kb\Helper\Document');
     <?= $article->getTextHtml() ?>
 </div>
 <!-- show available downloads -->
-<?php $helper->getAllDocuments($article->getDocuments()); ?>
 <?php // get downloads ?>
 <div class="doc-section">
     <div class="doc-section-head">
@@ -49,18 +48,27 @@ $helper = $this->helper('\Mirasvit\Kb\Helper\Document');
             <span>Date Uploaded</span>
         </div>
     </div>
-    <div class="doc-section-row">
-        <div>
-            <a href=""><i class="fa fa-file-pdf-o" aria-hidden="true"></i> sample-doc-123</a><span class="size"><small>(10 kb)</small></span>
-        </div>
-        <div>
-            <p>The largest gymnastics facility ever fitted out by Continental.  A huge facility offering a vast range of equipment for high performanc e and training</p>
-        </div>
-        <div>
-            <span class="date">16.08.2017</span>
-        </div>
-    </div>
-
+    <?php
+    $documentList = $helper->getAllDocuments($article->getDocuments());
+    if (count($documentList) > 0) {
+        foreach ($documentList as $index => $row):
+            ?>
+            <div class="doc-section-row">
+                <div>
+                    <a href="<?= $helper->getDocumentUrl($row['documentfile'])?>"><i class="fa fa-file-pdf-o" aria-hidden="true"></i><?=$row['title']?></a><span class="size"><small>
+                            (<?= $helper->getFileSize($row['documentfile'])?> kb)
+                        </small></span>
+                </div>
+                <div>
+                    <p><?=$row['description']?></p>
+                </div>
+                <div>
+                    <span class="date"><?=date("d.m.Y", strtotime($row['created_at']))?></span>
+                </div>
+            </div>
+        <?php endforeach;
+    }
+    ?>
 </div>
 <div class="spacer">&nbsp;</div>
 <!-- end of downloads section -->

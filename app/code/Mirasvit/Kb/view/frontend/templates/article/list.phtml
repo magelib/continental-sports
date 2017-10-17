@@ -13,7 +13,6 @@ $collection = $block->getArticleCollection();
 
     <ol class="kb-articles__list">
         <?php foreach ($collection as $article): ?>
-            DEBUG-<LIST>
             <li class="kb-articles__article">
                 <a class="kb__title" href="<?= $article->getUrl() ?>"><?= $article->getName(); ?></a>
 
@@ -44,44 +43,7 @@ $collection = $block->getArticleCollection();
             </li>
         <?php endforeach; ?>
     </ol>
-    <!--
-    <div class="doc-section">
-        <div class="doc-section-head">
-            <div>
-                <span>Download</span>
-            </div>
-            <div>
-                <span>Description</span>
-            </div>
-            <div>
-                <span>Date Uploaded</span>
-            </div>
-        </div>
-        <div class="doc-section-row">
-            <div>
-                <a href=""><i class="fa fa-file-pdf-o" aria-hidden="true"></i> sample-doc-123</a><span class="size"><small>(10 kb)</small></span>
-            </div>
-            <div>
-                <p>The largest gymnastics facility ever fitted out by Continental.  A huge facility offering a vast range of equipment for high performanc e and training</p>
-            </div>
-            <div>
-                <span class="date">16.08.2017</span>
-            </div>
-        </div>
-
-        <div class="doc-section-row">
-            <div>
-                <a href=""><i class="fa fa-file-pdf-o" aria-hidden="true"></i> sample-doc-123</a><span class="size"><small>(10 kb)</small></span>
-            </div>
-            <div>
-                <p>The largest gymnastics facility ever fitted out by Continental.  A huge facility offering a vast range of equipment for high performanc e and training</p>
-            </div>
-            <div>
-                <span class="date">16.08.2017</span>
-            </div>
-        </div>
-    </div>
-    -->
+    
     <?= $block->getToolbarHtml() ?>
 <?php else: ?>
     <p><?= __('There are no articles available for this category'); ?></p>
