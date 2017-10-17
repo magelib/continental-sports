@@ -54,6 +54,9 @@
         <h3>Please add a template image to continue.</h3>
     <?php else: ?>
     <?php $mediaUrl = $this->getUrl('spares/spares_image/upload/id/' . $_product->getId()); ?>
+        <div class="gallery ui-sortable">
+            <div class="image image-placeholder">
+        <h2>Upload Image:</h2>
         <div id="<?php echo $uploader->getHtmlId() ?>" class="uploader"
              data-mage-init='{
         "Magento_Backend/js/media-uploader" : {
@@ -79,8 +82,10 @@
                     //echo $uploader->getConfig()->getFileField() ?>"
                            data-url="<?php /* @escapeNotVerified */
                            echo $mediaUrl; ?>" multiple="multiple"/>
-                </div>
+                    </div>
             </div>
+            </div>
+        </div>
             <div class="clear"></div>
             <script id="<?php echo $uploader->getHtmlId() ?>-template" type="text/x-magento-template"
                     data-template="uploader">
@@ -126,6 +131,8 @@
             </form>
 
         </div>
+	<div>Existing Locations</div>
+	<?=$related->showLocations(); ?>
 
         <script>
             require(["jquery"], function ($) {
@@ -188,7 +195,7 @@
                     }
                 }
 
-                //init();
+                init();
 
                 //DrawBox(<?= $sparesImages->getFirstItem()->getLocation(); ?>,<?= $sparesImages->getFirstItem()->getDimensions(); ?>);
             });
