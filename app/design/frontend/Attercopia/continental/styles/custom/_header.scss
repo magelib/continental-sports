@@ -3,6 +3,13 @@
 	width: 100% !important;
 	max-width: 100% !important;
 }
+.page-header .panel.header li:before {
+    content: "|";
+    float: left;
+    color: #6f6969;
+    margin-top: 14px;
+    margin-right:-3px;
+}
 .page-header{
 	border-bottom:1px solid #d1d1d1 !important;
 }
