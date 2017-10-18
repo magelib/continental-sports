@@ -10,7 +10,8 @@ $collection = $block->getCollection()
         <strong><?= __('Recent Posts') ?></strong>
     </div> -->
 <?php 
-	//Limit to 2 posts only
+	//Limit to 1 posts only
+	$maxPosts = 1;
 $i = 0; ?>
     <div class="block-content">
         <ol class="items">
@@ -35,7 +36,7 @@ $i = 0; ?>
                 </li>
             <?php 
 		$i++;
-		if ($i >=2) return;
+		if ( $i >= $maxPosts ) return;
 		 endforeach; ?>
         </ol>
     </div>

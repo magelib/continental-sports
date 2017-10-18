@@ -8,5 +8,10 @@
             <referenceContainer name="main">
 	     		<block class="Continental\HomeFeatures\Block\Features" template="Continental_HomeFeatures::default/features.phtml"/>
             </referenceContainer>
+
+            <referenceContainer name="sidebar.additional" htmlTag="div" htmlClass="blog__sidebar-main">
+                        <block class="Mirasvit\Blog\Block\Sidebar\Recent" name="trampoline.parks.home" template="Continental_HomeFeatures::default/trampolineParks.phtml"/>
+            </referenceContainer>
+
         </body>
     </page>
