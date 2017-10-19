@@ -124,7 +124,7 @@
         </referenceBlock>
 
         <referenceContainer name="page.bottom.container">
-                <block class="Magento\Framework\View\Element\Text" name="your.block.name" before="product.info.description">
+                <block class="Magento\Framework\View\Element\Text" name="product.description.block " before="product.info.description">
                     <arguments>
                         <argument name="text" xsi:type="string"><![CDATA[<h3 class="fullDescription">Full Description</h3>]]></argument>
                     </arguments>
@@ -138,6 +138,8 @@
                         <argument name="title" translate="true" xsi:type="string">Details</argument>
                     </arguments>
                 </block>
+	<!-- add Block here for grids -->
+		<block class="Continental\GalleryGrid\Block\Grids" name="product.gallery.grid" as="product.gallery.grid" template="imageGrid.phtml"/>
         </referenceContainer>
 
     </body>
