@@ -1,0 +1,18 @@
+<div class="admin__field field-image-gridable">
+    <div class="admin__field-control">
+        <div class="admin__field admin__field-option">
+            <input type="checkbox"
+                   id="use-for-gridable"
+                   data-role="gridable-save"
+                   data-form-part="<?php /* @escapeNotVerified */ echo $formName ?>"
+                   value="1"
+                   class="admin__control-checkbox"
+                   name="<?php /* @escapeNotVerified */ echo $elementName ?>[<%- data.file_id %>][gridable]"
+            <% if (data.useforgridable == 1) { %>checked="checked"<% } %> />
+
+            <label for="use-for-gridable" class="admin__field-label">
+                <?php /* @escapeNotVerified */ echo __('Use for Gallery Grid')?>
+            </label>
+        </div>
+    </div>
+</div>

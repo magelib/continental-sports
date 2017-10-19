@@ -276,19 +276,25 @@ $elementToggleCode = $element->getToggleCode() ? $element->getToggleCode() : 'to
                 </div>
 
                 <!-- Additional attribute -->
-                <div class="admin__field admin__field-inline field-image-resolution" data-role="resolution">
-                    <label class="admin__field-label">
-                        <span><?php /* @escapeNotVerified */ echo __('Grid View') ?></span>
-                    </label>
-
+                <div class="admin__field field-image-gridable">
                     <div class="admin__field-control">
-                        <select id="isGridImage" name="isGridImage">
-                            <option>No</option>
-                            <option>Yes</option>
-                        </select>
-                    </div>
+                        <div class="admin__field admin__field-option">
+                            <input type="checkbox"
+                                   id="use-for-gridable"
+                                   data-role="gridable-save"
+                                   data-form-part="<?php /* @escapeNotVerified */ echo $formName ?>"
+                                   value="1"
+                                   class="admin__control-checkbox"
+                                   name="<?php /* @escapeNotVerified */ echo $elementName ?>[<%- data.file_id %>][gridable]"
+                                    <% if (data.gridable == 1) { %>checked="checked"<% } %> />
 
+                            <label for="use-for-gridable" class="admin__field-label">
+                                <?php /* @escapeNotVerified */ echo __('Use for Gallery Grid')?>
+                            </label>
+                        </div>
+                    </div>
                 </div>
+
 
                 <div class="admin__field field-image-hide">
                     <div class="admin__field-control">
