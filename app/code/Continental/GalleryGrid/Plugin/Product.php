@@ -4,32 +4,28 @@ namespace Continental\GalleryGrid\Plugin;
 
 class Product
 {
-    /***
-     * Store Gridable items here
-     * @var array
-     */
-    private $_gridableImages;
+    protected $_block;
 
-    /**
-     * @param \Magento\Catalog\Model\Product $subject
-     * @param \Magento\Framework\Data\Collection $result
-     * @return mixed
-     */
+    public function __construct(\Continental\GalleryGrid\Helper\Data $helper) {
+        $this->helper = $helper;
+    }
+
     public function afterGetMediaGalleryImages(\Magento\Catalog\Model\Product $subject, $result)
     {
-        $this->_gridableImages = [];
+       $gridableImages = [];
 
         foreach ($result as $key => $image) {
             if ($image['gridable']) {
-                $this->_gridableImages[$key] = $image;
+                $gridableImages[$key] = $image;
                 $result->removeItemByKey($key);
             }
+        }
+
+        if (!empty($gridableImages)) {
+            $this->helper->SetGridImage($gridableImages);
         }
 
         return $result;
     }
 
-    public function getGridImages() {
-        return $this->_gritableImages;
-    }
-}
+ }
