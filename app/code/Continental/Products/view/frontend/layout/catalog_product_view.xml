@@ -9,7 +9,7 @@
     <body>
         <referenceContainer name="page.bottom.container">
             <!-- add Block here for related items (filtering spares) -->
-            <block class="Magento\Catalog\Block\Product\View" name="product.gallery.related" as="product.gallery.grid" template="relatedProducts.phtml" after"product.info.description" />
+            <block class="Magento\Catalog\Block\Product\View" name="product.gallery.related" as="product.gallery.grid" template="Continental_Products::relatedProducts.phtml" after="product.info.wrapper" />
         </referenceContainer>
     </body>
 </page>

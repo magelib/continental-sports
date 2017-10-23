@@ -1,1 +1,45 @@
-<h2>Related Producte Placeholder</h2>
+<?php
+// Get collection
+$helper = $this->helper('Continental\Products\Helper\Accessories');
+$relatedCollection = $helper->getAccesories();
+if (!empty($relatedCollection)):?>
+
+<div class="related_column">
+    <h2>Accessories</h2>
+        <?php foreach ($relatedCollection as $index=>$product): ?>
+            <?php // filter out spares
+                $sparesId = $helper->getCategory('Spares');
+                if (!in_array($sparesId, $product->getCategoryIds() ) ):
+            ?>
+                <div class="accessories_div">
+            <ul>
+                <li class=thumb""><img src="<?= $product->getThumbnail()?>" alt=""/></li>
+                <li class="details">
+                    <p class="title"><h4><?= $product->getName(); ?></h4></p>
+                    <p class="sku"><?= $product->getSku() ?></p>
+                    <?php if ($product->getShortDescription()): ?>
+                    <p class="desc">desc:<?= $product->getShortDescription() ?></p>
+                    <?php endif; ?>
+                    <p class="price">&pound;<?= $helper->formatPrice($product->getPrice()) ?></p>
+                    <?php echo print_r($product->getCategoryIds(), true); ?>
+                </li>
+                <li class="btns">
+                    <p><a href=""<?=$product->getProductUrl()?>"><button class="view-btn"><span>View</span></button></a></p>
+                    <p><a href=""><button class="add-btn"><span>Add</span></button></a></p>
+                </li>
+            </ul>
+        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+</div>
+    <script>
+        // add js here to handle buttons
+        require(["jquery"], function ($) {
+            $(".btns").click(function() {
+                alert("Test");
+                return false;
+            })
+        });
+    </script>
+<?php endif; ?>
+
