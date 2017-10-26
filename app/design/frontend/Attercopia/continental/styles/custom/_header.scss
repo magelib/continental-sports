@@ -3,6 +3,13 @@
 	width: 100% !important;
 	max-width: 100% !important;
 }
+.page-header .panel.header li:before {
+    content: "|";
+    float: left;
+    color: #6f6969;
+    margin-top: 14px;
+    margin-right:-3px;
+}
 .header.content {
 	padding: 28px 0 !important;
 	.logo {
@@ -31,6 +38,8 @@
     display: block;
     padding-top: 4px;
     padding-bottom: 4px;	     
+    color: black;
+    text-align:left;
     &:hover {
     	color: $primary;
     }

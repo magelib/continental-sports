@@ -38,7 +38,7 @@
 }
 .product.attribute {
 	.value[itemprop="description"] p{
-		@include font-size(18);
+		@include font-size(13);
 	}
 	&.sku strong {
 	display:block;
@@ -53,7 +53,7 @@
 }
 .product-info-main {
     box-shadow: 0px 20px 72px 13px rgba(0,0,0,0.04);
-    padding: 48px;
+    padding: 0px 48px 0px 48px;
     position: absolute;
     z-index: 1;
     right: 0;
