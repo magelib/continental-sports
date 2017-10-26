@@ -79,6 +79,10 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         }
     }
 
+    public function showLocations() {
+        return '<table><tr><td>SSS</td><td>SSS</td></tr>';
+    }
+
     public function getAllSparesMasterImages($mastersku) {
 
     }

@@ -3,6 +3,8 @@
 //@codingStandardsIgnoreFile
 $article = $block->getArticle();
 $tags = $block->getTags();
+$helper = $this->helper('\Mirasvit\Kb\Helper\Document');
+
 ?>
 
 <?= $block->getChildHtml('kb.search.form') ?>
@@ -32,6 +34,44 @@ $tags = $block->getTags();
 <div class="kb-article__body cms-content">
     <?= $article->getTextHtml() ?>
 </div>
+<!-- show available downloads -->
+<?php // get downloads ?>
+<div class="doc-section">
+    <div class="doc-section-head">
+        <div>
+            <span>Download</span>
+        </div>
+        <div>
+            <span>Description</span>
+        </div>
+        <div>
+            <span>Date Uploaded</span>
+        </div>
+    </div>
+    <?php
+    $documentList = $helper->getAllDocuments($article->getDocuments());
+    if (count($documentList) > 0) {
+        foreach ($documentList as $index => $row):
+            ?>
+            <div class="doc-section-row">
+                <div>
+                    <a href="<?= $helper->getDocumentUrl($row['documentfile'])?>"><i class="fa fa-file-pdf-o" aria-hidden="true"></i><?=$row['title']?></a><span class="size"><small>
+                            (<?= $helper->getFileSize($row['documentfile'])?> kb)
+                        </small></span>
+                </div>
+                <div>
+                    <p><?=$row['description']?></p>
+                </div>
+                <div>
+                    <span class="date"><?=date("d.m.Y", strtotime($row['created_at']))?></span>
+                </div>
+            </div>
+        <?php endforeach;
+    }
+    ?>
+</div>
+<div class="spacer">&nbsp;</div>
+<!-- end of downloads section -->
 
 <div class="kb-article__body-info-left">
     <div class="kb-article__categories">
@@ -79,33 +119,5 @@ $tags = $block->getTags();
     <?php endif ?>
 </div>
 <div class="clearfix"></div>
+<!-- clearing comment providers -->
 
-<?php if ($block->getCommentProvider() == 'disqus'): ?>
-    <div id="disqus_thread"></div>
-    <script>
-        var disqus_config = function () {
-        };
-        (function () {
-            var d = document, s = d.createElement('script');
-
-            s.src = '//<?=$block->getDisqusShortname() ?>.disqus.com/embed.js';
-
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
-    </script>
-<?php elseif ($block->getCommentProvider() == 'facebook'): ?>
-    <div id="fb-root"></div>
-    <script>(function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-
-    <div class="fb-comments" data-href="<?= $article->getUrl() ?>"
-         data-numposts="5" width="100%"></div>
-<?php endif ?>

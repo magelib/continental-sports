@@ -1,0 +1,21 @@
+<?php
+    $helper = $this->helper('Continental\GalleryGrid\Helper\Data');
+    $gridImage = $helper->getGridImages();
+    $count = 0;
+if (!empty($gridImage)): ?>
+<h3>Image Grid Title Text</h3>
+    <div class="gallery_row">
+    <?php foreach ($gridImage as $key => $image): ?>
+    <?php if ($count%3 === 0): ?>
+    </div><div class="gallery_row" style="clear:both">
+        <?php endif; ?>
+        <div class="contigrid">
+            <div class="gallery_image_wrapper">
+                <img src="<?=$image->getUrl(); ?>" />
+            </div>
+            <span><?=$image->getLabel()?></span>
+        </div>
+        <?php $count++; ?>
+<?php endforeach; ?>
+</div>
+<?php endif; ?>

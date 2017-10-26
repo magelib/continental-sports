@@ -2,7 +2,7 @@
 namespace Mirasvit\Kb\Helper;
 use \Magento\Framework\App\Helper\AbstractHelper;
 
-class Document {
+class Document extends \Magento\Framework\App\Helper\AbstractHelper {
 
     /***
      * @var \Mirasvit\Kb\Model\ResourceModel\Document\CollectionFactory
@@ -25,9 +25,48 @@ class Document {
         $this->urlInterface = $urlInterface;
     }
 
+
+    /***
+     * Return array of matching document details
+     * @param $ids
+     */
+    public function getAllDocuments($ids) {
+        $docIds = explode(',', $ids);
+
+        $d = $this->getDocumentsWhere(
+            array("document_id" =>
+                        array(
+                            'operator' => 'IN ',
+                            'value' => $ids
+                        )
+            )
+        );
+
+        return $d;
+    }
     /*
      *   @TODO Refactor this to find bug in code - shouldn't be needed as we are using Magento's Model
      */
+
+    public function getDocumentUrl($filename) {
+        $mediaDir = $_SERVER['DOCUMENT_ROOT'] . '/media/';
+        if (file_exists($mediaDir.$filename)) {
+            return '/media/'.$filename;
+        }
+    }
+
+    public function getFileSize($filename, $suffix = 'kb') {
+        $mediaDir = $_SERVER['DOCUMENT_ROOT'] . '/media/';
+        if (file_exists($mediaDir.$filename)) {
+            if ($suffix === 'kb') {
+                return number_format( filesize($mediaDir . $filename) /1000, 0);
+            }
+        } else
+        {
+            return $mediaDir.$filename;
+        }
+
+    }
 
     public function getDocumentsWhere($arr = null) {
         $where = ' WHERE ';
@@ -40,14 +79,14 @@ class Document {
     }
 
     public function getDocuments($where = null) {
-        /*$c = $this->documentFactory->create();
-        $c->getCollection();
-        return false;*/
-
         $connection = $this->resourceConnection->getConnection();
-        $documentTable = $this->resourceConnection->getTableName('mst_kb_documents');
-        $sql = "SELECT * FROM " . $documentTable;//". WHERE id = " . $themeId . ";";
+
+        $documentTable = $this->resourceConnection->getTableName('continental_documents');
+
+        $sql = "SELECT * FROM " . $documentTable;
+
         $result = $connection->fetchAll($sql);
+
         return $result;
     }
 
@@ -55,7 +94,7 @@ class Document {
         $arr = array();
         $x = $this->getDocuments();
         foreach ($x as $item) {
-            $arr[] = array('value' => $item['document_id'], 'label' => $item['name']);
+            $arr[] = array('value' => $item['documents_id'], 'label' => $item['title']);
         }
         return $arr;
     }

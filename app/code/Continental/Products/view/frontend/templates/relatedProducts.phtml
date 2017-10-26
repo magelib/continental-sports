@@ -1,0 +1,55 @@
+<?php
+// Get collection
+$helper = $this->helper('Continental\Products\Helper\Accessories');
+$relatedCollection = $helper->getAccesories();
+if (count($relatedCollection) > 1 ):?>
+
+<div class="related_column">
+    <h2>Accessories</h2>
+        <?php foreach ($relatedCollection as $index=>$product): ?>
+            <?php // filter out spares
+                $sparesId = $helper->getCategory('Spares');
+                if (!in_array($sparesId, $product->getCategoryIds() ) ):
+            ?>
+                <div class="accessories_div">
+            <ul>
+                <li class="thumb">
+                    <?php $thumbnail = $product->getThumbnail();
+                    if ($thumbnail): ?>
+                    <img src="/pub/media/catalog/product/<?= $thumbnail ?>" alt=""/></li>
+                <?php endif; ?>
+                <li class="details">
+                    <p class="title"><h4><?= $product->getName(); ?></h4></p>
+                    <p class="sku"><?= $product->getSku() ?></p>
+                    <?php if ($product->getShortDescription()): ?>
+                    <p class="desc">desc:<?= $product->getShortDescription() ?></p>
+                    <?php endif; ?>
+                    <p class="price">&pound;<?= $helper->formatPrice($product->getPrice()) ?></p>
+                </li>
+                <li class="btns">
+                    <p><a data-button="view" href="<?=$product->getProductUrl()?>"><button class="view-btn"><span>View</span></button></a></p>
+                    <p><a data-button="addtocart" data-addtocart="<?=$helper->getAddToCartUrl($product->getId())?>" href=""><button class="add-btn"><span>Add</span></button></a></p>
+                </li>
+            </ul>
+        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+</div>
+    <script>
+        // add js here to handle buttons
+        require(["jquery"], function ($) {
+            $(".btns a").click(function() {
+            if ($(this).data("button") === "view") {
+                window.location = $(this).attr("href");
+            }
+            if ($(this).data("button") === "addtocart") {
+                //window.location = $(this).attr("addtocart");
+                console.log("add to cart url : " + $(this).data("addtocart"));
+                $('<form data-role="tocart-form" action="' + $(this).data("addtocart") + '" method="post"><?= $block->getBlockHtml('formkey')?></form>').appendTo('body').submit();
+            }
+                return false;
+            })
+        });
+    </script>
+<?php endif; ?>
+
