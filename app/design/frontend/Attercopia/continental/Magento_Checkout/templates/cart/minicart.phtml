@@ -10,6 +10,7 @@
 ?>
 
 <div data-block="minicart" class="minicart-wrapper">
+
     <a class="action showcart fa fa-shopping-cart" href="<?php /* @escapeNotVerified */ echo $block->getShoppingCartUrl(); ?>"
        data-bind="scope: 'minicart_content'">
         <span class="text"><?php /* @escapeNotVerified */ echo __('My Cart'); ?></span>
@@ -36,9 +37,37 @@
                 "triggerClass":"active",
                 "parentClass":"active",
                 "buttons":[]}}'>
-            <div id="minicart-content-wrapper" data-bind="scope: 'minicart_content'">
+<!-- The basket is rendered here -->
+<?php
+    // use helper here to check if enquiry
+    $enquiry = false;
+    $accessories = $this->helper('Continental\Products\Helper\Accessories');
+    $hidemeHelper = $this->helper('Amasty\HidePrice\Helper\Data');
+    $cart = $this->helper('\Magento\Checkout\Helper\Cart');
+    // Loop through
+        $quote = $cart->getQuote();
+        //$items = $quote->getAllItems();
+        $items = $quote->getAllVisibleItems();
+        //$items = $this->_cart->getEvent()->getQuote()->getAllVisibleItems(); // get only visible items
+        $maxId = 0;
+        foreach ($items as $item){
+            // Get Product as object
+            $product = $accessories->getProductByID( $item->getProductId() );
+            if ( $hidemeHelper->isNeedHideProduct( $product ) ) {
+                echo "true";
+            }
+        }
+
+    if ($enquiry === false): ?>
+
+        <div id="minicart-content-wrapper" data-bind="scope: 'minicart_content'">
                 <!-- ko template: getTemplate() --><!-- /ko -->
             </div>
+<?php else: ?>
+        <div>
+            <button>Send Basket as Enquiry</button>
+        </div>
+    <?php endif; ?>
             <?php echo $block->getChildHtml('minicart.addons'); ?>
         </div>
     <?php endif ?>

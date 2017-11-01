@@ -30,22 +30,30 @@ class UpdateMessage implements ObserverInterface
 
     protected $url;
 
+    protected $_cart;
+
     public function __construct(
         \Magento\Framework\Message\ManagerInterface $managerInterface,
         \Magento\Framework\UrlInterface $url,
-        \Amasty\HidePrice\Helper\Data $helper
+        \Amasty\HidePrice\Helper\Data $helper,
+        \Magento\Checkout\Helper\Cart $cartHelper,
+        \Continental\Products\Helper\Accessories $accessoriesHelper
     ) {
         $this->messageManager = $managerInterface;
         $this->url = $url;
         $this->_helper = $helper;
+        $this->_cart = $cartHelper;
+        $this->_product = $accessoriesHelper;
     }
 
     public function execute(\Magento\Framework\Event\Observer $observer) {
+        // Get basket
         $this->messageCollection = $this->messageManager->getMessages(true);
 
         // Get message depending if Product is POA or not.
         $this->getAddToCartMessage();
-        $this->message .= ' :: GXT :: ' . $this->poa;
+
+//        $this->message .= $this->getBasket();
 
         $this->messageManager->addSuccess($this->message);
     }
@@ -56,18 +64,36 @@ class UpdateMessage implements ObserverInterface
         // Check if POA
         if ($this->isPoa()) {
             /* TODO: add this to backend and make content editable */
-            $this->message = 'This item is an enquiry only; your basket will be sent as ab enquiry and our dedicated customer support team will be in touch';
+            $this->message = 'This item is an enquiry only; your basket will be sent as an enquiry and our dedicated customer support team will be in touch';
+        }
+    }
+
+    /***
+     * @return int
+     */
+    protected function getBasket() {
+        $quote = $this->_cart->getQuote();
+        //$items = $quote->getAllItems();
+        $items = $quote->getAllVisibleItems();
+        //$items = $this->_cart->getEvent()->getQuote()->getAllVisibleItems(); // get only visible items
+        $maxId = 0;
+        foreach ($items as $item){
+            if ($item->getId() > $maxId) {
+                $maxId = $item->getId();
+            }
         }
 
+        $this->productId = $maxId;;
+        return $this->productId;
     }
 
     protected function isPoa() {
-        $this->poa = $this->_helper->getModuleConfig('frontend/link');
-        // Debugging:
-        if ($this->poa == 'AmastyHidePricePopup') {
-            return true;
-        }
-
+        $itemId = $this->getBasket();
+        $product = $this->_product->getProductByID( $itemId );
         return false;
+        // Get current product
+
+
+        //return  $this->_helper->isNeedHideProduct( $product );
     }
 }

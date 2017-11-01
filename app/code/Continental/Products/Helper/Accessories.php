@@ -80,6 +80,10 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
         return $this->_product;
     }
 
+    public function setProduct() {
+        return $this->getProduct();
+    }
+
     /***
      * Gets Categories id for filtering
      * Note to future developer - This doesn't adhere to DRY principles but we're in plugin land so what the heck..
@@ -116,6 +120,10 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
         $product = $this->_productRepository->getById( $productId );
         return $this->_listProduct->getAddToCartUrl($product);
 
+    }
+
+    public function getProductByID($productId) {
+        return $this->_productRepository->getById( $productId );
     }
 
     public function formatPrice($str) {

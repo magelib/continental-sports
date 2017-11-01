@@ -11,5 +11,6 @@
             <!-- add Block here for related items (filtering spares) -->
             <block class="Magento\Catalog\Block\Product\View" name="product.gallery.related" as="product.gallery.grid" template="Continental_Products::relatedProducts.phtml" after="product.info.wrapper" />
         </referenceContainer>
+        <!-- referenceBlock name="product.price.render" remove="true"/ -->
     </body>
 </page>
