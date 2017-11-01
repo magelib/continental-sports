@@ -64,7 +64,7 @@ class UpdateMessage implements ObserverInterface
         // Check if POA
         if ($this->isPoa()) {
             /* TODO: add this to backend and make content editable */
-            $this->message = 'This item is an enquiry only; your basket will be sent as an enquiry and our dedicated customer support team will be in touch';
+            $this->message .= 'This item is an enquiry only; your basket will be sent as an enquiry and our dedicated customer support team will be in touch';
         }
     }
 
@@ -73,27 +73,27 @@ class UpdateMessage implements ObserverInterface
      */
     protected function getBasket() {
         $quote = $this->_cart->getQuote();
-        //$items = $quote->getAllItems();
+
         $items = $quote->getAllVisibleItems();
-        //$items = $this->_cart->getEvent()->getQuote()->getAllVisibleItems(); // get only visible items
+
         $maxId = 0;
+
         foreach ($items as $item){
             if ($item->getId() > $maxId) {
-                $maxId = $item->getId();
+                // This was working when maxId was commented out
+                $maxId = $item->getId(); // MaxId should be the last item added.
+                $latestProductId = $item->getProductId();
             }
         }
 
-        $this->productId = $maxId;;
+        $this->productId = $latestProductId;
         return $this->productId;
     }
 
     protected function isPoa() {
-        $itemId = $this->getBasket();
-        $product = $this->_product->getProductByID( $itemId );
-        return false;
         // Get current product
-
-
-        //return  $this->_helper->isNeedHideProduct( $product );
+        $productId = $this->getBasket();
+        $product = $this->_product->getProductByID( $productId );
+        return  $this->_helper->isNeedHideProduct( $product );
     }
 }
