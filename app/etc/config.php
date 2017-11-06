@@ -102,7 +102,7 @@ return array (
     'Magento_SendFriend' => 1,
     'Magento_Shipping' => 1,
     'Magento_Sitemap' => 1,
-    'Amasty_HidePrice' => 0,
+    'Amasty_HidePrice' => 1,
     'Magento_Swagger' => 1,
     'Magento_Swatches' => 1,
     'Magento_SwatchesLayeredNavigation' => 1,
