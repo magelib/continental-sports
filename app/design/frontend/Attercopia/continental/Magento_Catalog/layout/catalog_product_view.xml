@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 /**
- * Copyright Â© 2013-2017 Magento, Inc. All rights reserved.
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
 -->
@@ -71,9 +71,11 @@
                      </block>
                      <block class="Magento\Catalog\Pricing\Render" name="product.price.final" after="product.info.options.wrapper">
                         <arguments>
-                            <argument name="price_render" xsi:type="string">product.price.render.default</argument>
-                            <argument name="price_type_code" xsi:type="string">final_price</argument>
-                            <argument name="zone" xsi:type="string">item_view</argument>
+                           <argument name="at_call" xsi:type="string">getSku</argument>
+                           <argument name="at_code" xsi:type="string">sku</argument>
+                           <argument name="css_class" xsi:type="string">sku</argument>
+                           <argument name="at_label" xsi:type="string" />
+                           <argument name="add_attribute" xsi:type="string">itemprop="sku"</argument>
                         </arguments>
                     </block>
                      <block class="Magento\Catalog\Block\Product\View" name="product.info.options.wrapper.bottom" as="product_options_wrapper_bottom" template="product/view/options/wrapper/bottom.phtml">
