@@ -5,9 +5,9 @@
 		text-transform: none;
 	}
 	.product.attribute.description {
-		width:1100px;
 		padding:5px;
 		margin-bottom:25px;
+		margin-right:20px;
 	}
 }
 
@@ -38,7 +38,7 @@
 }
 .product.attribute {
 	.value[itemprop="description"] p{
-		@include font-size(13);
+		@include font-size(12);
 	}
 	&.sku strong {
 	display:block;
@@ -53,7 +53,7 @@
 }
 .product-info-main {
     box-shadow: 0px 20px 72px 13px rgba(0,0,0,0.04);
-    padding: 0px 48px 0px 48px;
+    padding: 0px 48px 10px 48px;
     position: absolute;
     z-index: 1;
     right: 0;
@@ -63,7 +63,7 @@
     	// position: relative;
     }
 	.price-final_price .price-container .price-wrapper .price {
-		@include font-size(30);
+		@include font-size(25);
 		color: $primary;
 		letter-spacing: 1px;
 		font-weight: 300;
@@ -326,4 +326,31 @@
 			}
 		}
 	}
+}
+.accessories_div ul li.thumb {
+    width: 20%;
+    margin-right:20px;
+}
+.accessories_div ul li.details {
+    width: 50%;
+}
+.accessories_div ul li.btns {
+    float: left;
+    width: 20%;
+}
+.accessories_div ul li p.sku {
+    font-size: 12px;
+}
+.accessories_div ul li p.price {
+    font-size: 15px;
+}
+.btns button.view-btn {
+    font-size: 12px;
+}
+.btns button.add-btn {
+    font-size: 12px;
+}
+.btns button {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }

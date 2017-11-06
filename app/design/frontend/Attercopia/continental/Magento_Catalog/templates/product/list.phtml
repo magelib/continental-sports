@@ -76,7 +76,6 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                                 <strong class="product name product-item-name">
                                 <a class="product-item-link" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
                                     <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
-                                    <span><?php /* @escapeNotVerified */ echo $_product->getSku() ?></span>
                                 </a>                                
                             </strong>
                                 </div>
@@ -89,9 +88,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 // Load contiproducts class
 $contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\Details');
 ?>
-                            <?php if ($configurablesCount = $contiproducts->showConfigurableCount($_product)): ?>
-                                <p class="show-configurables"><?php echo $configurablesCount; ?> configurations</p>
-                            <?php endif; ?>
+                            
                         </div>
                         <?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
                         <?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
