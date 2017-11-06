@@ -69,6 +69,7 @@ class UpdateMessage implements ObserverInterface
     }
 
     /***
+     * Checks basket to get most recently added product and retrieves product id
      * @return int
      */
     protected function getBasket() {
@@ -87,9 +88,14 @@ class UpdateMessage implements ObserverInterface
         }
 
         $this->productId = $latestProductId;
+        
         return $this->productId;
     }
 
+    /***
+     * Checks if latest product is Poa
+     * @return bool
+     */
     protected function isPoa() {
         // Get current product
         $productId = $this->getBasket();
