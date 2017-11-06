@@ -54,12 +54,13 @@
 	}
 	h1.page-title {
 		color: $white;
-		@include font-size(48);
+		@include font-size(44);
     text-transform: uppercase;
     font-family: montserrat;
     letter-spacing: 1px;
     margin-top: 0;
     margin-bottom: 32px;
+    text-align: left;
 	}
 }
 @keyframes fade {
