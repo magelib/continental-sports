@@ -88,7 +88,7 @@ class UpdateMessage implements ObserverInterface
         }
 
         $this->productId = $latestProductId;
-        
+
         return $this->productId;
     }
 

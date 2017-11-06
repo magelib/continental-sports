@@ -515,9 +515,12 @@ define([
             this._setDefaultConfiguration(0);
         },
         _setDefaultConfiguration: function (elementId) {
-         console.log("Complete");
     }
     });
+
+    function setDefaultAttribute() {
+        alert("new function");
+    }
 
 // preselect items
     function preSelect(elementIndex) {
@@ -528,7 +531,8 @@ define([
     }
     setTimeout(
         function() {
-            preSelect(0);
+	    // setDefaultAttribute();
+            // preSelect(0);
         }, 1200
     );
 

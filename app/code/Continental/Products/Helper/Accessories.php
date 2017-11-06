@@ -50,7 +50,9 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Catalog\Model\CategoryFactory $categoryFactory,
         \Magento\Catalog\Block\Product\ListProduct $listProduct,
         \Magento\Catalog\Model\ProductRepository $productRepository,
+        \Magento\Framework\App\ResourceConnection $resource,
         Registry $registry
+
     )
     {
         $this->_scopeConfig = $context;
@@ -61,6 +63,7 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
         $this->_categoryFactory     = $categoryFactory;
         $this->_listProduct = $listProduct;
         $this->_productRepository = $productRepository;
+        $this->_resource = $resource;
         $this->_registry = $registry;
     }
 
@@ -72,8 +75,13 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
         if (is_null($this->_product)) {
             $this->_product = $this->_registry->registry('product');
 
+            if (empty($this->_product)) {
+                return null;
+            }
+
             if (!$this->_product->getId()) {
                 //throw new LocalizedException(__('Failed to initialize product'));
+
             }
         }
 
@@ -130,7 +138,11 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
         return number_format($str, 2);
     }
 
-    public function getSparesCategory() {
 
-    }
+    public function getDefaultAttributes() {
+        $connection = $this->_resource->getConnection();
+        $result = $connection->fetchAll("select * from catalog_product_super_attribute t1 left join catalog_product_super_attribute_label t2 ON t1.attribute_id = t2.value_id");
+        return isset($result[0]) ? $result : '';
+        //return $connection->fetchAll("select * from catalog_product_super_attribute t1 left join catalog_product_super_attribute_label t2 ON t1.attribute_id = t2.value_id");
+        }
 }
