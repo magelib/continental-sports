@@ -18,7 +18,8 @@ define([
             var simpleSku = this.options.spConfig.skus[this.simpleProduct];
 	    if (typeof simpleSku === "undefined") {
 		var v = $('div.product-info-main .sku .value').html();
-		if (v.indexOf('-master') != -1) {
+		/* set the sku when the configuration options are changed */
+            if (v.indexOf('-master') != -1) {
 		  window.skumaster = v;
 		} else {
 			simpleSku = window.skumaster;
@@ -28,9 +29,7 @@ define([
             if(simpleSku != '') {
                 $('div.product-info-main .sku .value').html(simpleSku);
             } 
-
-
-            //return original value
+           //return original value
             return result;
         });
 

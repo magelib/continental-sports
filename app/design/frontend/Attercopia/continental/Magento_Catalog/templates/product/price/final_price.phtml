@@ -7,7 +7,66 @@
 // @codingStandardsIgnoreFile
 
 ?>
+<?php
+// Get attributes
+$helper = $this->helper('Continental\Products\Helper\Accessories');
 
+$product = $helper->setProduct();
+$id = $product->getId();
+
+// yes object manager is bad, but it works and time is running out
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$product2 = $_objectManager->get('\Magento\Catalog\Model\Product')->load($id);
+$attributes = $product2->getAttributes();
+$attributeCounter = 0;
+$attributeJs = '';
+foreach ($attributes as $attribute) {
+    if (
+        !empty( $attribute->getDefaultValue() )
+        ) {
+            $attributeCounter++;
+                $attributeJs .= sprintf("%sa[\"attribute%s\"] = \"%s\";",
+                    PHP_EOL,
+                    $attribute->getAttributeId(),
+                    $attribute->getDefaultValue()
+            );
+    }
+}
+
+?>
+<script>
+ require([
+        'ko',
+        'jquery',
+	'mage/url',
+    ], function (ko, $, url) {
+<?php if ($attributeCounter > 0): ?>
+     a = [];
+     <?=$attributeJs?>
+     <?php endif; ?>
+     function setDefaultAttribute() {
+        $("select").each(function(i,item){
+            (function(i, item){
+                window.setTimeout(function(){
+                    id = $(item).attr("id");
+                    if ( typeof a[id] != "undefined") {
+                        $("#" + id).val(a[id]);
+                        $(item).trigger( "change" );
+                    }
+                }, i * 500);
+            }(i, item));
+        });
+    }
+
+     $(document).ready(function() {
+     setTimeout(function() {
+         setDefaultAttribute();
+     }, 1200
+     );
+ });
+});
+
+</script>
 <?php
 /** @var \Magento\Catalog\Pricing\Render\FinalPriceBox $block */
 

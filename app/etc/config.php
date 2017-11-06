@@ -6,7 +6,7 @@ return array (
     'Magento_Store' => 1,
     'Amasty_Methods' => 1,
     'BelVG_Tierpricesext' => 1,
-    'Continental_Banners' => 1,
+    'Continental_Banners' => 0,
     'Continental_Contipdf' => 1,
     'Continental_Documents' => 1,
     'Continental_Forms' => 1,

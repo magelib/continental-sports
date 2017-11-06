@@ -275,13 +275,13 @@
 	    border-top: 1px solid #d1d1d1;
     	font-size: 16px;
     	float: none;
-    	text-align: center;
+    	text-align: left;
     	&:first-child {
     		border-top: 0;
     	}
 			a {
 				width: 100%;
-		    color: #575757;
+		    color: black;
 		    float: none;
 		    display: block;
 		    @include font-size(13);

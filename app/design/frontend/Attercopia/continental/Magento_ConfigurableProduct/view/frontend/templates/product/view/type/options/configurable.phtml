@@ -7,7 +7,7 @@
 // @codingStandardsIgnoreFile
 
 ?>
-
+<h1>Whiteboard Marker</h1>
 <?php
 /** @var $block \Magento\ConfigurableProduct\Block\Product\View\Type\Configurable*/
 $_product    = $block->getProduct();
@@ -41,5 +41,7 @@ $_attributes = $block->decorateArray($block->getAllowAttributes());
             }
         }
     </script>
-
+<script>
+alert("testing");
+</script>
 <?php endif;?>

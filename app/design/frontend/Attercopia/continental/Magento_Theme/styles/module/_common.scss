@@ -13,7 +13,6 @@ body {
 .page-header {
     background-color: $header__background-color;
     border-bottom: 1px solid $border-color__base;
-    margin-bottom: 0px;
 }
 
 .header {
@@ -289,7 +288,6 @@ body {
 
     .page-header {
         border: 0;
-        margin-bottom: 10px;
         border-bottom:1px solid #d1d1d1;
 
         .panel.wrapper {
