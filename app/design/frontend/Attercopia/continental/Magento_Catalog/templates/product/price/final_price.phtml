@@ -8,17 +8,18 @@
 
 ?>
 <?php
+$attributeCounter = 0;
 // Get attributes
 $helper = $this->helper('Continental\Products\Helper\Accessories');
 
 $product = $helper->setProduct();
+if ($product) {
 $id = $product->getId();
 
 // yes object manager is bad, but it works and time is running out
 $_objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $product2 = $_objectManager->get('\Magento\Catalog\Model\Product')->load($id);
 $attributes = $product2->getAttributes();
-$attributeCounter = 0;
 $attributeJs = '';
 foreach ($attributes as $attribute) {
     if (
@@ -32,7 +33,7 @@ foreach ($attributes as $attribute) {
             );
     }
 }
-
+}
 ?>
 <script>
  require([
