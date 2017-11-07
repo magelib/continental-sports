@@ -74,6 +74,9 @@
     <?php else: ?>
             $("#top-cart-btn-checkout").hide();
             $(".poa_wrapper").show();
+                $("#top-cart-enquiry-btn").click(function() {
+                   window.location = '/poa';
+                });
     <?php endif; ?>
             });
         });
