@@ -54,25 +54,32 @@
             // Get Product as object
             $product = $accessories->getProductByID( $item->getProductId() );
             if ( $hidemeHelper->isNeedHideProduct( $product ) ) {
-                echo "true";
+                $enquiry = true;
             }
         }
-
-    if ($enquiry === false): ?>
-
+?>
         <div id="minicart-content-wrapper" data-bind="scope: 'minicart_content'">
                 <!-- ko template: getTemplate() --><!-- /ko -->
-            </div>
-<?php else: ?>
-        <div>
-            <button>Send Basket as Enquiry</button>
         </div>
-    <?php endif; ?>
             <?php echo $block->getChildHtml('minicart.addons'); ?>
         </div>
     <?php endif ?>
     <script>
+        require(["jquery"], function ($) {
+            $(".showcart").click(function() {
+    <?php if ($enquiry === false): ?>
+	    // Hide if visible
+                $("#top-cart-btn-checkout").show();
+                $(".poa_wrapper").hide();
+    <?php else: ?>
+            $("#top-cart-btn-checkout").hide();
+            $(".poa_wrapper").show();
+    <?php endif; ?>
+            });
+        });
+
         window.checkout = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getConfig()); ?>;
+
     </script>
     <script type="text/x-magento-init">
     {
