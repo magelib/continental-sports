@@ -109,6 +109,10 @@ class Index extends \Magento\Framework\App\Action\Action
 
     }
 
+    protected function basket() {
+
+    }
+
     /***
      * @return bool
      */
@@ -148,6 +152,17 @@ class Index extends \Magento\Framework\App\Action\Action
 
     protected function sendEmail($to, $toName = "Continental Sports", $from = "test@continentalsports.co.uk", $fromName="Continental Sports Admin")
     {
+        // Testing
+        preg_match('/http.*?\/\/(.*)\//', $this->storeManager->getStore()->getBaseUrl(), $matches);
+        // Use this for testing on other domains
+        if (!empty($matches[1])) {
+            $from = str_replace('continentalsports.co.uk', $matches[1], $from);
+        }
+        echo $from;
+
+        $to = "matthew.byfield@attercopia.co.uk";
+        $toName = 'Developer Testing';
+
         echo "sending to " . $to;
         try {
             $sender = [
@@ -155,10 +170,15 @@ class Index extends \Magento\Framework\App\Action\Action
                 'email' => $this->_escaper->escapeHtml($from)
             ];
 
+            // Sender data ok
             $recipient = [
                 'name' => $this->_escaper->escapeHtml($toName),
                 'email' => $this->_escaper->escapeHtml($to)
             ];
+
+            $recipient = $this->_escaper->escapeHtml($to);
+
+
 
             $transport = $this->_transportBuilder
                 ->setTemplateIdentifier('send_customer_email_template')// this code we have mentioned in the email_templates.xml
@@ -168,14 +188,21 @@ class Index extends \Magento\Framework\App\Action\Action
                         'store' => \Magento\Store\Model\Store::DEFAULT_STORE_ID,
                     ]
                 )
-                ->setTemplateVars(['data' => $this->_post])
+                ->setTemplateVars(
+                    [
+                        'name' => "Testing Name",
+                        'email' => 'Email Address',
+                        'telephone' => 'Telephone',
+                        'company' => 'Company',
+                        'message' => 'Message'
+                    ])
                 ->setFrom($sender)
                 ->addTo($recipient)
                 ->getTransport();
 
-            $transport->sendMessage();;
+            $transport->sendMessage();
             $this->inlineTranslation->resume();
-            $msg = 'Thanks for contacting us with your comments and questions. We\'ll respond to you very soon.';
+            $msg = '';
             echo $msg;
             //$this->messageManager->addSuccess( __($msg) );
             //$this->_redirect('*/*/');

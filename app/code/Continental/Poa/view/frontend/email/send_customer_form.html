@@ -1,0 +1,16 @@
+<!--@subject POA Order Form@-->
+<!--@vars {
+"var data.comment":"Comment",
+"var data.email":"Sender Email",
+"var data.name":"Sender Name"
+"var data.company":"Company Name"
+} @-->
+{{template config_path="design/email/header_template"}}
+<h2>Continental Sports</h2>
+<h3>POA Order</h3>
+{{trans "Name: %name" name=$name}}
+{{trans "Company: %company" company=$company}}
+{{trans "Email: %email" email=$email}}
+{{trans "Telephone: %telephone" telephone=$telephone}}
+{{trans "Telephone: %telephone" telephone=$telephone}}
+{{trans "Comment: %message" comment=$message}}
