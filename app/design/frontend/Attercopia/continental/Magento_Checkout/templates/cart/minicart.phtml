@@ -72,7 +72,8 @@
             if ($enquiry === true):
             ?>
                 setPoaActive();
-
+            <?php else: ?>
+                disablePoa();
             <?php endif; ?>
             $(".showcart").click(function () {
                 <?php if ($enquiry === false): ?>
@@ -90,11 +91,20 @@
                 <?php endif; ?>
             });
 
+            function disablePoa() {
+                $("#maincontent .checkout_wrapper").show();
+                $(".cart-summary #block-shipping").show();
+                $(".cart-summary #block-discount").show();
+                $(".cart-summary .poa_wrapper").hide();
+            }
+
             function setPoaActive() {
                 // Hide Summary items from main basket
                 $("#maincontent .checkout_wrapper").hide();
                 $(".cart-summary #block-shipping").hide();
                 $(".cart-summary #block-discount").hide();
+                // Show enquiry button
+                $(".cart-summary .poa_wrapper").show();
                 // redirect main cart button
                 $("#top-cart-enquiry-btn").click(function () {
                     window.location = '/poa';

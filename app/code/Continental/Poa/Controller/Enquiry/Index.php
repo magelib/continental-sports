@@ -128,17 +128,23 @@ class Index extends \Magento\Framework\App\Action\Action
         }
     }
 
+    private function convertBreaks($text) {
+        $breaks = array("<br />","<br>","<br/>");
+        $text = str_ireplace($breaks, "\r\n", $text);
+        return $text;
+    }
+
     /***
      * Convert the form post data so it can be saved as a contact us enquiry
      */
     protected function getFormatContactData() {
-        return [
-            'name' => sprintf("%s %s", $this->getPost('firstname'), $this->getPost('lastname')),
-            'company' => $this->getPost('company'),
-            'email' => $this->getPost('email'),
-            'telephone' => $this->getPost('telephone'),
-            'message' => $this->getPost('message') . PHP_EOL . $this->getBasketItems()
 
+        return [
+            'name'      => sprintf("%s %s", $this->getPost('firstname'), $this->getPost('lastname')),
+            'company'   => $this->getPost('company'),
+            'email'     => $this->getPost('email'),
+            'telephone' => $this->getPost('telephone'),
+            'message'   => $this->getPost('message') . PHP_EOL . 'Order Details: ' . PHP_EOL . '==========' . PHP_EOL . $this->convertBreaks($this->getBasketItems() )
         ];
     }
 
@@ -197,6 +203,7 @@ class Index extends \Magento\Framework\App\Action\Action
     {
         $toName = sprintf("%s %s", $this->getPost('firstname'), $this->getPost('surnname'));
 
+        $this->_subject = 'Customer confirmation for POA order';
         $this->sendEmail($this->getPost('email'), $toName);
 
         return false;
@@ -210,6 +217,7 @@ class Index extends \Magento\Framework\App\Action\Action
         $email = 'matthew.byfield@attercopia.co.uk';
 
         $toName = "Continental Sports";
+        $this->_subject = 'New POA website enquiry';
         $this->sendEmail($this->getPost('email'), $toName);
     }
 
@@ -265,7 +273,8 @@ class Index extends \Magento\Framework\App\Action\Action
                         'company' => $this->getPost('company'),
                         'message' => $this->getPost('message'),
                         'basket' => $this->getBasketItems(),
-                        'domain' => $this->domain
+                        'domain' => $this->domain,
+                        'subject' => $this->_subject
                     ])
                 ->setFrom($sender)
                 ->addTo($recipient)
@@ -296,7 +305,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $basket .= 'Name: ' . $item->getName() . '<br />';
             $basket .= 'Sku: ' . $item->getSku() . '<br />';
             $basket .= 'Quantity: ' . $item->getQty() . '<br />';
-            $basket .= 'Price: ' . $item->getPrice() . '<br />';
+//            $basket .= 'Price: ' . $item->getPrice() . '<br />';
             $basket .= "<br />";
         }
 
