@@ -1,1 +1,15 @@
-Placeholder template for thanks
+<!-- this code is required to update the mini cart/basket once enquiry has been sent -->
+<script>
+    require([
+        'Magento_Customer/js/customer-data'
+    ], function (customerData) {
+        var sections = ['cart'];
+        customerData.invalidate(sections);
+        customerData.reload(sections, true);
+    });
+</script>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$checkoutSession = $objectManager->get('\Magento\Checkout\Model\Session');
+?>
+<p><button onclick="window.location='<?=$checkoutSession->getContinueShoppingUrl()?>';">Continue Shopping</button></p>

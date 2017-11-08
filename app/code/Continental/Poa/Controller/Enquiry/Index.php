@@ -50,7 +50,9 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     protected $_escaper;
 
-    protected $_errors = 'testing'; // Set to null when finished testing
+    protected $_errors = null; // Set to null when finished testing
+
+    protected $_logger;
 
     private $_domain = 'https://www.continentalsports.co.uk';
 
@@ -62,7 +64,11 @@ class Index extends \Magento\Framework\App\Action\Action
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation,
-        \Magento\Checkout\Model\Cart $cart
+        \Magento\Checkout\Model\Cart $cart,
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Framework\Filter\FilterManager $filterManager,
+        \Me\Econtacts\Model\Econtacts $econtactsModel,
+        \Psr\Log\LoggerInterface $logger
     )
     {
         $this->resultPageFactory = $resultPageFactory;
@@ -73,6 +79,10 @@ class Index extends \Magento\Framework\App\Action\Action
         $this->storeManager = $storeManager;
         $this->inlineTranslation = $inlineTranslation;
         $this->cart = $cart;
+        $this->checkoutSession = $checkoutSession;
+        $this->filterManager = $filterManager;
+        $this->econtactsModel = $econtactsModel;
+        $this->_logger = $logger;
     }
 
     /***
@@ -84,43 +94,107 @@ class Index extends \Magento\Framework\App\Action\Action
             echo "<!-- Currently in dev mode -->";
         }
         $this->_post = $this->getRequest()->getPostValue();
-        //print_r($this->_post);
         $this->sendEmailsOut();
-        //$this->resultPageFactory->create();
         $resultPage = $this->resultPageFactory->create();
         $resultPage->addHandle('continental_poa_autoresponder_enquiry');
     }
 
-    private function checkFields() {
+    private function checkFields()
+    {
         $fields = array('email');
 
     }
 
-    private function sendEmailsOut() {
+    private function sendEmailsOut()
+    {
         $this->sendEmailToCustomer();
 
+        $this->sendEmailToContinental();
+
+        // Save into Keep Me plugin. (TO DO add dependency check)
+        $this->saveEnquiryToContacts();
+
         if ($this->_errors === null) {
+            // Clear the cart/basket as order received
             $this->clearBasket();
+            // Add success message
+            $msg = 'Enquiry has been sent';
+            $this->messageManager->addSuccess(__($msg));
+
+            // Redirect customer to specific thank you page
+            $this->_redirect('order-enquiry-thanks');
+        } else {
+            echo "error";
         }
     }
 
-    private function clearBasket() {
+    /***
+     * Convert the form post data so it can be saved as a contact us enquiry
+     */
+    protected function getFormatContactData() {
+        return [
+            'name' => sprintf("%s %s", $this->getPost('firstname'), $this->getPost('lastname')),
+            'company' => $this->getPost('company'),
+            'email' => $this->getPost('email'),
+            'telephone' => $this->getPost('telephone'),
+            'message' => $this->getPost('message') . PHP_EOL . $this->getBasketItems()
+
+        ];
+    }
+
+    protected function saveEnquiryToContacts() {
+        try {
+            $data = [
+                'store_id' => $this->storeManager->getStore()->getId()
+            ];
+
+            // get post
+            $post = $this->getFormatContactData();
+
+            $data = array_merge($data, $post);
+            /**
+             * @var \Magento\Framework\Filter\FilterManager $filterManager
+             */
+            $data['comment'] = $this->filterManager->stripTags($this->getPost('message'));
+
+            if (!empty($data)) {
+                $this->econtactsModel->addData($data);
+                $this->econtactsModel->save();
+            }
+        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+            $this->_logger->warning($e->getMessage());
+        } catch (\RuntimeException $e) {
+            $this->_logger->warning($e->getMessage());
+        } catch (\Exception $e) {
+            $this->_logger->warning($e->getMessage());
+        }
+    }
+
+    private function clearBasket()
+    {
         // Empty basket
-           $this->cart->truncate();
+        $allItems = $this->checkoutSession->getQuote()->getAllVisibleItems();
+
+        foreach ($allItems as $item) {
+            $itemId = $item->getItemId();
+            $this->cart->removeItem($itemId)->save();
+        }
+
+        $this->checkoutSession->clearQuote();
+        $this->checkoutSession->clearQuote()->clearStorage();
+        $this->messageManager->addSuccess(__("Basket has been cleared."));
     }
 
-    protected function checkForm() {
-
-    }
-
-    protected function basket() {
+    protected function checkForm()
+    {
 
     }
 
     /***
      * @return bool
      */
-    protected function sendEmailToCustomer() {
+    protected function sendEmailToCustomer()
+    {
         $toName = sprintf("%s %s", $this->getPost('firstname'), $this->getPost('surnname'));
 
         $this->sendEmail($this->getPost('email'), $toName);
@@ -131,34 +205,20 @@ class Index extends \Magento\Framework\App\Action\Action
     /***
      * @return bool
      */
-    protected function sendEmailToContinental() {
+    protected function sendEmailToContinental()
+    {
         $email = 'matthew.byfield@attercopia.co.uk';
-        /*
-        $order = $this->_objectManager->create('Magento\Sales\Model\Order')->load(1); // this is entity id
-        $order->setCustomerEmail($email);
-        if ($order) {
-            try {
-                $this->_objectManager->create('\Magento\Sales\Model\OrderNotifier')
-                    ->notify($order);
-                $this->messageManager->addSuccess(__('You sent the order email.'));
-            } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                $this->messageManager->addError($e->getMessage());
-            } catch (\Exception $e) {
-                $this->messageManager->addError(__('We can\'t send the email order right now.'));
-                $this->_objectManager->create('Magento\Sales\Model\OrderNotifier')->critical($e);
-            }
-        }
 
-    }
-        */
-        return false;
+        $toName = "Continental Sports";
+        $this->sendEmail($this->getPost('email'), $toName);
     }
 
-    private function getProtocol() {
+    private function getProtocol()
+    {
         return ($this->storeManager->getStore()->isCurrentlySecure()) ? 'https://' : 'http://';
     }
 
-    protected function sendEmail($to, $toName = "Continental Sports", $from = "test@continentalsports.co.uk", $fromName="Continental Sports Admin")
+    protected function sendEmail($to, $toName = "Continental Sports", $from = "test@continentalsports.co.uk", $fromName = "Continental Sports Admin")
     {
         // Testing
         preg_match('/http.*?\/\/(.*)\//', $this->storeManager->getStore()->getBaseUrl(), $matches);
@@ -168,7 +228,10 @@ class Index extends \Magento\Framework\App\Action\Action
             $from = str_replace('continentalsports.co.uk', $matches[1], $from);
         }
 
-        $to = "matthew.byfield@attercopia.co.uk";
+        if (!preg_match('/attercopia/', $to)) {
+            $to = "matthew.byfield@attercopia.co.uk";
+        }
+
         $toName = 'Developer Testing';
 
         try {
@@ -184,7 +247,6 @@ class Index extends \Magento\Framework\App\Action\Action
             ];
 
             $recipient = $this->_escaper->escapeHtml($to);
-
 
 
             $transport = $this->_transportBuilder
@@ -211,41 +273,42 @@ class Index extends \Magento\Framework\App\Action\Action
 
             $transport->sendMessage();
             $this->inlineTranslation->resume();
-            $msg = 'Enquiry has been sent.';
-            //echo $msg;
-            $this->messageManager->addSuccess( __($msg) );
-            // Clear the cart/basket as order received
-            $this->clearBasket();
-            // Redirect customer to specific thank you page
-            $this->_redirect('order-enquiry-thanks');
-            return;
+            return true;
         } catch (\Exception $e) {
             $this->inlineTranslation->resume();
             $msg = 'We can\'t process your request right now. Sorry, that\'s all we know.' . $e->getMessage();
-            echo $msg;
-            //$this->messageManager->addError( __($msg) );
-            //$this->_redirect('*/*/');
-            return;
+            $this->_errors = 'Cannot send email';
+            $this->messageManager->addError(__($msg));
+            $this->_redirect($this->_redirect->getRefererUrl());
+            return false;
         }
     }
 
-    protected function getBasketItems() {
+    /**
+     * @return string
+     */
+    protected function getBasketItems()
+    {
         $basketItems = $this->cart->getQuote()->getAllVisibleItems();
         $basket = '';
-        foreach($basketItems as $item) {
-            $basket .= '<br />ID: '. $item->getProductId().'<br />';
-            $basket .= 'Name: '. $item->getName().'<br />';
-            $basket .= 'Sku: '. $item->getSku().'<br />';
-            $basket .= 'Quantity: '. $item->getQty().'<br />';
-            $basket .= 'Price: '. $item->getPrice().'<br />';
+        foreach ($basketItems as $item) {
+            $basket .= '<br />ID: ' . $item->getProductId() . '<br />';
+            $basket .= 'Name: ' . $item->getName() . '<br />';
+            $basket .= 'Sku: ' . $item->getSku() . '<br />';
+            $basket .= 'Quantity: ' . $item->getQty() . '<br />';
+            $basket .= 'Price: ' . $item->getPrice() . '<br />';
             $basket .= "<br />";
         }
 
         return $basket;
-
     }
 
-    public function getPost($str) {
+    /***
+     * @param $str
+     * @return bool
+     */
+    public function getPost($str)
+    {
         return !empty($this->_post[$str]) ? $this->_post[$str] : false;
     }
 }

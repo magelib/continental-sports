@@ -11,9 +11,11 @@
 
 <div data-block="minicart" class="minicart-wrapper">
 
-    <a class="action showcart fa fa-shopping-cart" href="<?php /* @escapeNotVerified */ echo $block->getShoppingCartUrl(); ?>"
+    <a class="action showcart fa fa-shopping-cart" href="<?php /* @escapeNotVerified */
+    echo $block->getShoppingCartUrl(); ?>"
        data-bind="scope: 'minicart_content'">
-        <span class="text"><?php /* @escapeNotVerified */ echo __('My Cart'); ?></span>
+        <span class="text"><?php /* @escapeNotVerified */
+            echo __('My Cart'); ?></span>
         <span class="counter qty empty"
               data-bind="css: { empty: !!getCartParam('summary_count') == false }, blockLoader: isLoading">
             <span class="counter-number"><!-- ko text: getCartParam('summary_count') --><!-- /ko --></span>
@@ -37,48 +39,67 @@
                 "triggerClass":"active",
                 "parentClass":"active",
                 "buttons":[]}}'>
-<!-- The basket is rendered here -->
-<?php
-    // use helper here to check if enquiry
-    $enquiry = false;
-    $accessories = $this->helper('Continental\Products\Helper\Accessories');
-    $hidemeHelper = $this->helper('Amasty\HidePrice\Helper\Data');
-    $cart = $this->helper('\Magento\Checkout\Helper\Cart');
-    // Loop through
-        $quote = $cart->getQuote();
-        //$items = $quote->getAllItems();
-        $items = $quote->getAllVisibleItems();
-        //$items = $this->_cart->getEvent()->getQuote()->getAllVisibleItems(); // get only visible items
-        $maxId = 0;
-        foreach ($items as $item){
-            // Get Product as object
-            $product = $accessories->getProductByID( $item->getProductId() );
-            if ( $hidemeHelper->isNeedHideProduct( $product ) ) {
-                $enquiry = true;
+            <!-- The basket is rendered here -->
+            <?php
+            // use helper here to check if enquiry
+            $enquiry = false;
+            $accessories = $this->helper('Continental\Products\Helper\Accessories');
+            $hidemeHelper = $this->helper('Amasty\HidePrice\Helper\Data');
+            $cart = $this->helper('\Magento\Checkout\Helper\Cart');
+
+            $quote = $cart->getQuote();
+            $items = $quote->getAllVisibleItems();
+            $maxId = 0;
+
+            foreach ($items as $item) {
+                // Get Product as object
+                $product = $accessories->getProductByID($item->getProductId());
+                if ($hidemeHelper->isNeedHideProduct($product)) {
+                    $enquiry = true;
+                }
             }
-        }
-?>
-        <div id="minicart-content-wrapper" data-bind="scope: 'minicart_content'">
+            ?>
+            <div id="minicart-content-wrapper" data-bind="scope: 'minicart_content'">
                 <!-- ko template: getTemplate() --><!-- /ko -->
-        </div>
+            </div>
             <?php echo $block->getChildHtml('minicart.addons'); ?>
         </div>
     <?php endif ?>
     <script>
         require(["jquery"], function ($) {
-            $(".showcart").click(function() {
-    <?php if ($enquiry === false): ?>
-	    // Hide if visible
+            <?php
+            // Hide summary items
+            if ($enquiry === true):
+            ?>
+                setPoaActive();
+
+            <?php endif; ?>
+            $(".showcart").click(function () {
+                <?php if ($enquiry === false): ?>
+                // Hide if visible
                 $("#top-cart-btn-checkout").show();
                 $(".poa_wrapper").hide();
-    <?php else: ?>
-            $("#top-cart-btn-checkout").hide();
-            $(".poa_wrapper").show();
-                $("#top-cart-enquiry-btn").click(function() {
-                   window.location = '/poa';
+                <?php else: ?>
+                $("#top-cart-btn-checkout").hide();
+                $(".poa_wrapper").show();
+
+                // redirect mini cart button
+                $("#top-cart-enquiry-btn").click(function () {
+                    window.location = '/poa';
                 });
-    <?php endif; ?>
+                <?php endif; ?>
             });
+
+            function setPoaActive() {
+                // Hide Summary items from main basket
+                $("#maincontent .checkout_wrapper").hide();
+                $(".cart-summary #block-shipping").hide();
+                $(".cart-summary #block-discount").hide();
+                // redirect main cart button
+                $("#top-cart-enquiry-btn").click(function () {
+                    window.location = '/poa';
+                });
+            }
         });
 
         window.checkout = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getConfig()); ?>;
@@ -87,12 +108,15 @@
     <script type="text/x-magento-init">
     {
         "[data-block='minicart']": {
-            "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+            "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */
+        echo $block->getJsLayout(); ?>
         },
         "*": {
-            "Magento_Ui/js/block-loader": "<?php /* @escapeNotVerified */ echo $block->getViewFileUrl('images/loader-1.gif'); ?>"
+            "Magento_Ui/js/block-loader": "<?php /* @escapeNotVerified */
+        echo $block->getViewFileUrl('images/loader-1.gif'); ?>"
         }
     }
+
     </script>
 </div>
 
