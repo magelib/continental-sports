@@ -52,6 +52,8 @@ class Index extends \Magento\Framework\App\Action\Action
 
     protected $_errors = 'testing'; // Set to null when finished testing
 
+    private $_domain = 'https://www.continentalsports.co.uk';
+
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
@@ -79,12 +81,14 @@ class Index extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         if ($this->_errors != null) {
-            echo "Currently in dev mode";
+            echo "<!-- Currently in dev mode -->";
         }
         $this->_post = $this->getRequest()->getPostValue();
-        print_r($this->_post);
+        //print_r($this->_post);
         $this->sendEmailsOut();
-        //return $this->resultPageFactory->create();
+        //$this->resultPageFactory->create();
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->addHandle('continental_poa_autoresponder_enquiry');
     }
 
     private function checkFields() {
@@ -150,20 +154,23 @@ class Index extends \Magento\Framework\App\Action\Action
         return false;
     }
 
+    private function getProtocol() {
+        return ($this->storeManager->getStore()->isCurrentlySecure()) ? 'https://' : 'http://';
+    }
+
     protected function sendEmail($to, $toName = "Continental Sports", $from = "test@continentalsports.co.uk", $fromName="Continental Sports Admin")
     {
         // Testing
         preg_match('/http.*?\/\/(.*)\//', $this->storeManager->getStore()->getBaseUrl(), $matches);
         // Use this for testing on other domains
         if (!empty($matches[1])) {
+            $this->domain = $this->getProtocol() . $matches[1];
             $from = str_replace('continentalsports.co.uk', $matches[1], $from);
         }
-        echo $from;
 
         $to = "matthew.byfield@attercopia.co.uk";
         $toName = 'Developer Testing';
 
-        echo "sending to " . $to;
         try {
             $sender = [
                 'name' => $this->_escaper->escapeHtml($fromName),
@@ -190,11 +197,13 @@ class Index extends \Magento\Framework\App\Action\Action
                 )
                 ->setTemplateVars(
                     [
-                        'name' => "Testing Name",
-                        'email' => 'Email Address',
-                        'telephone' => 'Telephone',
-                        'company' => 'Company',
-                        'message' => 'Message'
+                        'name' => sprintf("%s %s", $this->getPost('firstname'), $this->getPost('surname')),
+                        'email' => $this->getPost('email'),
+                        'telephone' => $this->getPost('telephone'),
+                        'company' => $this->getPost('company'),
+                        'message' => $this->getPost('message'),
+                        'basket' => $this->getBasketItems(),
+                        'domain' => $this->domain
                     ])
                 ->setFrom($sender)
                 ->addTo($recipient)
@@ -202,10 +211,13 @@ class Index extends \Magento\Framework\App\Action\Action
 
             $transport->sendMessage();
             $this->inlineTranslation->resume();
-            $msg = '';
-            echo $msg;
-            //$this->messageManager->addSuccess( __($msg) );
-            //$this->_redirect('*/*/');
+            $msg = 'Enquiry has been sent.';
+            //echo $msg;
+            $this->messageManager->addSuccess( __($msg) );
+            // Clear the cart/basket as order received
+            $this->clearBasket();
+            // Redirect customer to specific thank you page
+            $this->_redirect('order-enquiry-thanks');
             return;
         } catch (\Exception $e) {
             $this->inlineTranslation->resume();
@@ -215,6 +227,22 @@ class Index extends \Magento\Framework\App\Action\Action
             //$this->_redirect('*/*/');
             return;
         }
+    }
+
+    protected function getBasketItems() {
+        $basketItems = $this->cart->getQuote()->getAllVisibleItems();
+        $basket = '';
+        foreach($basketItems as $item) {
+            $basket .= '<br />ID: '. $item->getProductId().'<br />';
+            $basket .= 'Name: '. $item->getName().'<br />';
+            $basket .= 'Sku: '. $item->getSku().'<br />';
+            $basket .= 'Quantity: '. $item->getQty().'<br />';
+            $basket .= 'Price: '. $item->getPrice().'<br />';
+            $basket .= "<br />";
+        }
+
+        return $basket;
+
     }
 
     public function getPost($str) {

@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Email/etc/email_templates.xsd">
-    <template id="send_customer_email_template" label="Email Form" file="send_customer_form.html" type="text" module="Continental_Poa" area="frontend"/>
+    <template id="send_customer_email_template" label="Email Form" file="send_customer_form.html" type="html" module="Continental_Poa" area="frontend"/>
 </config>
