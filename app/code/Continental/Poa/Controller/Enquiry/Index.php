@@ -123,6 +123,7 @@ class Index extends \Magento\Framework\App\Action\Action
 
             // Redirect customer to specific thank you page
             $this->_redirect('order-enquiry-thanks');
+            //array('_cart' => $this->checkoutSession->getQuoteId())
         } else {
             echo "error";
         }
@@ -144,7 +145,7 @@ class Index extends \Magento\Framework\App\Action\Action
             'company'   => $this->getPost('company'),
             'email'     => $this->getPost('email'),
             'telephone' => $this->getPost('telephone'),
-            'message'   => $this->getPost('message') . PHP_EOL . 'Order Details: ' . PHP_EOL . '==========' . PHP_EOL . $this->convertBreaks($this->getBasketItems() )
+            'message'   => $this->getPost('message') . PHP_EOL . 'Order Details for Ref#' . $this->checkoutSession->getQuoteId() . ': ' . PHP_EOL . '==========' . PHP_EOL . $this->convertBreaks($this->getBasketItems() )
         ];
     }
 
@@ -201,9 +202,9 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     protected function sendEmailToCustomer()
     {
-        $toName = sprintf("%s %s", $this->getPost('firstname'), $this->getPost('surnname'));
+        $toName = sprintf("%s %s", $this->getPost('firstname'), $this->getPost('lastname'));
 
-        $this->_subject = 'Customer confirmation for POA order';
+        $this->_subject = 'Customer confirmation for POA order #' . $this->checkoutSession->getQuoteId();
         $this->sendEmail($this->getPost('email'), $toName);
 
         return false;
@@ -217,7 +218,7 @@ class Index extends \Magento\Framework\App\Action\Action
         $email = 'matthew.byfield@attercopia.co.uk';
 
         $toName = "Continental Sports";
-        $this->_subject = 'New POA website enquiry';
+        $this->_subject = 'New POA website enquiry #' . $this->checkoutSession->getQuoteId();
         $this->sendEmail($this->getPost('email'), $toName);
     }
 
@@ -294,6 +295,8 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     /**
+     * Get details of active items in basket/cart
+     * Id and Price have been ignored as they aren't required for POA orders
      * @return string
      */
     protected function getBasketItems()
@@ -301,15 +304,31 @@ class Index extends \Magento\Framework\App\Action\Action
         $basketItems = $this->cart->getQuote()->getAllVisibleItems();
         $basket = '';
         foreach ($basketItems as $item) {
-            $basket .= '<br />ID: ' . $item->getProductId() . '<br />';
-            $basket .= 'Name: ' . $item->getName() . '<br />';
+            $options = $this->getItemConfiguration($item);
+            $options =  (!empty($options)) ? "<br /><strong>Details</strong>:  " .  $options : '';
+            $basket .= 'Name: ' . $item->getName() . $options . '<br />';
             $basket .= 'Sku: ' . $item->getSku() . '<br />';
             $basket .= 'Quantity: ' . $item->getQty() . '<br />';
-//            $basket .= 'Price: ' . $item->getPrice() . '<br />';
             $basket .= "<br />";
         }
 
         return $basket;
+    }
+
+    protected function getItemConfiguration($item) {
+        $details = '';
+
+        $options = $item->getProduct()->getTypeInstance(true)->getOrderOptions($item->getProduct());
+
+        if (isset($options['attributes_info']) && !empty($options['attributes_info'])) {
+            foreach ($options['attributes_info'] as $index => $option) {
+                $details .= '<br /><strong>' . $option['label'] . '</strong>: ';
+                $details .= $option['value'] . '<br />-----';
+                // Can also get summary => 'simple_name'
+                // Can also get configurable sku if different => 'simple_sku'
+            }
+        }
+        return $details;
     }
 
     /***

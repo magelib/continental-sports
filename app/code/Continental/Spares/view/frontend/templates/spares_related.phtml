@@ -33,17 +33,31 @@
     <?php
     $related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
     $collection = $related->getRelatedProducts();
-    if ($collection) {
-    foreach ($collection as $index => $relatedProduct): ?>
+    if ($collection): ?>
         <tr>
+        <?php
+        //foreach ($collection as $index => $relatedProduct):
+        // testing
+        $relatedProduct = $collection[0];
+        for ($index = 0; $index <= 14; $index++): ?>
+
+
+            <?php echo ( ( ($index % 3) == 0) && ($index > 0)) ? '</tr><tr>' : ''; ?>
             <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>" /></td>
-            <td class="rowText"><?= $relatedProduct['sku'] ?></td>
-            <td class="rowText">&pound;<?= $relatedProduct['price'] ?></td>
+            <td class="rowText" hover-data="{100,100,100,100}">
+                <ul>
+                    <li class="sparesName">
+                        <?= $relatedProduct['title'] ?>
+                    </li>
+                    <li><?= $relatedProduct['sku'] ?></li>
+                    <li class="sparesPrice">&pound;<?= $relatedProduct['price'] ?></li>
+                </ul>
+            </td>
+
             <td>
                 <?php
                 $addToCartUrl = $block->getAddToCartUrl($helper->getProductBySku($relatedProduct['sku']));
                 ?>
-
                 <form data-role="tocart-form" action="<?php echo $addToCartUrl; ?>" method="post">
                     <?php echo $block->getBlockHtml('formkey')?>
                     <div class="btn">
@@ -53,7 +67,12 @@
                     </div>
                 </form>
             </td>
+
+        <?php
+        endfor;
+        //endforeach;
+        endif;
+        ?>
         </tr>
-        <?php endforeach; } ?>
     </table>
 </div>
