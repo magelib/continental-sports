@@ -1,0 +1,47 @@
+
+.form-login {
+	.remind:hover {
+		color: $primary;
+		text-decoration: none;
+	}
+}
+
+@media all and (max-width: $medium) {
+	.form-login {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    .btn {
+	    display: inline-block;
+	    float: none;
+	    width: auto !important;
+    }
+    .remind {
+    	margin-top: 12px;
+	    display: inline-block;
+    }
+    fieldset:after {
+    	margin-top: 12px !important;
+    }
+	}
+	.block-new-customer {
+		text-align: center;
+		.btn {
+	    float: none;
+    	display: inline-block;
+		}
+	}
+	.block-customer-login {
+		text-align: center;
+	}
+}
+@media all and (max-width: $small) {
+	.form-login {
+    width: 75%;
+  }
+}
+@media all and (max-width: $xsmall) {
+	.form-login {
+    width: 100%;
+  }
+}

@@ -1,3 +1,5 @@
+*.swp
+*.save
 app/etc/env.php
 *
 */
@@ -15,6 +17,8 @@ atlassian*
 /app/config_sandbox
 /app/etc/config.php
 /app/etc/env.php
+!/app/code/*
+!/app/design/*
 /app/code/Magento/TestModule*
 /lib/internal/flex/uploader/.actionScriptProperties
 /lib/internal/flex/uploader/.flexProperties
