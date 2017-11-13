@@ -95,12 +95,6 @@
 
          </container>
           <!-- end of product info wrap -->
-         <container name="product.spares.wrap" htmlTag="div" htmlClass="product-spares-wrap">
-            <block class="Magento\Catalog\Block\Product\View" name="product.spares.left" as="product.spares.left" template="product/spares/left.phtml" />
-            <container name="product.spares.info.main" htmlTag="div" htmlClass="spares-info-main">
-               <block class="Magento\Catalog\Block\Product\View" name="product.spares.right" as="product.spares.right" template="product/spares/right.phtml" />
-            </container>
-         </container>
       </referenceContainer>
       <referenceContainer name="content.aside">
          <referenceBlock name="catalog.product.related" remove="true" />

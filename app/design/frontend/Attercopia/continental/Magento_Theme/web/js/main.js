@@ -127,16 +127,16 @@ function($) {
 	
     });
     $('.spares-nav-button .btn-spares').click(function(){
-        $(".spares-listing").hide();
-        $('.product-info-wrapper').show();
-        $('.related_column').show();
-        $('#maincontent .columns').show();
+        ft(".spares-listing");
+        fi('.product-info-wrapper');
+        fi('.related_column');
+        fi('#maincontent .columns');
 
     });
 
 
     function showSpares() {
-        $(".spares-listing").show();
+        fi(".spares-listing");
     }
 
     function hideProductPage() {
@@ -145,9 +145,12 @@ function($) {
         ft('#maincontent .columns');
     }
 
+    function fi(el) {
+        $(el).show();
+    }
+
     function ft(el) {
         $(el).hide();
-        //$(el).fadeToggle(500, "linear");
     }
 
     var imageH =  $(".fotorama__img").outerHeight();
