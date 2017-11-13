@@ -103,10 +103,18 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
      * Note to future developer - This doesn't adhere to DRY principles but we're in plugin land so what the heck..
      * @return mixed
      */
+    public function getCategoryId($categoryName) {
+        $collection = $this->_categoryFactory->create()->getCollection()->addAttributeToFilter('name',$categoryName)->setPageSize(1);
+
+        if ($collection->getSize()) {
+            return $collection->getFirstItem()->getId();
+        }
+        return false;
+    }
 
     public function getCategory($categoryName)
     {
-        $categoryId = $this->getProduct()->getCategoryId($categoryName);
+        $categoryId = $this->getCategoryId($categoryName);
         $category = $this->_categoryFactory->create()->load($categoryId);
         return $category;
     }
