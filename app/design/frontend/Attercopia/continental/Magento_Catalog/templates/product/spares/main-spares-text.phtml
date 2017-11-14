@@ -1,0 +1,23 @@
+<div class="spares-top-right">
+
+        <?php
+        $imageBlock =  $block->getLayout()->createBlock('Magento\Catalog\Block\Product\ListProduct');
+        //get product object...
+        $product = $block->getProduct();
+        $productImage = $imageBlock->getImage($product, 'category_page_list');
+        ?>
+    <div class="spares-thumbnail" style="background: url(<?= $productImage->getImageUrl() ?>) no-repeat left center; background-size: cover;">
+
+    </div>
+    <div class="spares-nav-button">
+        <button class="btn-spares">Back to Product</button>
+    </div>
+    <div class="spares-info">
+    <?php
+    echo $this->getLayout()
+    ->createBlock('Magento\Cms\Block\Block')
+    ->setBlockId('spares-info')
+    ->toHtml();
+?>
+    </div>
+</div>

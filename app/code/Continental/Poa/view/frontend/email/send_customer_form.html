@@ -1,0 +1,20 @@
+<!--@subject {{trans "%subject" subject=$subject|raw}}@-->
+
+<!--@vars {
+"var data.comment":"Comment",
+"var data.email":"Sender Email",
+"var data.name":"Sender Name"
+"var data.company":"Company Name"
+} @-->
+<!-- template config_path="design/email/header_template" -->
+<a class="logo" href="{{$domain|raw}}/" title="Continental Sports">
+    <img src="{{$domain|raw}}/media/logo/stores/1/logo.png" alt="Continental Sports" width="189" height="64">
+</a>
+<h2>Continental Sports</h2>
+<h3>POA Order</h3>
+<br />{{trans "<strong>Name:</strong> %name" name=$name|raw}}
+<br />{{trans "<strong>Company:</strong> %company" company=$company|raw}}
+<br />{{trans "<strong>Email:</strong> %email" email=$email|raw}}
+<br />{{trans "<strong>Telephone:</strong> %telephone" telephone=$telephone|raw}}
+<br />{{trans "<strong>Basket</strong><hr /> %basket" basket=$basket|raw}}
+<br />{{trans "<strong>Message</strong><hr /> %message" message=$message|raw}}

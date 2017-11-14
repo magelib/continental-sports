@@ -110,9 +110,10 @@ function($) {
 
     // Toggle spares / product  DOM 
 
-    $('.btn-spares').click(function(){
-
-      $('.product-info-wrap').fadeToggle(500, 'linear');
+    $('.product-info-main .btn-spares').click(function(){
+        hideProductPage();
+        showSpares();
+/*      $('.product-info-wrap').fadeToggle(500, 'linear');
       $('.product-spares-wrap').fadeToggle(500, 'linear');
 
         window.setTimeout(function(){
@@ -122,18 +123,37 @@ function($) {
         window.setTimeout(function(){
             $('body').toggleClass('spares-view');
         }, 500); //<-- Delay in milliseconds
+*/
+	
+    });
+    $('.spares-nav-button .btn-spares').click(function(){
+        ft(".spares-listing");
+        fi('.product-info-wrapper');
+        fi('.related_column');
+        fi('#maincontent .columns');
 
     });
 
+
+    function showSpares() {
+        fi(".spares-listing");
+    }
+
+    function hideProductPage() {
+        ft('.product-info-wrapper');
+        ft('.related_column');
+        ft('#maincontent .columns');
+    }
+
+    function fi(el) {
+        $(el).show();
+    }
+
+    function ft(el) {
+        $(el).hide();
+    }
+
     var imageH =  $(".fotorama__img").outerHeight();
     $(".fotorama__stage").height(imageH);
-
-    console.log($(".fotorama__img").length);
-
-    console.log(imageH);
-
-    
-
-
 });
 

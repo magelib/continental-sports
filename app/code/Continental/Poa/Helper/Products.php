@@ -1,12 +1,10 @@
 <?php
-namespace Continental\Products\Helper;
-
+namespace Continental\Poa\Helper;
 use Magento\Framework\Registry;
-
 /**
  * Custom Module Email helper
  */
-class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
+class Products extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
@@ -52,11 +50,7 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Catalog\Model\CategoryFactory $categoryFactory,
         \Magento\Catalog\Block\Product\ListProduct $listProduct,
         \Magento\Catalog\Model\ProductRepository $productRepository,
-        \Magento\Framework\App\ResourceConnection $resource,
-        \Magento\Checkout\Helper\Cart $cartHelper,
-        \Amasty\HidePrice\Helper\Data $helper,
         Registry $registry
-
     )
     {
         $this->_scopeConfig = $context;
@@ -64,26 +58,19 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
         $this->_storeManager = $storeManager;
         $this->inlineTranslation = $inlineTranslation;
         $this->_transportBuilder = $transportBuilder;
-        $this->_categoryFactory = $categoryFactory;
+        $this->_categoryFactory     = $categoryFactory;
         $this->_listProduct = $listProduct;
         $this->_productRepository = $productRepository;
-        $this->_resource = $resource;
-        $this->_cart = $cartHelper;
-        $this->_helper = $helper;
         $this->_registry = $registry;
     }
 
     /**
      * @return Product
      */
-    private function getProduct()
+    public function getProduct()
     {
         if (is_null($this->_product)) {
             $this->_product = $this->_registry->registry('product');
-
-            if (empty($this->_product)) {
-                return null;
-            }
 
             if (!$this->_product->getId()) {
                 //throw new LocalizedException(__('Failed to initialize product'));
@@ -91,11 +78,6 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
         }
 
         return $this->_product;
-    }
-
-    public function setProduct()
-    {
-        return $this->getProduct();
     }
 
     /***
@@ -114,8 +96,7 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
     /***
      * Get a list of related products with spares stripped out.
      */
-    public function getAccesories()
-    {
+    public function getAccesories() {
         return $this->getProduct()->getRelatedProductCollection()
             ->addAttributeToSelect(
                 [
@@ -126,67 +107,4 @@ class Accessories extends \Magento\Framework\App\Helper\AbstractHelper
                     'id'
                 ]);
     }
-
-    /***
-     * @param $productId
-     * @return mixed
-     */
-    public function getAddToCartUrl($productId)
-    {
-        $product = $this->_productRepository->getById($productId);
-        return $this->_listProduct->getAddToCartUrl($product);
-
-    }
-
-    public function getProductByID($productId)
-    {
-        return $this->_productRepository->getById($productId);
-    }
-
-    public function formatPrice($str)
-    {
-        return number_format($str, 2);
-    }
-
-
-
-    /***
-     * Checks basket to get most recently added product and retrieves product id
-     * @return int
-     */
-    protected function getBasket()
-    {
-        $quote = $this->_cart->getQuote();
-
-        $this->items = $quote->getAllVisibleItems();
-    }
-
-    protected function checkPoa()
-    {
-        $this->getBasket();
-
-        if (count($this->items) > 0) {
-
-            foreach ($this->items as $item) {
-                //$item->getId(); // MaxId should be the last item added.
-                //$item->getProductId();
-                if ( $this->isPoa( $item->getProductId() ) ) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /***
-     * Checks if latest product is Poa
-     * @return bool
-     */
-    protected function isPoa($productId) {
-        // Get current product
-        $product = $this->_product->getProductByID( $productId );
-        return  $this->_helper->isNeedHideProduct( $product );
-    }
-
-
 }

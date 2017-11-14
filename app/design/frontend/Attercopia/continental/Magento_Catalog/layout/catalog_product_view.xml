@@ -92,14 +92,9 @@
             </container>
             <referenceBlock name="product.info.details" remove="true" />
             <block class="Magento\Cookie\Block\RequireCookie" name="require-cookie" template="Magento_Cookie::require_cookie.phtml" />
-            <!-- moved elements for spares here -->
+
          </container>
-         <container name="product.spares.wrap" htmlTag="div" htmlClass="product-spares-wrap">
-            <block class="Magento\Catalog\Block\Product\View" name="product.spares.left" as="product.spares.left" template="product/spares/left.phtml" />
-            <container name="product.spares.info.main" htmlTag="div" htmlClass="spares-info-main">
-               <block class="Magento\Catalog\Block\Product\View" name="product.spares.right" as="product.spares.right" template="product/spares/right.phtml" />
-            </container>
-         </container>
+          <!-- end of product info wrap -->
       </referenceContainer>
       <referenceContainer name="content.aside">
          <referenceBlock name="catalog.product.related" remove="true" />
@@ -111,25 +106,34 @@
       <referenceBlock name="product.info.addtocart.additional">
          <block class="Magento\Catalog\Block\ShortcutButtons\InCatalog" name="addtocart.shortcut.buttons.additional" />
       </referenceBlock>
-      <referenceContainer name="page.bottom.container">
-         <container name="product.info.wrapper" label="Product social links container" htmlTag="div" htmlClass="product-info-wrapper">
-            <block class="Magento\Framework\View\Element\Text" name="product.description.block " before="product.info.description">
-               <arguments>
-                  <argument name="text" xsi:type="string"><![CDATA[<h3 class="fullDescription">Full Description</h3>]]></argument>
-               </arguments>
-            </block>
-            <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="product/view/attribute.phtml" group="detailed_info">
-               <arguments>
-                  <argument name="at_call" xsi:type="string">getDescription</argument>
-                  <argument name="at_code" xsi:type="string">description</argument>
-                  <argument name="css_class" xsi:type="string">description</argument>
-                  <argument name="at_label" xsi:type="string">none</argument>
-                  <argument name="title" translate="true" xsi:type="string">Details</argument>
-               </arguments>
-            </block>
-            <!-- add Block here for grids -->
-            <block class="Continental\GalleryGrid\Block\Grids" name="product.gallery.grid" as="product.gallery.grid" template="imageGrid.phtml" />
-         </container>
+
+        <referenceContainer name="page.bottom.container">
+           <container name="product.info.wrapper" label="Product social links container" htmlTag="div" htmlClass="product-info-wrapper">
+
+               <block class="Magento\Framework\View\Element\Text" name="product.description.block " before="product.info.description">
+                <arguments>
+                   <argument name="text" xsi:type="string"><![CDATA[<h3 class="fullDescription">Full Description</h3>]]></argument>
+                </arguments>
+             </block>
+                            <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="product/view/attribute.phtml" group="detailed_info">
+
+                               <arguments>
+                                  <argument name="at_call" xsi:type="string">getDescription</argument>
+                                  <argument name="at_code" xsi:type="string">description</argument>
+                                  <argument name="css_class" xsi:type="string">description</argument>
+                                  <argument name="at_label" xsi:type="string">none</argument>
+                                  <argument name="title" translate="true" xsi:type="string">Details</argument>
+                               </arguments>
+
+                            </block>
+
+             <block class="Continental\GalleryGrid\Block\Grids" name="product.gallery.grid" as="product.gallery.grid" template="imageGrid.phtml" />
+          </container>
+            <container name="spares.listing" label="Spares Listing Container" htmlTag="div" htmlClass="spares-listing">
+                <block class="Magento\Catalog\Block\Product\View" name="spares.listing.image" template="product/spares/main-spares-image.phtml" />
+                <block class="Magento\Catalog\Block\Product\View" name="spares.listing.text" template="product/spares/main-spares-text.phtml" />
+                <block class="Magento\Catalog\Block\Product\View" name="product.spares.related" template="Continental_Spares::spares_related.phtml" after="spares.listing.text" />
+            </container>
       </referenceContainer>
    </body>
 </page>
