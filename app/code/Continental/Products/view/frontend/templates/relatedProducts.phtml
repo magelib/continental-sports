@@ -8,7 +8,7 @@ if (count($relatedCollection) > 1 ):?>
     <h2>Accessories</h2>
         <?php foreach ($relatedCollection as $index=>$product): ?>
             <?php // filter out spares
-                $sparesId = $helper->getCategory('Spares');
+                $sparesId = $helper->getCategoryId('Spares');
                 if (!in_array($sparesId, $product->getCategoryIds() ) ):
             ?>
                 <div class="accessories_div">
