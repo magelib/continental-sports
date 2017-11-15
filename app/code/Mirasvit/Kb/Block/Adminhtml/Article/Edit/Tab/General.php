@@ -105,19 +105,21 @@ class General extends \Magento\Backend\Block\Widget\Form
             'values' => [0 => __('No'), 1 => __('Yes')],
 
         ]);
-        $fieldset->addField('position', 'text', [
-            'label' => __('Sort Order'),
-            'name'  => 'position',
-            'value' => $article->getPosition(),
-            'after_element_js'  => $this->documentHelper->afterElementMultiSelect( $article->getDocuments() ) . $this->documentHelper->afterDocs()
-        ]);
 
+        $fieldset->addField('position', 'text', [
+                    'label' => __('Sort Order'),
+                    'name'  => 'position',
+                    'value' => $article->getPosition(),
+                    'after_element_js'  => $this->documentHelper->afterElementMultiSelect( $article->getDocuments())
+                ]);
+
+        //Use this to directly link to Document Manager: currently not working $this->documentHelper->afterDocs()
         $fieldset->addField('select_field', 'multiselect', array(
-            'label'             => 'Documents',
-            'name'              => 'documents',
-            'values'            => $this->documentHelper->optionArray(),
-            // multi select doesn't like after_element_js ??
-        ));
+                            'label'             => 'Documents',
+                            'name'              => 'documents',
+                            'values'            => $this->documentHelper->optionArray(),
+                            // multi select doesn't like after_element_js ??
+                        ));
 
         $this->addStoreField($fieldset, $article);
 
@@ -129,6 +131,7 @@ class General extends \Magento\Backend\Block\Widget\Form
         ]);
 
         $tags = [];
+
         foreach ($article->getTags() as $tag) {
             $tags[] = $tag->getName();
         }
