@@ -67,8 +67,10 @@ function($) {
         var detach = $(this).find(".btn").detach();
 
         if(width <= 620) {
-
-          $(detach).insertAfter($(this).find("p"));
+	  if (typeof window.detach == "undefined") {
+              $(detach).insertAfter($(this).find("p"));
+	      window.detach = true;
+	  }
 
         }
         else {
