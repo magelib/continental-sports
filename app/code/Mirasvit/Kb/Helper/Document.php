@@ -112,7 +112,7 @@ class Document extends \Magento\Framework\App\Helper\AbstractHelper {
 	            require([
                     'jquery'
                 ], function ($) {
-                $("select[id=select_field]").val([{$values}]);
+                    $("select[id=select_field]").val([{$values}]);
                 });
                 </script>
 HTML;

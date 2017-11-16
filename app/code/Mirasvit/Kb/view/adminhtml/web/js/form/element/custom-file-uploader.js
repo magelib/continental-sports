@@ -16,8 +16,6 @@ define([
          */
         onFileUploaded: function (e, data) {
             this._super(e, data);
-            console.log(e); // test
-            console.log(data); // test
             var response = data.result; // Here the response data are stored
         }
     });

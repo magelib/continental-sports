@@ -22,10 +22,14 @@
 		margin-top: 0;
 		margin-bottom: 24px;
 	}
+	&.spares {
+		p { width:38%; }
+	}
 	p {
 		width: 50%;
 		margin-top: 24px;
-    float: left;
+                float: left;
+		clear:both;
 	}
 	img {
 		position: absolute;
