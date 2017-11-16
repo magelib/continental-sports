@@ -283,7 +283,7 @@ define([
 
                 this.categoryLink = $('<a>')
                     .attr('href', categoryUrl)
-                    .text($.mage.__('All ') + category);
+                    .text(category + $.mage.__(' Home'));
 
                 this.categoryParent = $('<li>')
                     .addClass('ui-menu-item all-category')

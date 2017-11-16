@@ -159,10 +159,14 @@
 }
 .product.media {
 	position: relative;
-	.fotorama__stage__frame .fotorama__img {
-    position: absolute;
-    top: 29%;
-    left: 61%;
+	.fotorama__stage__frame  {
+		transition-duration: 0ms;
+
+		.fotorama__img {
+			position: absolute;
+			top: 29%;
+			left: 61%;
+		}
 	}
 }
 .product.data.items > .item.content {
@@ -293,7 +297,7 @@
     width: 50%;
 	}
 .product-options-wrapper {
-	    .swatch-attribute .color { 
+	    .swatch-attribute .color {
 		margin-top:10px;
 	     }
 }
@@ -353,4 +357,18 @@
 .btns button {
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.product-buttons.bottom-buttons {
+	margin-bottom: 30px;
+}
+
+.product-options-wrapper {
+	.swatch-attribute {
+		.swatch-option {
+			border: 0;
+			width: 40px;
+			height: 40px;
+		}
+	}
 }
