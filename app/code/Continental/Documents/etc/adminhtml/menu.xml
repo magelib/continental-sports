@@ -5,5 +5,6 @@
 		    <add action="documents/index/index" id="Continental::continental_documents" module="Continental_Documents" parent="Continental::top_level" resource="Magento_Backend::content" sortOrder="9999" title="Technical Document Manager" />
             <add id="Continental::fme_banners" title="Home Page Banners" module="FME_Banners" sortOrder="50" parent="Continental::top_level" action="banners/index/index" resource="FME_Banners::banners"/>
             <add id="Continental::Mirasvit_Kb" title="Knowledge Base" module="Mirasvit_Kb" sortOrder="70" resource="Mirasvit_Kb::kb" parent="Continental::top_level" action="kbase/article" />
+	    <add id="Continental::KeepContacts" title="Enquiries / Email Enquiries" module="Me_Econtacts" sortOrder="60" parent="Continental::top_level" action="econtacts/econtacts" resource="Me_Econtacts::econtacts"/>
 	</menu>
 </config>

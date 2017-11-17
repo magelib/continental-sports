@@ -1,3 +1,55 @@
+$_topMargin: 20px;
+$_offSet: 30px;
+html, body {
+  overflow-x: hidden;
+}
+
+.kb__category-title {
+	p {
+	margin:$_topMargin 0;
+	}
+}
+.kb__search-box form,
+.full-width-bar {
+  margin: 0 -9999rem;
+  /* add back negative margin value */
+  padding: 0.25rem 9999rem;
+  background: rgba(232,232,232, 0.5);
+	input  {
+		margin-top:$_topMargin;
+		margin-bottom:$_topMargin;
+		height:50px;
+	}
+	button {
+		position:absolute;
+		right:0;
+	        margin-top: -68px !important;
+		&.action {
+			&.primary {
+			background-color:transparent;
+			color: #ddd;
+			border:0;
+			}
+			i {
+			font-size:$_offSet;
+			}
+		}
+	}
+}
+
+h1.page-title {
+	display:none;
+}
+h2 {
+	text-transform:none;
+}
+section.kb__category {
+	li { 
+	list-style:none;
+		margin-bottom:20px;
+ }
+
+}
 .kb-articles__list {
 	padding-left: 0;
 	list-style: none;
@@ -17,6 +69,7 @@
 	}
 }
 .kb__search-box {
+	margin-bottom: $_topMargin;
 	position: relative;
 	input[type="text"] {
 		border-radius: 6px;

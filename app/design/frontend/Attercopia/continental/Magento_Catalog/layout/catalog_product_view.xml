@@ -114,7 +114,8 @@
                 <arguments>
                    <argument name="text" xsi:type="string"><![CDATA[<h3 class="fullDescription">Full Description</h3>]]></argument>
                 </arguments>
-             </block>
+               </block>
+              <block class="Continental\General\Block\Buttons" name="testttt" template="Magento_Catalog::product/view/buttonsBottom.phtml" />
                             <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description" template="product/view/attribute.phtml" group="detailed_info">
 
                                <arguments>
@@ -128,12 +129,12 @@
                             </block>
 
              <block class="Continental\GalleryGrid\Block\Grids" name="product.gallery.grid" as="product.gallery.grid" template="imageGrid.phtml" />
-          </container>
+           </container>
             <container name="spares.listing" label="Spares Listing Container" htmlTag="div" htmlClass="spares-listing">
                 <block class="Magento\Catalog\Block\Product\View" name="spares.listing.image" template="product/spares/main-spares-image.phtml" />
                 <block class="Magento\Catalog\Block\Product\View" name="spares.listing.text" template="product/spares/main-spares-text.phtml" />
                 <block class="Magento\Catalog\Block\Product\View" name="product.spares.related" template="Continental_Spares::spares_related.phtml" after="spares.listing.text" />
             </container>
-      </referenceContainer>
+        </referenceContainer>
    </body>
 </page>
