@@ -37,7 +37,7 @@
 
 </table>
 
-<div id="popup-mpdal" style="display:none;">
+<div id="popup-mpdal" class="spares-editor">
     <?php
     $_product = $block->getProduct();
 
@@ -53,10 +53,12 @@
     if (!$spares->getLayoutImge($_product)): ?>
         <h3>Please add a template image to continue.</h3>
     <?php else: ?>
+    Testing images found????
     <?php $mediaUrl = $this->getUrl('spares/spares_image/upload/id/' . $_product->getId()); ?>
         <div class="gallery ui-sortable">
             <div class="image image-placeholder">
         <h2>Upload Image:</h2>
+                <!-- is this a duplicate???
         <div id="<?php echo $uploader->getHtmlId() ?>" class="uploader"
              data-mage-init='{
         "Magento_Backend/js/media-uploader" : {
@@ -74,17 +76,23 @@
         }
     }'
             >
-            <div class="image image-placeholder">
-                <div class="fileinput-button form-buttons button">
+            </div>
+-->
+                <div class="image image-placeholder">
+                    <div class="fileinput-button form-buttons button">
                 <span><?php /* @escapeNotVerified */
                     echo __('Browse Files...') ?></span>
                     <input id="fileupload" type="file" name="<?php /* @escapeNotVerified */
                     //echo $uploader->getConfig()->getFileField() ?>"
                            data-url="<?php /* @escapeNotVerified */
                            echo $mediaUrl; ?>" multiple="multiple"/>
+
+                        <div class="dummy-btn">Add Files</div>
+
                     </div>
-            </div>
-            </div>
+                </div>
+
+
         </div>
             <div class="clear"></div>
             <script id="<?php echo $uploader->getHtmlId() ?>-template" type="text/x-magento-template"
@@ -126,13 +134,16 @@
 
                 <p>
                     <input type="hidden" name="sparesimage" value="<?php echo $image; ?>"/></p>
-                <button>Save</button>
+                    <input type="hidden" name="action" value="new"/>
+
+                <p class="save"><button>Save</button></p>
+                <p class="update"><button>Update</button></p>
                 </p>
             </form>
 
         </div>
 	<div>Existing Locations</div>
-	<?=$related->showLocations(); ?>
+	<?=$related->showLocations($_product->getSku() ); ?>
 
         <script>
             require(["jquery"], function ($) {
