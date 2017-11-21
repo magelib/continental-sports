@@ -128,6 +128,13 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
                 ->toHtml(),
         ]);
 
+        $this->addTab('image', [
+            'label'   => __('Image'),
+            'content' => $this->getLayout()->createBlock('Mirasvit\Kb\Block\Adminhtml\Category\Edit\Tab\Image')
+                ->toHtml(),
+        ]);
+
+
         if ($this->getCategory()->getId() > 1) {
             $this->addTab('seo', [
                 'label'   => __('Meta Information'),
