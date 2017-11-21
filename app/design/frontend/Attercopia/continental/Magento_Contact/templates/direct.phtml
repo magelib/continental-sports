@@ -17,43 +17,37 @@ $company = $title = $firstname = $lastname = $telephone = null;
 if ($customerSession->isLoggedIn()) {
     // customer login action
     $title = $customerSession->getCustomer()->getPrefix();
-    $firstname  = $customerSession->getCustomer()->getFirstname();
-    $lastname   = $customerSession->getCustomer()->getLastname();
-    $email      = $customerSession->getCustomer()->getEmail();
-    /* Address Details */
-    //$a = $customerSession->getCustomerAddresses();
-    $a = $customerSession->getCustomer()->getDefaultBilling();
+    $firstname = $customerSession->getCustomer()->getFirstname();
+    $lastname = $customerSession->getCustomer()->getLastname();
+    $email = $customerSession->getCustomer()->getEmail();
+    $customerId = $customerSession->getCustomer()->getId();
+    $customerObj = $om->get('Magento\Customer\Model\Customer')->load($customerId);
+    $customerAddress = array();
 
-/*
-        foreach ($customerSession->getCustomerAddress() as $addressObj) {
-            $customerAddress[] = $address->toArray();
-        }
-
-    foreach ($customerAddress as $customerAddres) {
-        $street = $customerAddres['street'];
-        $city = $customerAddres['city'];
-        $telephone = $customerAddres['telephone'];
-        $postcode = $customerAddres['postcode'];
-        $country_id = $customerAddres['country_id'];
-        $company = $customerAddres['company'];
+    /* Get Address & Customer Details */
+    foreach ($customerObj->getAddresses() as $address) {
+        $customerAddress[] = $address->toArray();
     }
-*/
+
+    $fields = array(
+        'prefix',
+        'street',
+        'city',
+        'telephone',
+        'postcode',
+        'region',
+        'company',
+        'country_id'
+    );
+
+    foreach ($fields as $field) {
+
+        ${$field} = isset($customerAddress[0][$field]) ? $customerAddress[0][$field] : '';
+    }
+
 }
 $contiForms = $this->getLayout()->createBlock('\Continental\Forms\Block\ContactForms');
 
-function testContact($om) {
-    $data = array(
-        "name" => "Captain Cook",
-        "email" => "hull@smellsoffish.com",
-        "telephone" => "4324234234",
-        "comment" => "I love bouncing and sailing",
-        "store_id" => "1"
-    );
-
-    $model = $om->create('Me\Econtacts\Model\Econtacts');
-    $model->addData($data);
-    $model->save();
-}
 ?>
 <?php
 $test = '\Braintree\ClientToken';
@@ -64,7 +58,6 @@ Braintree\Configuration::privateKey('ff2238a060754e6d3f4673618f110a60');
 
 $args = array(':customer_id' => '3023202');
 $args = array();
-// Testing
 
 $clientToken = $om->create($test)->generate($args);
 ?>
@@ -84,7 +77,7 @@ $clientToken = $om->create($test)->generate($args);
             <div class="control">
                 <input name="titlee" id="titlee" title="<?php /* @escapeNotVerified */
                 echo __('Title') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $title) ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $prefix) ?>"
                        class="input-text" type="text" data-validate="{required:true}"/>
             </div>
 
@@ -136,7 +129,7 @@ $clientToken = $om->create($test)->generate($args);
             <div class="control">
                 <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */
                 echo __('Telephone') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone') ?: $telephone) ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone') ? : $telephone) ?>"
                        class="input-text" type="text"/>
             </div>
         </div>
@@ -161,7 +154,7 @@ $clientToken = $om->create($test)->generate($args);
             <div class="control">
                 <input name="address1" id="address1" title="<?php /* @escapeNotVerified */
                 echo __('Address#1') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('address1')) ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('address1')) ?: $street ?>"
                        class="input-text" type="text"/>
             </div>
         </div>
@@ -174,7 +167,7 @@ $clientToken = $om->create($test)->generate($args);
             <div class="control">
                 <input name="address1" id="address1" title="<?php /* @escapeNotVerified */
                 echo __('Address#2') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('address2')) ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('address2')) ?: $city ?>"
                        class="input-text" type="text"/>
             </div>
         </div>
@@ -186,7 +179,7 @@ $clientToken = $om->create($test)->generate($args);
             <div class="control">
                 <input name="postcode" id="postcode" title="<?php /* @escapeNotVerified */
                 echo __('Post Code') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone')) ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('postcode')) ?: $postcode ?>"
                        class="input-text" type="text"/>
             </div>
         </div>
@@ -198,7 +191,7 @@ $clientToken = $om->create($test)->generate($args);
             <div class="control">
                 <input name="county" id="county" title="<?php /* @escapeNotVerified */
                 echo __('County') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('county')) ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('county')) ?: $region ?>"
                        class="input-text" type="text"/>
             </div>
         </div>
@@ -386,14 +379,14 @@ $testcvv = 'XXX';
                         if (tokenizeErr) {
                             // Handle error in Hosted Fields tokenization
 
-                            jQuery(".error").html( tokenErrorHandler(tokenizeErr) );
+                            jQuery(".error").html(tokenErrorHandler(tokenizeErr));
                             jQuery(".error").fadeIn('fast').delay(3000).fadeOut('slow');
                             return;
                         }
 
                         document.querySelector('input[name="payment-method-nonce"]').value = payload.nonce;
                         // Populate hidden fields
-                        jQuery( "#" + formID +" #email").val(jQuery("#contact-form #email").val() );
+                        jQuery("#" + formID + " #email").val(jQuery("#contact-form #email").val());
                         form.submit();
                     });
                 }, false);
@@ -439,7 +432,7 @@ $testcvv = 'XXX';
                     return 'Network error occurred when tokenizing.';
                     break;
                 default:
-                    return 'Something bad happened! ' +  tokenizeErr;
+                    return 'Something bad happened! ' + tokenizeErr;
             }
 //    console.log('Got nonce:', payload.nonce);
         }
