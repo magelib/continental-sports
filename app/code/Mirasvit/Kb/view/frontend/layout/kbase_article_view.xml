@@ -6,6 +6,7 @@
         <referenceBlock name="sidebar.additional" remove="true" />
 
         <referenceContainer name="content">
+<<<<<<< HEAD
             <block name="kb.article.view" class="Mirasvit\Kb\Block\Article\View" template="article/view.phtml" cacheable="false">
 
             </block>
@@ -15,5 +16,11 @@
             <block name="kb.search.form" class="Mirasvit\Kb\Block\Search\Form" template="search/form.phtml"/>
             <block name="kb.category.sidebar" class="Mirasvit\Kb\Block\Category\Sidebar" template="category/sidebar.phtml"/>
         </referenceContainer>
+=======
+            <block name="kb.search.form" class="Mirasvit\Kb\Block\Search\Form" template="search/form.phtml"/>
+            <block name="kb.article.view" class="Mirasvit\Kb\Block\Article\View" template="article/view.phtml" cacheable="false">
+            </block>
+        </referenceContainer>
+>>>>>>> matty
     </body>
 </page>

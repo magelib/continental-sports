@@ -3,8 +3,11 @@
 //@codingStandardsIgnoreFile
 $article = $block->getArticle();
 $tags = $block->getTags();
+<<<<<<< HEAD
 $helper = $this->helper('\Mirasvit\Kb\Helper\Document');
 
+=======
+>>>>>>> matty
 ?>
 
 <?= $block->getChildHtml('kb.search.form') ?>
@@ -34,6 +37,7 @@ $helper = $this->helper('\Mirasvit\Kb\Helper\Document');
 <div class="kb-article__body cms-content">
     <?= $article->getTextHtml() ?>
 </div>
+<<<<<<< HEAD
 <!-- show available downloads -->
 <?php // get downloads ?>
 <div class="doc-section">
@@ -72,6 +76,8 @@ $helper = $this->helper('\Mirasvit\Kb\Helper\Document');
 </div>
 <div class="spacer">&nbsp;</div>
 <!-- end of downloads section -->
+=======
+>>>>>>> matty
 
 <div class="kb-article__body-info-left">
     <div class="kb-article__categories">
@@ -119,5 +125,38 @@ $helper = $this->helper('\Mirasvit\Kb\Helper\Document');
     <?php endif ?>
 </div>
 <div class="clearfix"></div>
+<<<<<<< HEAD
 <!-- clearing comment providers -->
 
+=======
+
+<?php if ($block->getCommentProvider() == 'disqus'): ?>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+        };
+        (function () {
+            var d = document, s = d.createElement('script');
+
+            s.src = '//<?=$block->getDisqusShortname() ?>.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+<?php elseif ($block->getCommentProvider() == 'facebook'): ?>
+    <div id="fb-root"></div>
+    <script>(function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <div class="fb-comments" data-href="<?= $article->getUrl() ?>"
+         data-numposts="5" width="100%"></div>
+<?php endif ?>
+>>>>>>> matty

@@ -9,7 +9,11 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
+<<<<<<< HEAD
  * @version   1.0.29
+=======
+ * @version   1.0.41
+>>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -317,11 +321,20 @@ class Category extends \Magento\Framework\Model\AbstractModel implements Identit
     }
 
     /**
+<<<<<<< HEAD
      * @return int
      */
     public function getArticlesNumber()
     {
         return $this->getResource()->getArticlesNumber($this);
+=======
+     * @param int $customerGroupId
+     * @return int
+     */
+    public function getArticlesNumber($customerGroupId)
+    {
+        return $this->getResource()->getArticlesNumber($this, $customerGroupId);
+>>>>>>> matty
     }
 
     /**

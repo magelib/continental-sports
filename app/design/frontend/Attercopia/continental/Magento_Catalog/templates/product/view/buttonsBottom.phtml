@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View*/
+
+if ($currentProduct = $block->getCurrentProduct()) { ?>
+    <div class="product-social-links">
+        <div class="product-addto-links" data-role="add-to-links">
+            <div class="product-buttons bottom-buttons">
+                <a class="btn-pdf" href="/pdf/?id=<?=$currentProduct->getId(); ?>"><span>Brochure</span></a>
+                <?php
+                // hide this button if there are no spares available
+                $related    = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
+                $collection = $related->getRelatedProducts();
+                $showSpares = is_array($collection) ? true : false;
+                if ($showSpares): ?>
+                    <button class="btn-spares"><span></span>Spares</button>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
+<script type="application/javascript">
+    require(['jquery', 'jquery/ui'], function($){
+        $(document).ready(function () {
+           $(document.body).on('click', '.bottom-buttons .btn-spares', function () {
+                $('.spares-listing, .columns, .product-info-wrapper, .related_column').toggle();
+           });
+        });
+    });
+</script>
+

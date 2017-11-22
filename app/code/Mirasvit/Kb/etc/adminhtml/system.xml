@@ -34,6 +34,14 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <comment>Allow to show amount of articles in category that does not contain other categories</comment>
                 </field>
+<<<<<<< HEAD
+=======
+                <field id="category_url_exclude" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude categories URL-keys from Article URL</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Allows to have URL's to articles with or without categories url-keys. After changing this option you need to re-save your articles using Update URL mass-action.</comment>
+                </field>
+>>>>>>> matty
             </group>
             <group id="comments" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
                 <label>Comments</label>

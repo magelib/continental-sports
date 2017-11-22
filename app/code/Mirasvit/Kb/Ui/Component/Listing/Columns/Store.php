@@ -9,7 +9,11 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
+<<<<<<< HEAD
  * @version   1.0.29
+=======
+ * @version   1.0.41
+>>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -30,8 +34,14 @@ class Store extends \Magento\Store\Ui\Component\Listing\Column\Store
     protected function prepareItem(array $item)
     {
         $content = '';
+<<<<<<< HEAD
         if (!empty($item[$this->storeKey]) || (isset($item[$this->storeKey]) && intval($item[$this->storeKey]) === 0)) {
             $origStores = explode(',', $item[$this->storeKey]);
+=======
+        $storeKey = 'store_id';
+        if (!empty($item[$storeKey]) || (isset($item[$storeKey]) && intval($item[$storeKey]) === 0)) {
+            $origStores = explode(',', $item[$storeKey]);
+>>>>>>> matty
         }
 
         if (empty($origStores) && (isset($origStores) && intval($origStores) !== 0)) {

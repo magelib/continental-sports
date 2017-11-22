@@ -21,4 +21,14 @@
             <argument name="pool" xsi:type="object">Mirasvit\Kb\Ui\DataProvider\Category\Modifier\Pool</argument>
         </arguments>
     </type>
+<<<<<<< HEAD
+=======
+    <type name="Magento\Framework\Notification\MessageList">
+        <arguments>
+            <argument name="messages" xsi:type="array">
+                <item name="SeoCompatibility" xsi:type="string">Mirasvit\Kb\Model\System\Message\Compatibility</item>
+            </argument>
+        </arguments>
+    </type>
+>>>>>>> matty
 </config>

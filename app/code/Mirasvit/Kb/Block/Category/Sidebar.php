@@ -9,7 +9,11 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
+<<<<<<< HEAD
  * @version   1.0.29
+=======
+ * @version   1.0.41
+>>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -43,6 +47,10 @@ class Sidebar extends \Magento\Framework\View\Element\Template
      * @param \Mirasvit\Kb\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory
      * @param \Mirasvit\Kb\Helper\Data                                    $kbData
      * @param \Magento\Framework\Registry                                 $registry
+<<<<<<< HEAD
+=======
+     * @param \Magento\Customer\Model\Session                             $customerSession,
+>>>>>>> matty
      * @param \Magento\Framework\View\Element\Template\Context            $context
      * @param array                                                       $data
      */
@@ -50,13 +58,25 @@ class Sidebar extends \Magento\Framework\View\Element\Template
         \Mirasvit\Kb\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
         \Mirasvit\Kb\Helper\Data $kbData,
         \Magento\Framework\Registry $registry,
+<<<<<<< HEAD
+=======
+        \Magento\Customer\Model\Session $customerSession,
+>>>>>>> matty
         \Magento\Framework\View\Element\Template\Context $context,
         array $data = []
     ) {
         $this->categoryCollectionFactory = $categoryCollectionFactory;
+<<<<<<< HEAD
         $this->kbData = $kbData;
         $this->registry = $registry;
         $this->context = $context;
+=======
+        $this->kbData                    = $kbData;
+        $this->registry                  = $registry;
+        $this->customerSession           = $customerSession;
+        $this->context                   = $context;
+
+>>>>>>> matty
         parent::__construct($context, $data);
     }
 
@@ -134,6 +154,17 @@ class Sidebar extends \Magento\Framework\View\Element\Template
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * @return int
+     */
+    public function getCustomerGroupId()
+    {
+        return $this->customerSession->getCustomerGroupId();
+    }
+
+    /**
+>>>>>>> matty
      * @param null|int $parentId
      *
      * @return array

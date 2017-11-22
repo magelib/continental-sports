@@ -9,7 +9,11 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
+<<<<<<< HEAD
  * @version   1.0.29
+=======
+ * @version   1.0.41
+>>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -54,12 +58,20 @@ class Article extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         \Mirasvit\Core\Api\UrlRewriteHelperInterface $urlRewrite,
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\Framework\App\CacheInterface $cacheManager,
+<<<<<<< HEAD
+=======
+        \Mirasvit\Kb\Model\Config $config,
+>>>>>>> matty
         $resourcePrefix = null
     ) {
         $this->urlRewrite = $urlRewrite;
         $this->context = $context;
         $this->cacheManager = $cacheManager;
         $this->resourcePrefix = $resourcePrefix;
+<<<<<<< HEAD
+=======
+        $this->config = $config;
+>>>>>>> matty
 
         parent::__construct($context, $resourcePrefix);
     }
@@ -161,6 +173,49 @@ class Article extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * @param \Mirasvit\Kb\Model\Article $article
+     * @return \Mirasvit\Kb\Model\Article
+     */
+    protected function loadCustomerCategoryIds(\Mirasvit\Kb\Model\Article $article)
+    {
+        $select = $this->getConnection()->select()
+            ->from($this->getTable('mst_kb_article_customer_group'))
+            ->where('acg_article_id = ?', $article->getId());
+        if ($data = $this->getConnection()->fetchAll($select)) {
+            $array = [];
+            foreach ($data as $row) {
+                $array[] = $row['acg_group_id'];
+            }
+            $article->setData('customer_group_ids', $array);
+        }
+
+        return $article;
+    }
+
+    /**
+     * @param \Mirasvit\Kb\Model\Article $article
+     * @return void
+     */
+    protected function saveCustomerCategoryIds($article)
+    {
+        $condition = $this->getConnection()->quoteInto('acg_article_id = ?', $article->getId());
+        $this->getConnection()->delete($this->getTable('mst_kb_article_customer_group'), $condition);
+        foreach ((array)$article->getData('customer_group_ids') as $id) {
+            $objArray = [
+                'acg_article_id' => $article->getId(),
+                'acg_group_id'   => $id,
+            ];
+            $this->getConnection()->insert(
+                $this->getTable('mst_kb_article_customer_group'),
+                $objArray
+            );
+        }
+    }
+
+    /**
+>>>>>>> matty
      * @param AbstractModel $article
      * @return AbstractModel
      */
@@ -209,6 +264,10 @@ class Article extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $this->loadStoreIds($object);
         $this->loadCategoryIds($object);
         $this->loadTagIds($object);
+<<<<<<< HEAD
+=======
+        $this->loadCustomerCategoryIds($object);
+>>>>>>> matty
 
         return parent::_afterLoad($object);
     }
@@ -246,10 +305,20 @@ class Article extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $this->saveStoreIds($object);
         $this->saveCategoryIds($object);
         $this->saveTagIds($object);
+<<<<<<< HEAD
 
         $categoryKey = '';
         if ($category = $object->getCategory()) {
             $categoryKey = $category->getUrlKey();
+=======
+        $this->saveCustomerCategoryIds($object);
+
+        $categoryKey = '';
+        if ($category = $object->getCategory()) {
+            if (!$this->config->getCategoryURLExcluded()) {
+                $categoryKey = $category->getUrlKey();
+            }
+>>>>>>> matty
 
             $this->cacheManager->clean([$object::CACHE_KB_ARTICLE_CATEGORY . '_' . $category->getId()]);
         }

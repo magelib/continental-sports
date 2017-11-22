@@ -9,7 +9,11 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
+<<<<<<< HEAD
  * @version   1.0.29
+=======
+ * @version   1.0.41
+>>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -18,11 +22,16 @@ namespace Mirasvit\Kb\Block\Adminhtml\Article\Edit\Tab;
 
 class General extends \Magento\Backend\Block\Widget\Form
 {
+<<<<<<< HEAD
     protected $documentHelper;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Mirasvit\Kb\Helper\Document $documentHelper,
+=======
+    public function __construct(
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+>>>>>>> matty
         \Mirasvit\Kb\Helper\Form\Article\Category $formCategoryHelper,
         \Magento\Backend\Model\UrlInterface $backendUrl,
         \Mirasvit\Kb\Helper\Data $kbData,
@@ -32,6 +41,7 @@ class General extends \Magento\Backend\Block\Widget\Form
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
         array $data = []
     ) {
+<<<<<<< HEAD
         $this->objectManager      = $objectManager;
         $this->formCategoryHelper = $formCategoryHelper;
         $this->backendUrl         = $backendUrl;
@@ -41,6 +51,16 @@ class General extends \Magento\Backend\Block\Widget\Form
         $this->context            = $context;
         $this->wysiwygConfig      = $wysiwygConfig;
         $this->documentHelper     = $documentHelper;
+=======
+        $this->objectManager          = $objectManager;
+        $this->formCategoryHelper     = $formCategoryHelper;
+        $this->backendUrl             = $backendUrl;
+        $this->kbData                 = $kbData;
+        $this->formFactory            = $formFactory;
+        $this->registry               = $registry;
+        $this->context                = $context;
+        $this->wysiwygConfig          = $wysiwygConfig;
+>>>>>>> matty
 
         $this->articleManagement          = $this->getArticleMagagement();
         $this->articleFormHelper          = $this->getArticleFormHelper();
@@ -109,6 +129,7 @@ class General extends \Magento\Backend\Block\Widget\Form
             'label' => __('Sort Order'),
             'name'  => 'position',
             'value' => $article->getPosition(),
+<<<<<<< HEAD
             'after_element_js'  => $this->documentHelper->afterElementMultiSelect( $article->getDocuments() ) . $this->documentHelper->afterDocs()
         ]);
 
@@ -121,18 +142,41 @@ class General extends \Magento\Backend\Block\Widget\Form
 
         $this->addStoreField($fieldset, $article);
 
+=======
+
+        ]);
+        $this->addStoreField($fieldset, $article);
+
+        $fieldset->addField('customer_group_ids', 'multiselect', [
+            'label'    => __('Customer Groups'),
+            'required' => true,
+            'name'     => 'customer_group_ids[]',
+            'value'    => $article->getCustomerGroupIds(),
+            'values'   => $this->getGroupCollectionFactory()->create()->toOptionArray(),
+        ]);
+
+>>>>>>> matty
         $fieldset->addField('user_id', 'select', [
             'label'  => __('Author'),
             'name'   => 'user_id',
             'value'  => $article->getUserId(),
+<<<<<<< HEAD
             'values' => $this->kbData->toAdminUserOptionArray()
         ]);
 
+=======
+            'values' => $this->kbData->toAdminUserOptionArray(),
+
+        ]);
+>>>>>>> matty
         $tags = [];
         foreach ($article->getTags() as $tag) {
             $tags[] = $tag->getName();
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> matty
         $fieldset->addField('tags', 'text', [
             'label' => __('Tags'),
             'name'  => 'tags',
@@ -206,4 +250,15 @@ class General extends \Magento\Backend\Block\Widget\Form
     {
         return $this->objectManager->get('\Mirasvit\Kb\Helper\Form\Article\Storeview');
     }
+<<<<<<< HEAD
+=======
+
+    /**
+     * @return \Magento\Customer\Model\ResourceModel\Group\CollectionFactory
+     */
+    private function getGroupCollectionFactory()
+    {
+        return $this->objectManager->get('\Magento\Customer\Model\ResourceModel\Group\CollectionFactory');
+    }
+>>>>>>> matty
 }

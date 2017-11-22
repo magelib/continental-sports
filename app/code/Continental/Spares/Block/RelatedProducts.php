@@ -79,8 +79,21 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         }
     }
 
-    public function showLocations() {
-        return '<table><tr><td>SSS</td><td>SSS</td></tr>';
+    public function showLocations($mastersku) {
+        /* Get all location for this part */
+        $list = $this->_listingHelper->filterSpareImages($mastersku);
+        $rowHtml = '<table>';
+
+        if ( count($list) > 0 ) {
+            foreach ($list as $index=> $obj) {
+                $rowHtml .= printf("<tr><td>%s</td></tr>", $index);
+           }
+            $rowHtml .= '</table>';
+            return $rowHtml;
+        }
+            return "-- No locations found for this item --";
+
+
     }
 
     public function getAllSparesMasterImages($mastersku) {

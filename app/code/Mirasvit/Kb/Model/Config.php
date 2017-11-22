@@ -9,7 +9,11 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
+<<<<<<< HEAD
  * @version   1.0.29
+=======
+ * @version   1.0.41
+>>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -101,6 +105,18 @@ class Config
 
     /**
      * @param null|string $store
+<<<<<<< HEAD
+=======
+     * @return int
+     */
+    public function getCategoryURLExcluded($store = null)
+    {
+        return $this->scopeConfig->getValue('kb/general/category_url_exclude', ScopeInterface::SCOPE_STORE, $store);
+    }
+
+    /**
+     * @param null|string $store
+>>>>>>> matty
      * @return string
      */
     public function getCommentProvider($store = null)

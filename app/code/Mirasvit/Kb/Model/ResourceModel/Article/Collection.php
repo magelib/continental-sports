@@ -9,7 +9,11 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
+<<<<<<< HEAD
  * @version   1.0.29
+=======
+ * @version   1.0.41
+>>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -21,6 +25,14 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     \Magento\Framework\Option\ArrayInterface
 {
     /**
+<<<<<<< HEAD
+=======
+     * @var string
+     */
+    protected $_idFieldName = 'article_id';//@codingStandardsIgnoreLine
+
+    /**
+>>>>>>> matty
      * @var \Mirasvit\Kb\Model\SearchFactory
      */
     protected $searchFactory;
@@ -228,6 +240,42 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     }
 
     /**
+<<<<<<< HEAD
+=======
+     * @param int $groupId
+     *
+     * @return $this
+     */
+    public function addCustomerGroupIdFilter($groupId)
+    {
+        $this->getSelect()
+            ->where("EXISTS (
+                    SELECT *
+                    FROM `{$this->getTable('mst_kb_article_customer_group')}` AS `article_customer_group_table`
+                    WHERE main_table.article_id = article_customer_group_table.acg_article_id
+                        AND article_customer_group_table.acg_group_id = ?)
+                    OR NOT EXISTS (
+                    SELECT *
+                    FROM `{$this->getTable('mst_kb_article_customer_group')}` AS `article_customer_group_table`
+                    WHERE main_table.article_id = article_customer_group_table.acg_article_id
+                )", $groupId);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function addVisibilityFilter()
+    {
+        $this->getSelect()
+            ->where("main_table.is_active = 1");
+
+        return $this;
+    }
+
+    /**
+>>>>>>> matty
      * {@inheritdoc}
      */
     protected function _initSelect()
