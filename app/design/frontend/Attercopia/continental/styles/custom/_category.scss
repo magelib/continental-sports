@@ -8,6 +8,8 @@
 	float: left;
 	background-image: url('#{$imagePath}/generic-banner.jpg');
   min-height: 600px;
+	display: inline-table;
+	
 	.columns .column.main {
     padding-bottom: 0;
   }

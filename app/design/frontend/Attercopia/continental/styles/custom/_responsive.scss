@@ -54,6 +54,7 @@
 		padding-right: 24px;
 	}
 }
+
 @media all and(max-width: $medium){
 	h1 {
 		margin-bottom: 24px;
@@ -141,6 +142,7 @@
 	    margin-left: auto;
 	    margin-right: auto;
 	    width: 100%;
+	   	max-width: 90%;
 	  }
 	}
 	.block-search .control {
@@ -148,6 +150,10 @@
 	}
 	.block-search {
 		margin-right: 32px;
+
+		.head-search {
+			font-size: 16px;
+		}
 	}
 	.block-search input {
     left: -400% !important;
@@ -261,6 +267,14 @@
 	}
 	.navigation .level0.active > a:not(.ui-state-active), .navigation .level0.has-active > a:not(.ui-state-active) {
 		border-color: $primary;
+	}
+}
+
+@media all and (max-width: 400px) {
+	.header.content .logo {
+		img {
+			max-width: 60%;
+		}
 	}
 }
 

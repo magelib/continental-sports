@@ -1,13 +1,45 @@
 <div class="searchautocomplete__autocomplete textsing1233" data-bind="css: {_active: isVisible, _loading: loading}">
     <div class="searchautocomplete__spinner">
-        <div class="spinner-item spinner-item-1"></div>
-        <div class="spinner-item spinner-item-2"></div>
-        <div class="spinner-item spinner-item-3"></div>
-        <div class="spinner-item spinner-item-4"></div>
-        <div class="spinner-item spinner-item-5"></div>
-        <div class="spinner-item spinner-item-6"></div>
-        <div class="spinner-item spinner-item-7"></div>
-        <div class="spinner-item spinner-item-8"></div>
+        <script type="text/javascript">
+            let canvas, ctx;
+
+            const shearAngle = -Math.PI * 0.125;
+            const count = 10;
+            const w = 50;
+            const h = 50;
+            const gap = 12;
+            let totalWidth = count * w + (count - 1) * gap;
+            let halfWidth = totalWidth * 0.5;
+            let halfHeight = h * 0.5;
+
+            function setup() {
+                canvas = createCanvas(windowWidth, windowHeight);
+                ctx = canvas.drawingContext;
+            }
+
+            function draw() {
+                background(256);
+                stroke(0);
+                noFill();
+                translate(width * 0.5 - halfWidth, height * 0.5);
+                shearX(shearAngle);
+
+                let time = Date.now() * 0.005;
+                for(let i = 0; i < count; i++) {
+                    let t = i / count;
+                    let s = sin((time - t * QUARTER_PI * 3) % TAU);
+                    let weight = map(s, -1, 1, 2, 8);
+                    let x = t * totalWidth;
+                    let y = s * 8 - halfHeight;
+                    strokeWeight(weight);
+                    rect(x, y, w, h);
+                }
+            }
+
+            function windowResized() {
+                resizeCanvas(windowWidth, windowHeight);
+            }
+        </script>
     </div>
 
     <div data-bind="visible: result().totalItems > 0">

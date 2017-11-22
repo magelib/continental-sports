@@ -17,31 +17,32 @@ $company = $title = $firstname = $lastname = $telephone = null;
 if ($customerSession->isLoggedIn()) {
     // customer login action
     $title = $customerSession->getCustomer()->getPrefix();
-    $firstname  = $customerSession->getCustomer()->getFirstname();
-    $lastname   = $customerSession->getCustomer()->getLastname();
-    $email      = $customerSession->getCustomer()->getEmail();
+    $firstname = $customerSession->getCustomer()->getFirstname();
+    $lastname = $customerSession->getCustomer()->getLastname();
+    $email = $customerSession->getCustomer()->getEmail();
     /* Address Details */
     //$a = $customerSession->getCustomerAddresses();
     $a = $customerSession->getCustomer()->getDefaultBilling();
 
-/*
-        foreach ($customerSession->getCustomerAddress() as $addressObj) {
-            $customerAddress[] = $address->toArray();
-        }
+    /*
+            foreach ($customerSession->getCustomerAddress() as $addressObj) {
+                $customerAddress[] = $address->toArray();
+            }
 
-    foreach ($customerAddress as $customerAddres) {
-        $street = $customerAddres['street'];
-        $city = $customerAddres['city'];
-        $telephone = $customerAddres['telephone'];
-        $postcode = $customerAddres['postcode'];
-        $country_id = $customerAddres['country_id'];
-        $company = $customerAddres['company'];
-    }
-*/
+        foreach ($customerAddress as $customerAddres) {
+            $street = $customerAddres['street'];
+            $city = $customerAddres['city'];
+            $telephone = $customerAddres['telephone'];
+            $postcode = $customerAddres['postcode'];
+            $country_id = $customerAddres['country_id'];
+            $company = $customerAddres['company'];
+        }
+    */
 }
 $contiForms = $this->getLayout()->createBlock('\Continental\Forms\Block\ContactForms');
 
-function testContact($om) {
+function testContact($om)
+{
     $data = array(
         "name" => "Captain Cook",
         "email" => "hull@smellsoffish.com",
@@ -54,6 +55,7 @@ function testContact($om) {
     $model->addData($data);
     $model->save();
 }
+
 ?>
 <?php
 $test = '\Braintree\ClientToken';
@@ -77,146 +79,149 @@ $clientToken = $om->create($test)->generate($args);
       echo __('* Required Fields') ?>"
       data-mage-init='{"validation":{}}'>
     <fieldset class="fieldset">
-        <div class="field name required">
-            <label class="label" for="title"><span><?php /* @escapeNotVerified */
-                    echo __('Title') ?></span></label>
+        <div class="wrapper-fields">
+            <div class="field name required">
+                <label class="label" for="title"><span><?php /* @escapeNotVerified */
+                        echo __('Title') ?></span></label>
 
-            <div class="control">
-                <input name="titlee" id="titlee" title="<?php /* @escapeNotVerified */
-                echo __('Title') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $title) ?>"
-                       class="input-text" type="text" data-validate="{required:true}"/>
+                <div class="control">
+                    <input name="titlee" id="titlee" title="<?php /* @escapeNotVerified */
+                    echo __('Title') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('name') ?: $title) ?>"
+                           class="input-text" type="text" data-validate="{required:true}"/>
+                </div>
+
             </div>
 
-        </div>
+
+            <div class="field name required">
+                <label class="label" for="firstame"><span><?php /* @escapeNotVerified */
+                        echo __('First Name') ?></span></label>
+
+                <div class="control">
+                    <input name="firstname" id="firstname" title="<?php /* @escapeNotVerified */
+                    echo __('First Name') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('firstname') ?: $firstname) ?>"
+                           class="input-text" type="text" data-validate="{required:true}"/>
+                </div>
+            </div>
 
 
-        <div class="field name required">
-            <label class="label" for="firstame"><span><?php /* @escapeNotVerified */
-                    echo __('First Name') ?></span></label>
+            <div class="field name required">
+                <label class="label" for="lastname"><span><?php /* @escapeNotVerified */
+                        echo __('Last Name') ?></span></label>
 
-            <div class="control">
-                <input name="firstname" id="firstname" title="<?php /* @escapeNotVerified */
-                echo __('First Name') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('firstname') ?: $firstname) ?>"
-                       class="input-text" type="text" data-validate="{required:true}"/>
+                <div class="control">
+                    <input name="lastname" id="lastname" title="<?php /* @escapeNotVerified */
+                    echo __('Last Name') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('lastname') ?: $lastname) ?>"
+                           class="input-text" type="text" data-validate="{required:true}"/>
+                </div>
+            </div>
+
+
+            <div class="field name">
+                <label class="label" for="name"><span><?php /* @escapeNotVerified */
+                        echo __('Company') ?></span></label>
+
+                <div class="control">
+                    <input name="company" id="company" title="<?php /* @escapeNotVerified */
+                    echo __('Company') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('company') ?: $company) ?>"
+                           class="input-text" type="text" data-validate="{required:false}"/>
+                </div>
+            </div>
+
+            <div class="field telephone">
+                <label class="label" for="telephone"><span><?php /* @escapeNotVerified */
+                        echo __('Telephone') ?></span></label>
+
+                <div class="control">
+                    <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */
+                    echo __('Telephone') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone') ?: $telephone) ?>"
+                           class="input-text" type="text"/>
+                </div>
+            </div>
+
+
+            <div class="field email required">
+                <label class="label" for="email"><span><?php /* @escapeNotVerified */
+                        echo __('Email') ?></span></label>
+
+                <div class="control">
+                    <input name="email" id="email" title="<?php /* @escapeNotVerified */
+                    echo __('Email') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>"
+                           class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+                </div>
             </div>
         </div>
+        <div style="clear: both;"></div>
+        <div class="wrapper-fields">
+            <div class="field address1 required">
+                <label class="label" for="address1"><span><?php /* @escapeNotVerified */
+                        echo __('Address#1') ?></span></label>
 
-
-        <div class="field name required">
-            <label class="label" for="lastname"><span><?php /* @escapeNotVerified */
-                    echo __('Last Name') ?></span></label>
-
-            <div class="control">
-                <input name="lastname" id="lastname" title="<?php /* @escapeNotVerified */
-                echo __('Last Name') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('lastname') ?: $lastname) ?>"
-                       class="input-text" type="text" data-validate="{required:true}"/>
+                <div class="control">
+                    <input name="address1" id="address1" title="<?php /* @escapeNotVerified */
+                    echo __('Address#1') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('address1')) ?>"
+                           class="input-text" type="text"/>
+                </div>
             </div>
-        </div>
 
 
-        <div class="field name">
-            <label class="label" for="name"><span><?php /* @escapeNotVerified */
-                    echo __('Company') ?></span></label>
+            <div class="field address2 required">
+                <label class="label" for="address2"><span><?php /* @escapeNotVerified */
+                        echo __('Address#2') ?></span></label>
 
-            <div class="control">
-                <input name="company" id="company" title="<?php /* @escapeNotVerified */
-                echo __('Company') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('company') ?: $company) ?>"
-                       class="input-text" type="text" data-validate="{required:false}"/>
+                <div class="control">
+                    <input name="address1" id="address1" title="<?php /* @escapeNotVerified */
+                    echo __('Address#2') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('address2')) ?>"
+                           class="input-text" type="text"/>
+                </div>
             </div>
-        </div>
 
-        <div class="field telephone">
-            <label class="label" for="telephone"><span><?php /* @escapeNotVerified */
-                    echo __('Telephone') ?></span></label>
+            <div class="field postcode required">
+                <label class="label" for="postcode"><span><?php /* @escapeNotVerified */
+                        echo __('Post Code') ?></span></label>
 
-            <div class="control">
-                <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */
-                echo __('Telephone') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone') ?: $telephone) ?>"
-                       class="input-text" type="text"/>
+                <div class="control">
+                    <input name="postcode" id="postcode" title="<?php /* @escapeNotVerified */
+                    echo __('Post Code') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone')) ?>"
+                           class="input-text" type="text"/>
+                </div>
             </div>
-        </div>
 
+            <div class="field county">
+                <label class="label" for="county"><span><?php /* @escapeNotVerified */
+                        echo __('County') ?></span></label>
 
-        <div class="field email required">
-            <label class="label" for="email"><span><?php /* @escapeNotVerified */
-                    echo __('Email') ?></span></label>
-
-            <div class="control">
-                <input name="email" id="email" title="<?php /* @escapeNotVerified */
-                echo __('Email') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>"
-                       class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
+                <div class="control">
+                    <input name="county" id="county" title="<?php /* @escapeNotVerified */
+                    echo __('County') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('county')) ?>"
+                           class="input-text" type="text"/>
+                </div>
             </div>
-        </div>
 
-        <div class="field address1 required">
-            <label class="label" for="address1"><span><?php /* @escapeNotVerified */
-                    echo __('Address#1') ?></span></label>
+            <div class="field country">
+                <label class="label" for="country"><span><?php /* @escapeNotVerified */
+                        echo __('Country') ?></span></label>
 
-            <div class="control">
-                <input name="address1" id="address1" title="<?php /* @escapeNotVerified */
-                echo __('Address#1') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('address1')) ?>"
-                       class="input-text" type="text"/>
+                <div class="control">
+                    <?php echo $contiForms->getCountries(); ?>
+                </div>
             </div>
-        </div>
 
+            <div class="field message">
+                <label class="label" for="message"><span><?php /* @escapeNotVerified */
+                        echo __('Message') ?></span></label>
 
-        <div class="field address2 required">
-            <label class="label" for="address2"><span><?php /* @escapeNotVerified */
-                    echo __('Address#2') ?></span></label>
-
-            <div class="control">
-                <input name="address1" id="address1" title="<?php /* @escapeNotVerified */
-                echo __('Address#2') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('address2')) ?>"
-                       class="input-text" type="text"/>
-            </div>
-        </div>
-
-        <div class="field postcode required">
-            <label class="label" for="postcode"><span><?php /* @escapeNotVerified */
-                    echo __('Post Code') ?></span></label>
-
-            <div class="control">
-                <input name="postcode" id="postcode" title="<?php /* @escapeNotVerified */
-                echo __('Post Code') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone')) ?>"
-                       class="input-text" type="text"/>
-            </div>
-        </div>
-
-        <div class="field county">
-            <label class="label" for="county"><span><?php /* @escapeNotVerified */
-                    echo __('County') ?></span></label>
-
-            <div class="control">
-                <input name="county" id="county" title="<?php /* @escapeNotVerified */
-                echo __('County') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('county')) ?>"
-                       class="input-text" type="text"/>
-            </div>
-        </div>
-
-        <div class="field country">
-            <label class="label" for="country"><span><?php /* @escapeNotVerified */
-                    echo __('Country') ?></span></label>
-
-            <div class="control">
-                <?php echo $contiForms->getCountries(); ?>
-            </div>
-        </div>
-
-        <div class="field message">
-            <label class="label" for="message"><span><?php /* @escapeNotVerified */
-                    echo __('Message') ?></span></label>
-
-            <div class="control">
+                <div class="control">
                 <textarea name="" id="message" title="<?php /* @escapeNotVerified */
                 echo __('Message') ?>" class="input-text" cols="5" rows="3"
                           data-validate="{required:false}"><?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('message')) ?>
@@ -235,47 +240,48 @@ $clientToken = $om->create($test)->generate($args);
                     }
                     ?>
 </textarea>
+                </div>
             </div>
-        </div>
 
-        <div class="field reference required ">
-            <label class="label" for="reference"><span><?php /* @escapeNotVerified */
-                    echo __('Reference') ?></span></label>
+            <div class="field reference required ">
+                <label class="label" for="reference"><span><?php /* @escapeNotVerified */
+                        echo __('Reference') ?></span></label>
 
-            <div class="control">
-                <input name="reference" id="referemce" title="<?php /* @escapeNotVerified */
-                echo __('Reference') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('county')) ?>"
-                       class="input-text" type="text"/>
+                <div class="control">
+                    <input name="reference" id="referemce" title="<?php /* @escapeNotVerified */
+                    echo __('Reference') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('county')) ?>"
+                           class="input-text" type="text"/>
+                </div>
             </div>
-        </div>
 
-        <div class="field amount">
-            <label class="label" for="amount"><span><?php /* @escapeNotVerified */
-                    echo __('Payment amount') ?> &pound;</span></label>
+            <div class="field amount">
+                <label class="label" for="amount"><span><?php /* @escapeNotVerified */
+                        echo __('Payment amount') ?> &pound;</span></label>
 
-            <div class="control">
-                <input name="amount" id="amount" title="<?php /* @escapeNotVerified */
-                echo __('Payment amount') ?>"
-                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('amount')) ?>"
-                       class="input-text" type="text"/>
+                <div class="control">
+                    <input name="amount" id="amount" title="<?php /* @escapeNotVerified */
+                    echo __('Payment amount') ?>"
+                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('amount')) ?>"
+                           class="input-text" type="text"/>
+                </div>
             </div>
-        </div>
 
-        <div class="field contact-method">
-            <label class="label" for="contact-method"><span><?php /* @escapeNotVerified */
-                    echo __('Preferred contact method') ?></span></label>
+            <div class="field contact-method">
+                <label class="label" for="contact-method"><span><?php /* @escapeNotVerified */
+                        echo __('Preferred contact method') ?></span></label>
 
-            <div class="control">
-                <select name="contact-method" id="contact-method" title="<?php /* @escapeNotVerified */
-                echo __('Preferred contact method') ?>" class="select-text" data-validate="{required:true}">
-                    <option value="telephone">Telephone</option>
-                    <option value="email">Email</option>
-                </select>
+                <div class="control">
+                    <select name="contact-method" id="contact-method" title="<?php /* @escapeNotVerified */
+                    echo __('Preferred contact method') ?>" class="select-text" data-validate="{required:true}">
+                        <option value="telephone">Telephone</option>
+                        <option value="email">Email</option>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <?php echo $block->getChildHtml('form.additional.info'); ?>
+            <?php echo $block->getChildHtml('form.additional.info'); ?>
+        </div>
     </fieldset>
     <!-- Braintree form goes here>
 		<fieldset>
@@ -298,9 +304,6 @@ $clientToken = $om->create($test)->generate($args);
         <label class="label label-small">Expiration Date</label>
 
         <div id="expirationDate" class="hosted-field"></div>
-
-        <!-- <input type="text" name="email" id="email"/> -->
-        <input type="text" name="payment-method-nonce"/>
 
         <div class="actions-toolbar">
             <div class="primary">
@@ -325,7 +328,6 @@ $testcardnumber = 'XXXX XXXX XXXX XXX';
 $testexpiration = 'XX / XXXX';
 $testcvv = 'XXX';
 ?>
-
 
 
 <script>
@@ -386,14 +388,14 @@ $testcvv = 'XXX';
                         if (tokenizeErr) {
                             // Handle error in Hosted Fields tokenization
 
-                            jQuery(".error").html( tokenErrorHandler(tokenizeErr) );
+                            jQuery(".error").html(tokenErrorHandler(tokenizeErr));
                             jQuery(".error").fadeIn('fast').delay(3000).fadeOut('slow');
                             return;
                         }
 
                         document.querySelector('input[name="payment-method-nonce"]').value = payload.nonce;
                         // Populate hidden fields
-                        jQuery( "#" + formID +" #email").val(jQuery("#contact-form #email").val() );
+                        jQuery("#" + formID + " #email").val(jQuery("#contact-form #email").val());
                         form.submit();
                     });
                 }, false);
@@ -439,7 +441,7 @@ $testcvv = 'XXX';
                     return 'Network error occurred when tokenizing.';
                     break;
                 default:
-                    return 'Something bad happened! ' +  tokenizeErr;
+                    return 'Something bad happened! ' + tokenizeErr;
             }
 //    console.log('Got nonce:', payload.nonce);
         }
