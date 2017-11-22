@@ -11,13 +11,11 @@ $post = $block->getPost();
 <div class="blog__post-view">
 
     <?= $this->getPostMetaHeader()->toHtml() ?>
-    <hr />
     <?php if ($post->getFeaturedImageUrl()): ?>
         <img src="<?= $post->getFeaturedImageUrl() ?>"  alt="<?= $post->getName() ?>" class="blog__post-featured-image"/>
     <?php endif ?>
-    <hr />
-        <?= $block->getPostContent() ?>
-    <hr />
+
+    <?= $block->getPostContent() ?>
 
     <?= $this->getChildHtml('blog.post.related.posts') ?>
 

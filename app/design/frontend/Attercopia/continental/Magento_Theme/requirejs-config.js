@@ -27,7 +27,8 @@ var config = {
             "menu":                   "Magento_Theme/js/menu",
             "popupWindow":            "mage/popup-window",
             "validation":             "mage/validation/validation",
-            "welcome":                "Magento_Theme/js/view/welcome"
+            "welcome":                "Magento_Theme/js/view/welcome",
+            "p5":                     "Magento_Theme/js/p5.min.js"
         }
     },
     paths: {

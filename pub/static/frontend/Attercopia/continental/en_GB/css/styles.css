@@ -2320,6 +2320,20 @@ select:not([disabled]):focus {
         -ms-flex-order: 2;
             order: 2; }
 
+.cms-direct-payment .page-title-wrapper {
+  max-width: 50%;
+  margin: auto; }
+
+.page-layout-1column.cms-page-view .page-main {
+  max-width: 1190px; }
+
+.contact-index-index .page-main {
+  padding-top: 20px;
+  margin: auto; }
+  @media screen and (min-width: 768px) {
+    .contact-index-index .page-main {
+      max-width: 40%; } }
+
 @media only screen and (max-width: 1035px) {
   .navigation,
   .breadcrumbs,
@@ -3783,6 +3797,25 @@ select:focus ~ .tooltip .tooltip-content {
       float: left; }
     .fieldset > .field:not(.choice) > .control {
       float: left; } }
+
+.form.contact.direct {
+  text-align: center; }
+  .form.contact.direct fieldset {
+    margin-bottom: 0; }
+    .form.contact.direct fieldset .wrapper-fields {
+      width: 50%;
+      max-width: 630px;
+      margin: 0 auto;
+      padding: 24px;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      text-align: left;
+      margin-bottom: 20px; }
+      .form.contact.direct fieldset .wrapper-fields .field {
+        padding-right: 5px;
+        padding-left: 5px;
+        margin-top: 10px; }
 
 @font-face {
   font-family: "icons-blank-theme";
@@ -11907,26 +11940,28 @@ body {
       height: 100%; }
   .navigation ul {
     padding: 0; }
-  .header.panel > .header.links {
-    float: right;
-    font-size: 0;
-    margin: 0;
-    padding: 0;
-    list-style: none none;
-    margin-left: auto; }
-    .header.panel > .header.links > li {
-      display: inline-block;
-      vertical-align: top; }
-    .header.panel > .header.links > li {
-      font-size: 14px;
-      margin: 0 0 0 15px; }
-      .header.panel > .header.links > li.welcome,
-      .header.panel > .header.links > li a {
-        line-height: 1.4; }
-      .header.panel > .header.links > li.welcome a {
-        padding-left: 5px; }
-  .header.content {
-    padding: 30px 20px 0; }
+  .header {
+    width: 100%; }
+    .header.panel > .header.links {
+      float: right;
+      font-size: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none none;
+      margin-left: auto; }
+      .header.panel > .header.links > li {
+        display: inline-block;
+        vertical-align: top; }
+      .header.panel > .header.links > li {
+        font-size: 14px;
+        margin: 0 0 0 15px; }
+        .header.panel > .header.links > li.welcome,
+        .header.panel > .header.links > li a {
+          line-height: 1.4; }
+        .header.panel > .header.links > li.welcome a {
+          padding-left: 5px; }
+    .header.content {
+      padding: 30px 20px 0; }
   .page-header {
     border: 0;
     border-bottom: 1px solid #d1d1d1; }
@@ -11965,6 +12000,10 @@ body {
 .sparesLocator {
   background-color: #ddd;
   border: 10px solid pink; }
+
+@media all and (-ms-high-contrast: none) {
+  .page-wrapper {
+    display: inline-block !important; } }
 
 .my-credit-cards .status {
   font-style: italic; }
@@ -13109,7 +13148,8 @@ body {
   background-repeat: no-repeat;
   float: left;
   background-image: url("../images/generic-banner.jpg");
-  min-height: 600px; }
+  min-height: 600px;
+  display: inline-table; }
   .category-bg .columns .column.main {
     padding-bottom: 0; }
 
@@ -13286,6 +13326,11 @@ body {
     font-size: 48px;
     font-size: 4.8rem;
     margin: 0; }
+    @media screen and (max-width: 500px) {
+      .banner-block h2 {
+        font-size: 24px;
+        font-size: 2.4rem;
+        word-break: break-word; } }
   .banner-block p {
     font-size: 14px;
     font-size: 1.4rem;
@@ -13323,8 +13368,9 @@ body {
     float: left;
     margin-top: 0;
     margin-bottom: 24px; }
-  .home-feature-box.spares p {
-    width: 38%; }
+    @media screen and (max-width: 400px) {
+      .home-feature-box h2 {
+        font-size: 30px; } }
   .home-feature-box p {
     width: 50%;
     margin-top: 24px;
@@ -13449,13 +13495,16 @@ body {
   padding: 0; }
 
 .blog__post-item {
-  width: 100%;
+  width: 80%;
   float: left;
   margin-top: 24px;
   margin-bottom: 0;
   position: relative; }
   .blog__post-item:first-child {
     margin-top: 0; }
+  @media screen and (max-width: 900px) {
+    .blog__post-item {
+      width: 100%; } }
 
 .field.limiter {
   margin-right: 12px; }
@@ -13498,7 +13547,6 @@ body {
     font-weight: 400 !important; }
 
 .blog__sidebar-main .block .content {
-  background-color: #f1f1f1;
   float: left;
   width: 100%; }
   .blog__sidebar-main .block .content ul {
@@ -13531,6 +13579,10 @@ body {
 .blog-post-view h1.page-title {
   margin-top: 0;
   margin-bottom: 12px; }
+
+.blog-post-view img {
+  margin-bottom: 20px;
+  margin-top: 20px; }
 
 .blog__post-excerpt .mobile, .blog__post-excerpt .tablet {
   display: none; }
@@ -14053,7 +14105,8 @@ body {
   border-bottom: 1px solid #d1d1d1;
   padding-bottom: 8px;
   padding-left: 30px;
-  padding-top: 8px; }
+  padding-top: 8px;
+  margin-bottom: 20px; }
 
 .panel.wrapper {
   border-bottom: 0;
@@ -14066,9 +14119,6 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap; }
   .page-products .products-grid .product-items .product-item {
@@ -14091,6 +14141,8 @@ body {
 
 .products-grid .product-item-info {
   width: 100% !important; }
+  .products-grid .product-item-info .amasty-hide-price-container {
+    margin-bottom: 30px; }
 
 .products-grid .product-item-details {
   padding: 24px;
@@ -14598,11 +14650,14 @@ section.kb__category {
     .header.content .logo img {
       margin-left: auto;
       margin-right: auto;
-      width: 100%; }
+      width: 100%;
+      max-width: 90%; }
   .block-search .control {
     border-top: 0 !important; }
   .block-search {
     margin-right: 32px; }
+    .block-search .head-search {
+      font-size: 16px; }
   .block-search input {
     left: -400% !important; }
   .block-search .block-content {
@@ -14688,6 +14743,10 @@ section.kb__category {
     width: 100%; }
   .navigation .level0.active > a:not(.ui-state-active), .navigation .level0.has-active > a:not(.ui-state-active) {
     border-color: #d1242e; } }
+
+@media all and (max-width: 400px) {
+  .header.content .logo img {
+    max-width: 60%; } }
 
 @media all and (max-width: 900px) {
   .header-top-links {

@@ -255,6 +255,8 @@ body {
     }
 
     .header {
+        width: 100%;
+
         &.panel {
             & > .header.links {
                 float: right;
@@ -352,4 +354,10 @@ body {
 }
 .sparesLocator {
 	background-color:#ddd; border:10px solid pink;
+}
+
+@media all and (-ms-high-contrast: none) {
+    .page-wrapper {
+        display: inline-block !important;
+    }
 }
