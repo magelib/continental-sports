@@ -33,6 +33,10 @@
 		  margin: 0 24px 0 0;
 
 	}
+	.level0 .submenu li a {
+		color: black;
+		text-align: left;
+	}
 	.level0 > .level-top {
 		@include font-size(16);
     display: block;

@@ -53,13 +53,17 @@
 	padding: 0;
 }
 .blog__post-item {
-	width: 100%;
+	width: 80%;
 	float: left;
 	margin-top: 24px;
 	margin-bottom: 0;
 	position: relative;
 	&:first-child {
 		margin-top: 0;
+	}
+
+	@media screen and (max-width: 900px) {
+		width: 100%;
 	}
 }
 .field.limiter {
@@ -108,7 +112,6 @@
 		}
 	}
 	.block .content {
-    background-color: #f1f1f1;
     float: left;
     width: 100%;
     ul {
@@ -147,6 +150,11 @@
 	h1.page-title {
 		margin-top: 0;
 		margin-bottom: 12px;
+	}
+
+	img {
+		margin-bottom: 20px;
+		margin-top: 20px;
 	}
 }
 .blog__post-excerpt {
