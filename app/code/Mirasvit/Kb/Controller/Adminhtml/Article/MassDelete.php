@@ -9,27 +9,15 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
-<<<<<<< HEAD
- * @version   1.0.29
-=======
  * @version   1.0.41
->>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> matty
 namespace Mirasvit\Kb\Controller\Adminhtml\Article;
 
 use Magento\Framework\Controller\ResultFactory;
 
-<<<<<<< HEAD
-class MassDelete extends \Mirasvit\Kb\Controller\Adminhtml\Article
-{
-=======
 class MassDelete extends \Magento\Backend\App\Action
 {
     public function __construct(
@@ -44,34 +32,11 @@ class MassDelete extends \Magento\Backend\App\Action
         parent::__construct($context);
     }
 
->>>>>>> matty
     /**
      *
      */
     public function execute()
     {
-<<<<<<< HEAD
-        $ids = $this->getRequest()->getParam('article_id');
-        if (!is_array($ids)) {
-            $this->messageManager->addError(__('Please select article(s)'));
-        } else {
-            try {
-                foreach ($ids as $id) {
-                    $model = $this->articleFactory->create()
-                        ->load($id);
-                    $model->delete();
-                }
-                $this->messageManager->addSuccess(
-                    __('Total of %1 record(s) were successfully deleted', count($ids))
-                );
-            } catch (\Exception $e) {
-                $this->messageManager->addError($e->getMessage());
-            }
-        }
-        $this->_redirect('*/*/index');
-    }
-}
-=======
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
 
@@ -100,4 +65,3 @@ class MassDelete extends \Magento\Backend\App\Action
         return $this->context->getAuthorization()->isAllowed('Mirasvit_Kb::kb_article');
     }
 }
->>>>>>> matty

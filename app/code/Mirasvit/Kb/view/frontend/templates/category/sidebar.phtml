@@ -1,19 +1,11 @@
 <?php
 /** @var \Mirasvit\Kb\Block\Category\Sidebar $block */
-<<<<<<< HEAD
-
-$tree = $block->getCategoryTree();
-$minLevel = $block->getMinCategoryLevel();
-?>
-
-=======
 /** @var \Mirasvit\Kb\Model\Category $category */
 
 $tree = $block->getCategoryTree();
 $minLevel = $block->getMinCategoryLevel();
 $customerGroupId = $block->getCustomerGroupId();
 ?>
->>>>>>> matty
 <?php if (count($tree) > 0): ?>
     <div class="block block-collapsible-nav kb__category-sidebar">
         <div class="title block-collapsible-nav-title"
@@ -23,11 +15,6 @@ $customerGroupId = $block->getCustomerGroupId();
         <div class="block-collapsible-content content"  id="block-collapsible-nav-kb">
             <ul class="nav items">
                 <?php foreach ($tree as $category): ?>
-<<<<<<< HEAD
-                    <li class="item level-<?= $category->getLevel() - $minLevel + 1 ?>">
-                        <a href="<?= $category->getUrl() ?>"><?= $category->getName() ?>
-                            <span class="count"><?= $category->getArticlesNumber($block->getStoreId()) ?></span>
-=======
                     <li class="item level-<?= $category->getLevel() - $minLevel + 1; ?>"
                         data-parent="<?= $category->getParentId(); ?>"
                         >
@@ -38,17 +25,12 @@ $customerGroupId = $block->getCustomerGroupId();
                                     ></span>
                             <?php endif;?>
                             <span class="count"><?= $category->getArticlesNumber($customerGroupId) ?></span>
->>>>>>> matty
                         </a>
                     </li>
                 <?php endforeach ?>
             </ul>
         </div>
     </div>
-<<<<<<< HEAD
-<?php endif ?>
-
-=======
     <script type="text/javascript">
         require(['jquery'], function ($) {
             $(function () {
@@ -91,4 +73,3 @@ $customerGroupId = $block->getCustomerGroupId();
         });
     </script>
 <?php endif ?>
->>>>>>> matty

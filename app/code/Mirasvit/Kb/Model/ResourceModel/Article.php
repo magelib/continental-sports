@@ -9,11 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
-<<<<<<< HEAD
- * @version   1.0.29
-=======
  * @version   1.0.41
->>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -58,20 +54,14 @@ class Article extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         \Mirasvit\Core\Api\UrlRewriteHelperInterface $urlRewrite,
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\Framework\App\CacheInterface $cacheManager,
-<<<<<<< HEAD
-=======
         \Mirasvit\Kb\Model\Config $config,
->>>>>>> matty
         $resourcePrefix = null
     ) {
         $this->urlRewrite = $urlRewrite;
         $this->context = $context;
         $this->cacheManager = $cacheManager;
         $this->resourcePrefix = $resourcePrefix;
-<<<<<<< HEAD
-=======
         $this->config = $config;
->>>>>>> matty
 
         parent::__construct($context, $resourcePrefix);
     }
@@ -173,8 +163,6 @@ class Article extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
-<<<<<<< HEAD
-=======
      * @param \Mirasvit\Kb\Model\Article $article
      * @return \Mirasvit\Kb\Model\Article
      */
@@ -215,7 +203,6 @@ class Article extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
     }
 
     /**
->>>>>>> matty
      * @param AbstractModel $article
      * @return AbstractModel
      */
@@ -264,10 +251,7 @@ class Article extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $this->loadStoreIds($object);
         $this->loadCategoryIds($object);
         $this->loadTagIds($object);
-<<<<<<< HEAD
-=======
         $this->loadCustomerCategoryIds($object);
->>>>>>> matty
 
         return parent::_afterLoad($object);
     }
@@ -305,12 +289,6 @@ class Article extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $this->saveStoreIds($object);
         $this->saveCategoryIds($object);
         $this->saveTagIds($object);
-<<<<<<< HEAD
-
-        $categoryKey = '';
-        if ($category = $object->getCategory()) {
-            $categoryKey = $category->getUrlKey();
-=======
         $this->saveCustomerCategoryIds($object);
 
         $categoryKey = '';
@@ -318,7 +296,6 @@ class Article extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
             if (!$this->config->getCategoryURLExcluded()) {
                 $categoryKey = $category->getUrlKey();
             }
->>>>>>> matty
 
             $this->cacheManager->clean([$object::CACHE_KB_ARTICLE_CATEGORY . '_' . $category->getId()]);
         }

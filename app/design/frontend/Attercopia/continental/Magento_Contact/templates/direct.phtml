@@ -20,7 +20,6 @@ if ($customerSession->isLoggedIn()) {
     $firstname = $customerSession->getCustomer()->getFirstname();
     $lastname = $customerSession->getCustomer()->getLastname();
     $email = $customerSession->getCustomer()->getEmail();
-<<<<<<< HEAD
     $customerId = $customerSession->getCustomer()->getId();
     $customerObj = $om->get('Magento\Customer\Model\Customer')->load($customerId);
     $customerAddress = array();
@@ -39,37 +38,6 @@ if ($customerSession->isLoggedIn()) {
         'region',
         'company',
         'country_id'
-=======
-    /* Address Details */
-    //$a = $customerSession->getCustomerAddresses();
-    $a = $customerSession->getCustomer()->getDefaultBilling();
-
-    /*
-            foreach ($customerSession->getCustomerAddress() as $addressObj) {
-                $customerAddress[] = $address->toArray();
-            }
-
-        foreach ($customerAddress as $customerAddres) {
-            $street = $customerAddres['street'];
-            $city = $customerAddres['city'];
-            $telephone = $customerAddres['telephone'];
-            $postcode = $customerAddres['postcode'];
-            $country_id = $customerAddres['country_id'];
-            $company = $customerAddres['company'];
-        }
-    */
-}
-$contiForms = $this->getLayout()->createBlock('\Continental\Forms\Block\ContactForms');
-
-function testContact($om)
-{
-    $data = array(
-        "name" => "Captain Cook",
-        "email" => "hull@smellsoffish.com",
-        "telephone" => "4324234234",
-        "comment" => "I love bouncing and sailing",
-        "store_id" => "1"
->>>>>>> wardsoft
     );
 
     foreach ($fields as $field) {
@@ -78,10 +46,7 @@ function testContact($om)
     }
 
 }
-<<<<<<< HEAD
 $contiForms = $this->getLayout()->createBlock('\Continental\Forms\Block\ContactForms');
-=======
->>>>>>> wardsoft
 
 ?>
 <?php

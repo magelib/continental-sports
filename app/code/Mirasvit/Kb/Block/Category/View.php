@@ -9,11 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
-<<<<<<< HEAD
- * @version   1.0.29
-=======
  * @version   1.0.41
->>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -21,10 +17,7 @@
 
 namespace Mirasvit\Kb\Block\Category;
 
-<<<<<<< HEAD
-=======
 use Mirasvit\Kb\Model\Article;
->>>>>>> matty
 use Magento\Framework\View\Element\Template;
 
 class View extends Template
@@ -58,10 +51,7 @@ class View extends Template
      * @param \Mirasvit\Kb\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory
      * @param \Mirasvit\Kb\Model\ResourceModel\Article\CollectionFactory  $articleCollectionFactory
      * @param \Mirasvit\Kb\Model\Config                                   $config
-<<<<<<< HEAD
-=======
      * @param \Magento\Cms\Model\Template\FilterProvider                  $filterProvider
->>>>>>> matty
      * @param \Magento\Framework\Registry                                 $registry
      * @param \Magento\Framework\View\Element\Template\Context            $context
      * @param array                                                       $data
@@ -70,23 +60,13 @@ class View extends Template
         \Mirasvit\Kb\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
         \Mirasvit\Kb\Model\ResourceModel\Article\CollectionFactory $articleCollectionFactory,
         \Mirasvit\Kb\Model\Config $config,
-<<<<<<< HEAD
-        \Magento\Framework\Registry $registry,
-=======
         \Magento\Cms\Model\Template\FilterProvider $filterProvider,
         \Magento\Framework\Registry $registry,
         \Magento\Customer\Model\Session $customerSession,
->>>>>>> matty
         \Magento\Framework\View\Element\Template\Context $context,
         array $data = []
     ) {
         $this->categoryCollectionFactory = $categoryCollectionFactory;
-<<<<<<< HEAD
-        $this->articleCollectionFactory = $articleCollectionFactory;
-        $this->config = $config;
-        $this->registry = $registry;
-        $this->context = $context;
-=======
         $this->articleCollectionFactory  = $articleCollectionFactory;
         $this->config                    = $config;
         $this->filterProvider            = $filterProvider;
@@ -94,7 +74,6 @@ class View extends Template
         $this->customerSession           = $customerSession;
         $this->context                   = $context;
 
->>>>>>> matty
         parent::__construct($context, $data);
     }
 
@@ -205,10 +184,7 @@ class View extends Template
             ->addCategoryIdFilter($category->getId())
             ->addFieldToFilter('main_table.is_active', true)
             ->addStoreIdFilter($this->context->getStoreManager()->getStore()->getId())
-<<<<<<< HEAD
-=======
             ->addCustomerGroupIdFilter($this->customerSession->getCustomerGroupId())
->>>>>>> matty
             ->setPageSize($this->config->getArticleLinksLimit())
             ->setOrder('position', 'asc');
 
@@ -274,8 +250,6 @@ class View extends Template
     }
 
     /**
-<<<<<<< HEAD
-=======
      * Prepare HTML content
      *
      * @return string
@@ -286,7 +260,6 @@ class View extends Template
     }
 
     /**
->>>>>>> matty
      * Return identifiers for produced content.
      *
      * @return array

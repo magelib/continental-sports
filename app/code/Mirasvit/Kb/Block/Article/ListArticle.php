@@ -9,11 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
-<<<<<<< HEAD
- * @version   1.0.29
-=======
  * @version   1.0.41
->>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -39,11 +35,7 @@ class ListArticle extends \Magento\Framework\View\Element\Template implements Id
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
-<<<<<<< HEAD
-        \Magento\Framework\Data\Helper\PostHelper $postDataHelper,
-=======
         \Magento\Customer\Model\Session $customerSession,
->>>>>>> matty
         \Mirasvit\Kb\Model\Config $config,
         \Mirasvit\Kb\Model\CategoryFactory $categoryFactory,
         \Mirasvit\Kb\Model\ResourceModel\Article\CollectionFactory $articleCollectionFactory,
@@ -52,11 +44,7 @@ class ListArticle extends \Magento\Framework\View\Element\Template implements Id
         \Mirasvit\Kb\Helper\Data $kbData,
         array $data = []
     ) {
-<<<<<<< HEAD
-        $this->postDataHelper           = $postDataHelper;
-=======
         $this->customerSession          = $customerSession;
->>>>>>> matty
         $this->config                   = $config;
         $this->categoryFactory          = $categoryFactory;
         $this->articleCollectionFactory = $articleCollectionFactory;
@@ -267,10 +255,7 @@ class ListArticle extends \Magento\Framework\View\Element\Template implements Id
             $collection = $this->articleCollectionFactory->create()
                 ->addFieldToFilter('main_table.is_active', true)
                 ->addStoreIdFilter($this->context->getStoreManager()->getStore()->getId())
-<<<<<<< HEAD
-=======
                 ->addCustomerGroupIdFilter($this->customerSession->getCustomerGroupId())
->>>>>>> matty
             ;
             if ($category = $this->getCategory()) {
                 $collection->addCategoryIdFilter($category->getId());

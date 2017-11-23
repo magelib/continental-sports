@@ -9,11 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
-<<<<<<< HEAD
- * @version   1.0.29
-=======
  * @version   1.0.41
->>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -132,8 +128,6 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
                 ->toHtml(),
         ]);
 
-<<<<<<< HEAD
-=======
         $this->addTab('image', [
             'label'   => __('Image'),
             'content' => $this->getLayout()->createBlock('Mirasvit\Kb\Block\Adminhtml\Category\Edit\Tab\Image')
@@ -141,7 +135,6 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
         ]);
 
 
->>>>>>> matty
         if ($this->getCategory()->getId() > 1) {
             $this->addTab('seo', [
                 'label'   => __('Meta Information'),

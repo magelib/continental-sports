@@ -9,11 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
-<<<<<<< HEAD
- * @version   1.0.29
-=======
  * @version   1.0.41
->>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -73,8 +69,6 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'comment'  => 'Custom Layout Update',
                 ]);
         }
-<<<<<<< HEAD
-=======
 
         if (version_compare($context->getVersion(), '1.0.4') < 0) {
             include_once 'Upgrade_1_0_4.php';
@@ -87,6 +81,5 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
             Upgrade_1_0_5::upgrade($installer, $context);
         }
->>>>>>> matty
     }
 }

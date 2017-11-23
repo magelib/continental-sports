@@ -9,11 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
-<<<<<<< HEAD
- * @version   1.0.29
-=======
  * @version   1.0.41
->>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -25,14 +21,11 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     \Magento\Framework\Option\ArrayInterface
 {
     /**
-<<<<<<< HEAD
-=======
      * @var string
      */
     protected $_idFieldName = 'article_id';//@codingStandardsIgnoreLine
 
     /**
->>>>>>> matty
      * @var \Mirasvit\Kb\Model\SearchFactory
      */
     protected $searchFactory;
@@ -240,8 +233,6 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     }
 
     /**
-<<<<<<< HEAD
-=======
      * @param int $groupId
      *
      * @return $this
@@ -275,7 +266,6 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     }
 
     /**
->>>>>>> matty
      * {@inheritdoc}
      */
     protected function _initSelect()

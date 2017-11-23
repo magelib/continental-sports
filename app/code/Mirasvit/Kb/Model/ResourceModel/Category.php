@@ -9,11 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
-<<<<<<< HEAD
- * @version   1.0.29
-=======
  * @version   1.0.41
->>>>>>> matty
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -502,20 +498,13 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 
     /**
      * @param \Magento\Framework\Model\AbstractModel $category
-<<<<<<< HEAD
-=======
      * @param int                                    $customerGroupId
->>>>>>> matty
      *
      * @return int
      *
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-<<<<<<< HEAD
-    public function getArticlesNumber(\Magento\Framework\Model\AbstractModel $category)
-=======
     public function getArticlesNumber(\Magento\Framework\Model\AbstractModel $category, $customerGroupId)
->>>>>>> matty
     {
         $resource = $this->resource;
 
@@ -524,9 +513,6 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         SELECT count(distinct ac_article_id) FROM {$this->getMainTable()} c
         LEFT JOIN {$resource->getTableName('mst_kb_article_category')} ac ON c.`category_id` = ac.`ac_category_id`
         LEFT JOIN {$resource->getTableName('mst_kb_article')} art ON ac_article_id = art.article_id
-<<<<<<< HEAD
-        WHERE path LIKE '{$category->getPath()}%' AND art.is_active=1";
-=======
         WHERE path LIKE '{$category->getPath()}%' AND art.is_active=1 AND (
             EXISTS (
                 SELECT *
@@ -539,7 +525,6 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
                 WHERE art.article_id = article_customer_group_table.acg_article_id
             )
         )";
->>>>>>> matty
 
         $num = (int) $readConnection->fetchOne($query);
 
