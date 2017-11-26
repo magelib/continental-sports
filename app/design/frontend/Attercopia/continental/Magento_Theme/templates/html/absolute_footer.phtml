@@ -4,4 +4,18 @@
  * See COPYING.txt for license details.
  */
 ?>
-<?php /* @escapeNotVerified */ echo $block->getMiscellaneousHtml();
+<?php /* @escapeNotVerified */
+echo $block->getMiscellaneousHtml(); ?>
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        //IE BUG FIX
+        $(document).ready(function () {
+            if (navigator.appName == 'Microsoft Internet Explorer' ||  !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/)) || (typeof $.browser !== "undefined" && $.browser.msie == 1))
+            {
+                if ($('.sidebar .page-footer').length > 0) {
+                    $('.page-footer').insertAfter('main.page-main');
+                }
+            }
+        });
+    });
+</script>
