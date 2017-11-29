@@ -62,6 +62,7 @@ function($) {
     });
 
     function moveButton(width, featureBox) {
+	alert("Ah so this is move button");
       $(featureBox).each(function() { 
 
         var detach = $(this).find(".btn").detach();

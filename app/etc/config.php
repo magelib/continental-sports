@@ -12,6 +12,7 @@ return array (
     'Continental_GalleryGrid' => 1,
     'Continental_General' => 1,
     'Continental_HomeFeatures' => 1,
+    'Continental_Interactive' => 1,
     'Continental_Nav' => 1,
     'Continental_Poa' => 1,
     'Continental_Products' => 1,
