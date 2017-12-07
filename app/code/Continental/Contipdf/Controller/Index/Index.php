@@ -54,13 +54,18 @@ class Index extends \Magento\Framework\App\Action\Action
 	$this->basepath = $_SERVER['DOCUMENT_ROOT'] . '/';
     }
 
+    private function debug($str) {
+       // printf("<pre>%s</pre>",  $str);
+    }
+
     function execute()
     {
-	ob_start();
+//        ob_start();
         $productId = isset($_GET['id']) ? preg_replace('/[^0-9]/', '', $_GET['id']) : false;
 
         if (!$productId) {
-            exit("<script>history.back();</script>");
+//            exit("<script>history.back();</script>");
+            $this->debug("No product");
         }
 
         $html = isset($_GET['html']) ? true : false;
@@ -69,16 +74,28 @@ class Index extends \Magento\Framework\App\Action\Action
             $this->createHtml($productId);
         } else {
             // Force Download of Pdf
+            $this->debug("pdf start");
+
             //result = $this->resultFactory->create(PdfResult::TYPE);
             $product = $this->getProduct($productId);
+            $this->debug('product set');
+
             $filename = str_replace(' ', '_', $product->getName());
             $filename = str_replace(' - ', '-', $filename);
             $filename = preg_replace('/[^A-Za-z0-9_-]/', '', $filename);
             $filename .= '.pdf';
+            //$margin = ' --margin-left 0mm --margin-right 0mm --margin-top 0mm --header-spacing 3';
+            $margin = ' -B 21mm -L 2mm -R 2mm -T 22mm';
+            $footer = ' --footer-html \''. $_SERVER['HTTP_HOST'] . '/pub/media/pdf/templates/footer.html\'';
+            $header = ' --header-html \''. $_SERVER['HTTP_HOST'] . '/pub/media/pdf/templates/header.html\'';
+
             $path = $this->basepath . 'media/pdf/';
             if (!file_exists($path . $filename)) {
+                $this->debug("file doesn't exist");
                 $url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf \'' . $url . '&html=yes\' \'' . $path . $filename . '\'';
+                $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf'. $margin . $header . $footer . ' \'' . $url . '&html=yes\' \'' . $path . $filename . '\'';
+                echo $command;
+                exit();
                 $bash = exec($command);
         } else {
         }
@@ -105,15 +122,59 @@ class Index extends \Magento\Framework\App\Action\Action
         return $isSecure ? 'https' : 'http';
     }
 
+    private function checkFooter() {
+        $footerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/footer.html';
+
+        if (!file_exists($footerFile)) {
+            $footerHtml = <<< html
+            <!DOCTYPE html>
+           <body>
+        <div class="pdf-footer" style="height:200px; text-align: center; font-size: 12px;">
+            <p>Continental Sports Limited. Hill Top Road, Paddock, Huddersfield, West Yorkshire HD1 4SD. Registered in England &amp; Wales No: 00830200. VAT No: 516 3500 76</p>
+			<p>Telephone: 01484 542051   |   Fax: 01484 539148   |   Email: sales@contisports.co.uk</p>
+        </div>
+        </body>
+        </html>
+html;
+            file_put_contents($footerFile, $footerHtml);
+        }
+
+    }
+
+    private function checkHeader() {
+        $headerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/header.html';
+
+        if (!file_exists($headerFile)) {
+            $headerHtml = <<< html
+           <!DOCTYPE html>
+           <body>
+               <div class="pdf-header" style="background-color:#333!important; height:100px;">
+                    <div class="pdf-container" style="padding:30px">
+                        <img src="//continental.attercopia.co.uk/static/version1502457461/frontend/Attercopia/continental/en_GB/images/footer-logo.png" alt="PDF Logo" />
+                    </div>
+                </div>
+            </body>
+            </html>
+html;
+            file_put_contents($headerFile, $headerHtml);
+        }
+
+    }
+
     function createHtml($productId = false)
     {
+        // Added header
+        $this->checkHeader();
+        // Added Footer
+        $this->checkFooter();
         # Get product id
         if ($productId === false) return false;
 
         # Get template
-#        $template = '/var/www/html/app/code/Continental/Contipdf/view/frontend/templates/pdf_template.phtml';
-	$template = $this->basepath . '../app/code/code/Continental/Contipdf/view/frontend/templates/pdf_template.phtml';
-        if (!file_exists($template)) exit("Cannot open template");//return false; # Log missing template
+
+	    $template = dirname(__FILE__) . '/../../view/frontend/templates/pdf_template.phtml';
+
+        if (!file_exists($template)) exit("Cannot open template: $template");//return false; # Log missing template
         $contents = file_get_contents($template);
 
         # Get product details
