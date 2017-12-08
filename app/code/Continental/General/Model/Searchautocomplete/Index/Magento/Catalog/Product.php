@@ -212,11 +212,13 @@ class Product extends \Mirasvit\SearchAutocomplete\Index\Magento\Catalog\Product
             }
             $item['price'] = $this->pricingHelper->currency($item['price'], false, false);
 
+            // IF POA product hide the price
+            // a product is a POA product if its assigned to the POA category
             $collection = $this->_categoryFactory->create()->getCollection()->addAttributeToFilter('name', 'POA')->setPageSize(1);
             $categoryId = $collection->getFirstItem()->getId();
             if ($collection->getSize()) {
                 $key = array_search($categoryId, $product->getCategoryIds());
-                if($key !== NULL) {
+                if($key !== false) {
                     $item['price'] = '';
                 }
             }
