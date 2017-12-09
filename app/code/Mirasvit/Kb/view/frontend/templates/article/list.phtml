@@ -7,14 +7,14 @@
 <?php
 $collection = $block->getArticleCollection();
 ?>
-
 <?php if ($collection->count()): ?>
     <?= $block->getToolbarHtml() ?>
 
     <ol class="kb-articles__list">
         <?php foreach ($collection as $article): ?>
             <li class="kb-articles__article">
-                <a class="kb__title" href="<?= $article->getUrl() ?>"><?= $article->getName(); ?></a>
+                <i class="fa fa-fw fa-arrow-right"></i>
+                <a href="<?= $article->getUrl() ?>"><?= $article->getName(); ?></a>
 
                 <div class="kb-article__metadata kb-article__metadata-list">
                     <div class="author">
@@ -36,15 +36,15 @@ $collection = $block->getArticleCollection();
                     <?php endif ?>
                 </div>
 
-                <p class="kb__description"><?php
+                <?php
                 $remainder = '';
-                echo $this->helper('Mirasvit\Core\Helper\Text')->truncate(strip_tags($article->getSummary()), 300, ' ...', $remainder, false);
-                ?></p>
+                // Below can be used to display summary
+                //echo $this->helper('Mirasvit\Core\Helper\Text')->truncate(strip_tags($article->getSummary()), 300, ' ...', $remainder, false);
+                ?>
             </li>
         <?php endforeach; ?>
     </ol>
-
     <?= $block->getToolbarHtml() ?>
 <?php else: ?>
-    <p><?= __('There are no articles available for this category'); ?></p>
+    <p class="no-articles"><?= __('There are no articles available for this category'); ?></p>
 <?php endif ?>

@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
- * @version   1.0.29
+ * @version   1.0.41
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -68,6 +68,18 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'default'  => '',
                     'comment'  => 'Custom Layout Update',
                 ]);
+        }
+
+        if (version_compare($context->getVersion(), '1.0.4') < 0) {
+            include_once 'Upgrade_1_0_4.php';
+
+            Upgrade_1_0_4::upgrade($installer, $context);
+        }
+
+        if (version_compare($context->getVersion(), '1.0.5') < 0) {
+            include_once 'Upgrade_1_0_5.php';
+
+            Upgrade_1_0_5::upgrade($installer, $context);
         }
     }
 }

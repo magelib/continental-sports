@@ -67,6 +67,16 @@
     <?php endif ?>
     <script>
         require(["jquery"], function ($) {
+            window.elements = ["#cart-totals",
+
+                "#maincontent .checkout_wrapper",
+                ".cart-summary #block-shipping",
+                ".cart-summary #block-discount",
+//                ".cart-summary .poa_wrapper",
+                ".cart-summary .summary.title",
+                "#minicart-content-wrapper .subtotal"
+            ];
+
             <?php
             // Hide summary items
             if ($enquiry === true):
@@ -91,20 +101,42 @@
                 <?php endif; ?>
             });
 
+            function hideAll(elements) {
+                $(elements).each(function (i, t) {
+                    $(t).hide();
+                });
+            }
+
+            function showAll(elements) {
+                $(elements).each(function(i,t) {
+                    $(t).show();
+                });
+            }
+
             function disablePoa() {
-                $("#maincontent .checkout_wrapper").show();
-                $(".cart-summary #block-shipping").show();
-                $(".cart-summary #block-discount").show();
-                $(".cart-summary .poa_wrapper").hide();
+                showAll(window.elements);
+            }
+
+            function minicartHide() {
+
+                window.counter++;
+
+                if ( $(".price-wrapper").length) {
+                    $(".price-wrapper").html('<i>Price on application</i>');
+                    clearInterval(window.miniCartCheck);
+                }
+
+                if (window.counter > 10) {
+                    clearInterval(window.miniCartCheck);
+                }
             }
 
             function setPoaActive() {
+                window.counter = 1;
+                window.miniCartCheck = setInterval(function(){ minicartHide() }, 200);
+                $(".cart-price").hide();
                 // Hide Summary items from main basket
-                $("#maincontent .checkout_wrapper").hide();
-                $(".cart-summary #block-shipping").hide();
-                $(".cart-summary #block-discount").hide();
-                // Show enquiry button
-                $(".cart-summary .poa_wrapper").show();
+                hideAll(window.elements);
                 // redirect main cart button
                 $("#top-cart-enquiry-btn").click(function () {
                     window.location = '/poa';

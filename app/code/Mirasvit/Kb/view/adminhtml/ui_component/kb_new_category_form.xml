@@ -69,6 +69,24 @@
                 </item>
             </argument>
         </field>
+<!-- adding description field for front end index pages -->
+<field name="description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Introduction Text</item>
+                    <item name="componentType" xsi:type="string">field</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="dataScope" xsi:type="string">data.description</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
         <field name="parent">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Mirasvit\Kb\Ui\Component\Category\Form\Options</item>
@@ -84,7 +102,7 @@
                     <item name="disableLabel" xsi:type="boolean">true</item>
                     <item name="multiple" xsi:type="boolean">false</item>
                     <item name="levelsVisibility" xsi:type="number">1</item>
-                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
                     <item name="required" xsi:type="boolean">true</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>

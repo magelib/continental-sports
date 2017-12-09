@@ -9,12 +9,12 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
- * @version   1.0.29
+ * @version   1.0.41
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
 
-namespace Mirasvit\Kb\Ui\Component\category\Form;
+namespace Mirasvit\Kb\Ui\Component\Category\Form;
 
 use Magento\Framework\Data\OptionSourceInterface;
 use Mirasvit\Kb\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;

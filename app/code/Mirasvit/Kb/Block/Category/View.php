@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
- * @version   1.0.29
+ * @version   1.0.41
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -17,6 +17,7 @@
 
 namespace Mirasvit\Kb\Block\Category;
 
+use Mirasvit\Kb\Model\Article;
 use Magento\Framework\View\Element\Template;
 
 class View extends Template
@@ -50,6 +51,7 @@ class View extends Template
      * @param \Mirasvit\Kb\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory
      * @param \Mirasvit\Kb\Model\ResourceModel\Article\CollectionFactory  $articleCollectionFactory
      * @param \Mirasvit\Kb\Model\Config                                   $config
+     * @param \Magento\Cms\Model\Template\FilterProvider                  $filterProvider
      * @param \Magento\Framework\Registry                                 $registry
      * @param \Magento\Framework\View\Element\Template\Context            $context
      * @param array                                                       $data
@@ -58,15 +60,20 @@ class View extends Template
         \Mirasvit\Kb\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
         \Mirasvit\Kb\Model\ResourceModel\Article\CollectionFactory $articleCollectionFactory,
         \Mirasvit\Kb\Model\Config $config,
+        \Magento\Cms\Model\Template\FilterProvider $filterProvider,
         \Magento\Framework\Registry $registry,
+        \Magento\Customer\Model\Session $customerSession,
         \Magento\Framework\View\Element\Template\Context $context,
         array $data = []
     ) {
         $this->categoryCollectionFactory = $categoryCollectionFactory;
-        $this->articleCollectionFactory = $articleCollectionFactory;
-        $this->config = $config;
-        $this->registry = $registry;
-        $this->context = $context;
+        $this->articleCollectionFactory  = $articleCollectionFactory;
+        $this->config                    = $config;
+        $this->filterProvider            = $filterProvider;
+        $this->registry                  = $registry;
+        $this->customerSession           = $customerSession;
+        $this->context                   = $context;
+
         parent::__construct($context, $data);
     }
 
@@ -177,6 +184,7 @@ class View extends Template
             ->addCategoryIdFilter($category->getId())
             ->addFieldToFilter('main_table.is_active', true)
             ->addStoreIdFilter($this->context->getStoreManager()->getStore()->getId())
+            ->addCustomerGroupIdFilter($this->customerSession->getCustomerGroupId())
             ->setPageSize($this->config->getArticleLinksLimit())
             ->setOrder('position', 'asc');
 
@@ -239,6 +247,16 @@ class View extends Template
         }
 
         return $collection;
+    }
+
+    /**
+     * Prepare HTML content
+     *
+     * @return string
+     */
+    protected function _toHtml()
+    {
+        return $this->filterProvider->getPageFilter()->filter(parent::_toHtml());
     }
 
     /**

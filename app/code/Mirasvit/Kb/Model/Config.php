@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
- * @version   1.0.29
+ * @version   1.0.41
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -97,6 +97,15 @@ class Config
     public function getCategoryArticleAmount($store = null)
     {
         return $this->scopeConfig->getValue('kb/general/category_article_amount', ScopeInterface::SCOPE_STORE, $store);
+    }
+
+    /**
+     * @param null|string $store
+     * @return int
+     */
+    public function getCategoryURLExcluded($store = null)
+    {
+        return $this->scopeConfig->getValue('kb/general/category_url_exclude', ScopeInterface::SCOPE_STORE, $store);
     }
 
     /**

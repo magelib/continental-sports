@@ -34,6 +34,9 @@ class Spares extends \Magento\Framework\View\Element\Template
         return $media_dir;
     }
 
+    /*
+     * Get list of spares with images
+     */
     public function getLayoutImge($product) {
         return true;
     }

@@ -1,14 +1,15 @@
 {
         "name": "mirasvit/module-kb",
-        "description": "Knowledge base",
+        "description": "Knowledge Base",
         "require": {
-                "magento/module-store": "100.0.*|100.1.*",
-                "magento/module-backend": "100.0.*|100.1.*",
-                "magento/framework": "100.0.*|100.1.*",
+                "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0",
+                "magento/module-store": "100.0.*|100.1.*|100.2.*|101.0.*",
+                "magento/module-backend": "100.0.*|100.1.*|100.2.*|101.0.*",
+                "magento/framework": "100.0.*|100.1.*|100.2.*|101.0.*",
                 "mirasvit/module-core": "^1.2"
         },
         "type": "magento2-module",
-        "version": "1.0.29",
+        "version": "1.0.41",
         "license": [
                 "proprietary"
         ],

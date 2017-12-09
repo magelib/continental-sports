@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
- * @version   1.0.29
+ * @version   1.0.41
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -27,10 +27,6 @@ class Save extends \Mirasvit\Kb\Controller\Adminhtml\Article
     {
         if ($data = $this->getRequest()->getParams()) {
             $model = $this->_initModel();
-            /* documents */
-            if (!empty($data['documents'])) {
-                $data['documents'] = implode(',', $data['documents']);
-            }
 
             if (!empty($data['categories'])) {
                 $data['category_ids'] = explode(',', $data['categories']);
@@ -46,6 +42,8 @@ class Save extends \Mirasvit\Kb\Controller\Adminhtml\Article
                 } else {
                     if (in_array(0, $articleStoreIds)) { // if for all stores
                         $categoryIds = $data['store_ids'];
+                    } elseif (in_array(0, $data['store_ids'])) {
+                        $categoryIds = [0];
                     } else {
                         foreach ($data['store_ids'] as $key => $storeId) {
                             if (in_array($storeId, $articleStoreIds)) {

@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
- * @version   1.0.29
+ * @version   1.0.41
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -43,6 +43,7 @@ class Sidebar extends \Magento\Framework\View\Element\Template
      * @param \Mirasvit\Kb\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory
      * @param \Mirasvit\Kb\Helper\Data                                    $kbData
      * @param \Magento\Framework\Registry                                 $registry
+     * @param \Magento\Customer\Model\Session                             $customerSession,
      * @param \Magento\Framework\View\Element\Template\Context            $context
      * @param array                                                       $data
      */
@@ -50,13 +51,16 @@ class Sidebar extends \Magento\Framework\View\Element\Template
         \Mirasvit\Kb\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
         \Mirasvit\Kb\Helper\Data $kbData,
         \Magento\Framework\Registry $registry,
+        \Magento\Customer\Model\Session $customerSession,
         \Magento\Framework\View\Element\Template\Context $context,
         array $data = []
     ) {
         $this->categoryCollectionFactory = $categoryCollectionFactory;
-        $this->kbData = $kbData;
-        $this->registry = $registry;
-        $this->context = $context;
+        $this->kbData                    = $kbData;
+        $this->registry                  = $registry;
+        $this->customerSession           = $customerSession;
+        $this->context                   = $context;
+
         parent::__construct($context, $data);
     }
 
@@ -131,6 +135,14 @@ class Sidebar extends \Magento\Framework\View\Element\Template
     public function getStoreId()
     {
         return $this->context->getStoreManager()->getStore()->getId();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCustomerGroupId()
+    {
+        return $this->customerSession->getCustomerGroupId();
     }
 
     /**

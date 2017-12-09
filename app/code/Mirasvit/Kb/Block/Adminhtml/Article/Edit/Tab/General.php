@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
- * @version   1.0.29
+ * @version   1.0.41
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -18,11 +18,8 @@ namespace Mirasvit\Kb\Block\Adminhtml\Article\Edit\Tab;
 
 class General extends \Magento\Backend\Block\Widget\Form
 {
-    protected $documentHelper;
-
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Mirasvit\Kb\Helper\Document $documentHelper,
         \Mirasvit\Kb\Helper\Form\Article\Category $formCategoryHelper,
         \Magento\Backend\Model\UrlInterface $backendUrl,
         \Mirasvit\Kb\Helper\Data $kbData,
@@ -32,15 +29,14 @@ class General extends \Magento\Backend\Block\Widget\Form
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
         array $data = []
     ) {
-        $this->objectManager      = $objectManager;
-        $this->formCategoryHelper = $formCategoryHelper;
-        $this->backendUrl         = $backendUrl;
-        $this->kbData             = $kbData;
-        $this->formFactory        = $formFactory;
-        $this->registry           = $registry;
-        $this->context            = $context;
-        $this->wysiwygConfig      = $wysiwygConfig;
-        $this->documentHelper     = $documentHelper;
+        $this->objectManager          = $objectManager;
+        $this->formCategoryHelper     = $formCategoryHelper;
+        $this->backendUrl             = $backendUrl;
+        $this->kbData                 = $kbData;
+        $this->formFactory            = $formFactory;
+        $this->registry               = $registry;
+        $this->context                = $context;
+        $this->wysiwygConfig          = $wysiwygConfig;
 
         $this->articleManagement          = $this->getArticleMagagement();
         $this->articleFormHelper          = $this->getArticleFormHelper();
@@ -109,30 +105,29 @@ class General extends \Magento\Backend\Block\Widget\Form
             'label' => __('Sort Order'),
             'name'  => 'position',
             'value' => $article->getPosition(),
-            'after_element_js'  => $this->documentHelper->afterElementMultiSelect( $article->getDocuments() ) . $this->documentHelper->afterDocs()
+
         ]);
-
-        $fieldset->addField('select_field', 'multiselect', array(
-            'label'             => 'Documents',
-            'name'              => 'documents',
-            'values'            => $this->documentHelper->optionArray(),
-            // multi select doesn't like after_element_js ??
-        ));
-
         $this->addStoreField($fieldset, $article);
+
+        $fieldset->addField('customer_group_ids', 'multiselect', [
+            'label'    => __('Customer Groups'),
+            'required' => true,
+            'name'     => 'customer_group_ids[]',
+            'value'    => $article->getCustomerGroupIds(),
+            'values'   => $this->getGroupCollectionFactory()->create()->toOptionArray(),
+        ]);
 
         $fieldset->addField('user_id', 'select', [
             'label'  => __('Author'),
             'name'   => 'user_id',
             'value'  => $article->getUserId(),
-            'values' => $this->kbData->toAdminUserOptionArray()
-        ]);
+            'values' => $this->kbData->toAdminUserOptionArray(),
 
+        ]);
         $tags = [];
         foreach ($article->getTags() as $tag) {
             $tags[] = $tag->getName();
         }
-
         $fieldset->addField('tags', 'text', [
             'label' => __('Tags'),
             'name'  => 'tags',
@@ -205,5 +200,13 @@ class General extends \Magento\Backend\Block\Widget\Form
     private function getArticleStoreviewFormHelper()
     {
         return $this->objectManager->get('\Mirasvit\Kb\Helper\Form\Article\Storeview');
+    }
+
+    /**
+     * @return \Magento\Customer\Model\ResourceModel\Group\CollectionFactory
+     */
+    private function getGroupCollectionFactory()
+    {
+        return $this->objectManager->get('\Magento\Customer\Model\ResourceModel\Group\CollectionFactory');
     }
 }

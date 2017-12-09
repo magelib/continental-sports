@@ -70,7 +70,25 @@
                     <item name="source" xsi:type="string">documents</item>
                     <item name="sortOrder" xsi:type="number">10</item>
                     <item name="dataScope" xsi:type="string">title</item>
-		    <item name="rows" xsi:type="number">2</item>
+		    <item name="rows" xsi:type="number">1</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Description</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="source" xsi:type="string">documents</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="dataScope" xsi:type="string">description</item>
+                    <item name="rows" xsi:type="number">6</item>
                     <item name="validation" xsi:type="array">
                         <item name="required-entry" xsi:type="boolean">true</item>
                     </item>
@@ -93,7 +111,7 @@
                <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item> 
                <item name="dataScope" xsi:type="string">documentfile</item>
                 <item name="required" xsi:type="boolean">false</item>
-                <item name="sortOrder" xsi:type="number">16</item>
+                <item name="sortOrder" xsi:type="number">30</item>
                 <item name="uploaderConfig" xsi:type="array">
                     <item name="url" xsi:type="url" path="documents/documents_image/upload"/>
                 </item>

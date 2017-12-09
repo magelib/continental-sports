@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
- * @version   1.0.29
+ * @version   1.0.41
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -127,6 +127,13 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
             'content' => $this->getLayout()->createBlock('Mirasvit\Kb\Block\Adminhtml\Category\Edit\Tab\Design')
                 ->toHtml(),
         ]);
+
+        $this->addTab('image', [
+            'label'   => __('Image'),
+            'content' => $this->getLayout()->createBlock('Mirasvit\Kb\Block\Adminhtml\Category\Edit\Tab\Image')
+                ->toHtml(),
+        ]);
+
 
         if ($this->getCategory()->getId() > 1) {
             $this->addTab('seo', [

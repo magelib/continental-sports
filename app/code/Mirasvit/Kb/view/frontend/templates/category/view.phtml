@@ -5,7 +5,7 @@
 $rootCategory = $block->getCategory();
 $children = $this->getCategoryChildren($rootCategory);
 ?>
-
+<h1><?=  $rootCategory->getName() ?></h1>
 <?= $block->getChildHtml('kb.search.form'); ?>
 <?= $block->getKbPageTitle() ?>
 
@@ -14,28 +14,42 @@ $children = $this->getCategoryChildren($rootCategory);
         <?= $rootCategory->getDescription() ?>
     </div>
 <?php endif ?>
+<?php
+$cols = 3;
+$outerCount = 1;
+$count = 1;
+?>
+<?php if ($lastKey = $children->count()): ?>
 
-<?php if ($children->count()): ?>
     <div class="kb-category__grid">
-        <?php foreach ($children as $child): ?>
+        <?php foreach ($children as $key => $child): ?>
+
             <?php $categories = $block->getCategoryChildren($child, null, true) ?>
 
             <section class="kb__category">
                 <div class="kb__category-title">
                     <h2><?= $child->getName() ?></h2>
+
+                    <p><?= $child->getDescription() ?></p>
                 </div>
 
                 <?php if ($categories->count()): ?>
                     <ol>
-                        <?php foreach ($categories as $category): ?>
-                            <li>
-                                <a href="<?= $category->getUrl() ?>">
-                                    <i class="fa fa-fw fa-folder-open-o"></i> <?php
-                                    echo $category->getName() . $block->getArticleAmount($category);
-                                    ?>
-                                </a>
-                            </li>
-                        <?php endforeach ?>
+                    <?php foreach ($categories as $category): ?>
+                        <li>
+                            <a href="<?= $category->getUrl() ?>">
+                                <i class="fa fa-fw fa-arrow-right"></i> <?php
+                                echo $category->getName() . $block->getArticleAmount($category);
+                                ?>
+                            </a>
+                        </li>
+
+                        <?php if ($count % $cols === 0): ?>
+                            </ol>
+                            <ol>
+                        <?php endif; ?>
+                        <?php $count++; ?>
+                    <?php endforeach ?>
                     </ol>
                     <?php if ($categories->getSize() > $block->getPageLimit()): ?>
                         <div class="kb__category-view">
@@ -64,7 +78,15 @@ $children = $this->getCategoryChildren($rootCategory);
                         </div>
                     <?php endif ?>
                 <?php endif ?>
+                <?php if ($outerCount != $lastKey): ?>
+                    <div class="section-divider">&nbsp;</div>
+                <?php
+                endif;
+                $outerCount++;
+                ?>
+
             </section>
+
         <?php endforeach ?>
     </div>
 <?php else: ?>

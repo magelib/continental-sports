@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
- * @version   1.0.29
+ * @version   1.0.41
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -47,7 +47,7 @@ class Save implements \Mirasvit\Kb\Api\Service\Category\CategoryManagement\SaveI
                 $category->addData($data['design']);
             }
             if (!$category->getId()) {
-                $parentId = $data['parent'];
+                $parentId = (isset($data['parent'])) ? $data['parent'] : false;
                 if (!$parentId) {
                     $parentId = \Magento\Catalog\Model\Category::TREE_ROOT_ID;
                 }

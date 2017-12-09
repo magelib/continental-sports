@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Continental::test_level" module="Continental_Interactive" resource="Magento_Backend::content" sortOrder="70" title="Spares Interactive"/>
+        <add id="Continental_Interactive::interactive_index" title="World" module="Continental_Interactive" sortOrder="10" parent="Continental::test_level" resource="Continental_Interactive::interactive" />
+        <add id="Continental_Interactive::interactive_index_test1" title="Test1" module="Continental_Interactive" sortOrder="10" parent="Continental_Interactive::interactive_index" action="interactive/index" resource="Continental_Interactive::interactive_index_test1"/>
+        <add id="Continental_Interactive::interactive_grid" title="View Grid" module="Continental_Interactive" sortOrder="20" parent="Continental_Interactive::interactive_index" action="interactive/index/grid" resource="Continental_Interactive::interactive_grid"/>
+    </menu>
+</config>

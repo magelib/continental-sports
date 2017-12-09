@@ -9,7 +9,7 @@
  *
  * @category  Mirasvit
  * @package   mirasvit/module-kb
- * @version   1.0.29
+ * @version   1.0.41
  * @copyright Copyright (C) 2017 Mirasvit (https://mirasvit.com/)
  */
 
@@ -67,7 +67,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @param \Magento\Framework\Event\ManagerInterface                    $eventManager
      * @param \Magento\Store\Model\StoreManagerInterface                   $storeManager
      * @param \Mirasvit\Kb\Helper\Data                                     $kbData
-     * @param string                                                       $connection
+     * @param \Magento\Framework\DB\Adapter\AdapterInterface               $connection
      * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb         $resource
      */
     public function __construct(
@@ -77,7 +77,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
         \Magento\Framework\Event\ManagerInterface $eventManager,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Mirasvit\Kb\Helper\Data $kbData,
-        $connection = null,
+        \Magento\Framework\DB\Adapter\AdapterInterface $connection = null,
         \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource = null
     ) {
         $this->entityFactory = $entityFactory;
