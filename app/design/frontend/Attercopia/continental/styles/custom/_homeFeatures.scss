@@ -33,7 +33,11 @@
 		}
 	}
 	&.spares {
-		p { width:38%; }
+		p { width:38%;}
+
+		@media screen and (max-width: 1035px) {
+			width: 100%;
+		}
 	}
 	p {
 		width: 50%;
