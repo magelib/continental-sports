@@ -7,14 +7,20 @@
 		padding-bottom: 0;
 	}
 }
+
 .home-feature-box {
   @include diagonal-gradient (#c2c5c8, #878a8d);
 	height: 500px;
 	float: left;
 	width: 50%;
-	padding: 72px;
+	padding: 50px;
 	position: relative;
 	overflow: hidden;
+
+	@media screen and (max-width: 1400px) {
+		padding: 30px;
+	}
+
 	h2 {
 		padding-right: 24px;
 		@include font-size(48);
@@ -32,8 +38,18 @@
 	p {
 		width: 50%;
 		margin-top: 24px;
-                float: left;
+		float: left;
 		clear:both;
+		position: relative;
+		z-index: 999;
+
+		@media screen and (max-width: 1640px) {
+			width: 70%;
+		}
+
+		@media screen and (max-width: 1400px) {
+			width: 90%;
+		}
 	}
 	img {
 		position: absolute;
