@@ -299,7 +299,7 @@
         margin: $indent__base 0;
 
         .field.qty {
-            padding-right: 0.75 * $indent__base;
+            padding-right: 3px;
         }
 
         .input-text.qty {
@@ -606,9 +606,10 @@
     .page-layout-1column {
         .product-info-main {
             width: 40%;
+            margin-right: 50px;
         }
         .product.media {
-            width: 60%;
+            width: 56%;
         }
     }
 

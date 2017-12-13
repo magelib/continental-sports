@@ -60,8 +60,9 @@ a.action.primary {
   float: left;
   color: $dgrey;
   padding-left: 48px;
+  font-weight: bold;
   padding-right: 48px;
-  width: 48%;
+  width: 49%;
   text-align: center;
   &:hover {
     text-decoration: none;
@@ -76,11 +77,11 @@ a.action.primary {
 }
 .btn-spares {
   background-color: $white;
-  border: 1px solid #000;
+  border: 2px solid #000;
   border-radius: 4px;
   float: right;
   text-transform: uppercase;
-  width: 48%;
+  width: 49%;
   padding-top: 9px;
   padding-bottom: 8px;
   span {
@@ -93,6 +94,6 @@ a.action.primary {
   }
   &:hover {
     background-color: inherit;
-    border: 1px solid #000;
+    border: 2px solid #000;
   }
 }

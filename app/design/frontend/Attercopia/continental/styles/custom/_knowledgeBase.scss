@@ -112,6 +112,19 @@ h1.page-title {
     display: none;
 }
 
+.catalog-product-view {
+    h1.page-title {
+        display: block;
+        font-size: 3rem;
+    }
+}
+
+.catalog-product-view {
+    .product-info-price {
+        margin-bottom: 30px;
+    }
+}
+
 h2 {
     text-transform: none;
 }
