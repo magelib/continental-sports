@@ -17,7 +17,7 @@ if ($currentProduct = $block->getCurrentProduct()) { ?>
                 // hide this button if there are no spares available
                 $related    = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
                 $collection = $related->getRelatedProducts();
-                $showSpares = is_array($collection) ? true : false;
+                $showSpares = (is_array($collection) && !empty($collection)) ? true : false;
                 if ($showSpares): ?>
                     <button class="btn-spares"><span></span>Spares</button>
                 <?php endif; ?>

@@ -84,18 +84,11 @@ class Index extends \Magento\Framework\App\Action\Action
             $filename = str_replace(' - ', '-', $filename);
             $filename = preg_replace('/[^A-Za-z0-9_-]/', '', $filename);
             $filename .= '.pdf';
-            //$margin = ' --margin-left 0mm --margin-right 0mm --margin-top 0mm --header-spacing 3';
-            $margin = ' -B 21mm -L 2mm -R 2mm -T 22mm';
-            $footer = ' --footer-html \''. $_SERVER['HTTP_HOST'] . '/pub/media/pdf/templates/footer.html\'';
-            $header = ' --header-html \''. $_SERVER['HTTP_HOST'] . '/pub/media/pdf/templates/header.html\'';
 
             $path = $this->basepath . 'media/pdf/';
             if (!file_exists($path . $filename)) {
-                $this->debug("file doesn't exist");
                 $url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf'. $margin . $header . $footer . ' \'' . $url . '&html=yes\' \'' . $path . $filename . '\'';
-                echo $command;
-                exit();
+                $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf \'' . $url . '&html=yes\' \'' . $path . $filename . '\'';
                 $bash = exec($command);
         } else {
         }
@@ -106,7 +99,7 @@ class Index extends \Magento\Framework\App\Action\Action
 	header("Content-Transfer-Encoding: binary");
 	header('Pragma: public');
 	header("Content-disposition: attachment; filename=".$filename);
-	readfile($path.$filename);    
+	readfile($path.$filename);
 
         }
     }
