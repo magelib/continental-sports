@@ -29,7 +29,7 @@ a {
 	}
 }
 h1,h2,h3,h4,h5,h6 {
-	font-family: $hfont;
+	font-family: $hfont, $font, sans-serif;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 }
@@ -85,4 +85,69 @@ h1.page-title {
 	margin-top: 6px!important;
 	margin-left: 40px!important;
 	display: inline-block!important;
+}
+
+.catalogsearch-result-index {
+	.column.main {
+		width: 100%!important;
+	}
+}
+
+.search-results-box {
+	width: 60%;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+
+	label {
+		display: inline-block;
+		font-size: 20px;
+		margin-right: 10px;
+	}
+
+	.control {
+		display: inline-block;
+		width: 80%;
+	}
+
+	button {
+		position: absolute;
+		background: 0;
+		border: 0;
+
+		span {
+			border: 0;
+			clip: rect(0, 0, 0, 0);
+			height: 1px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute;
+			width: 1px;
+		}
+	}
+
+	input {
+		padding-left: 40px;
+		border: 1px solid #e4e4e4;
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+		border-radius: 8px;
+	}
+
+	button:before {
+		-webkit-font-smoothing: antialiased;
+		font-size: 22px;
+		line-height: 22px;
+		color: #8f8f8f;
+		content: "";
+		font-family: "icons-blank-theme";
+		margin: 0;
+		display: inline-block;
+		font-weight: normal;
+		overflow: hidden;
+		speak: none;
+		text-align: center;
+		vertical-align: top;
+	}
 }
