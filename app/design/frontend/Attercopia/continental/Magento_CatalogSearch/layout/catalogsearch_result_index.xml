@@ -1,0 +1,12 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Advanced Search</title>
+    </head>
+    <body>
+        <move element="sidebar.main" destination="content" before="search.result" />
+
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="search.input" template="Magento_CatalogSearch::search_input.phtml" before="-" />
+        </referenceContainer>
+    </body>
+</page>
