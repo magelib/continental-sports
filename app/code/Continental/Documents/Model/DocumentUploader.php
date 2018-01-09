@@ -227,7 +227,7 @@ class DocumentUploader
        
         
         $uploader = $this->uploaderFactory->create(['fileId' => $fileId]);
-        $uploader->setAllowedExtensions($this->getAllowedExtensions());
+        $uploader->setAllowedExtensions(['pdf', 'png', 'jpg', 'gif']);
         $uploader->setAllowRenameFiles(true);
 
         $result = $uploader->save($this->mediaDirectory->getAbsolutePath($baseTmpPath));
