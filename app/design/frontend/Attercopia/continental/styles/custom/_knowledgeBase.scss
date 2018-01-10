@@ -256,3 +256,16 @@ section.kb__category {
         }
     }
 }
+
+.tier-table {
+    text-align: center;
+
+    th {
+        text-align: center;
+        background: #f6f5f6;
+    }
+
+    td {
+        border-bottom: 1px solid #f6f5f6;
+    }
+}

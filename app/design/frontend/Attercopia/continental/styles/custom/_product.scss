@@ -408,3 +408,14 @@
 		}
 	}
 }
+
+.fotorama--fullscreen {
+	background: rgba(0,0,0,0.5)!important;
+
+	.fotorama__wrap {
+		max-width: 75%!important;
+		margin-top: 6%;
+		background: white;
+		border-radius: 10px;
+	}
+}
