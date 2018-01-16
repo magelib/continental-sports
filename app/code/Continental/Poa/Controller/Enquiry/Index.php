@@ -122,7 +122,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $this->messageManager->addSuccess(__($msg));
 
             // Redirect customer to specific thank you page
-            $this->_redirect('order-enquiry-thanks');
+            $this->_redirect('poa/enquiry/thanks');
             //array('_cart' => $this->checkoutSession->getQuoteId())
         } else {
             echo "error";
@@ -163,6 +163,7 @@ class Index extends \Magento\Framework\App\Action\Action
              * @var \Magento\Framework\Filter\FilterManager $filterManager
              */
             $data['comment'] = $this->filterManager->stripTags($this->getPost('message'));
+
 
             if (!empty($data)) {
                 $this->econtactsModel->addData($data);

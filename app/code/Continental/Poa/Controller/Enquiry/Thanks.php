@@ -17,18 +17,15 @@ class Thanks extends \Magento\Framework\App\Action\Action
         \Magento\Framework\View\Result\PageFactory $resultPageFactory
     )
     {
-        parent::__construct($context);
         $this->resultPageFactory = $resultPageFactory;
+        parent::__construct($context);
     }
     /**
      * Default customer account page
      *
-     * @return void
      */
     public function execute()
     {
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->addHandle('continental_poa_autoresponder_enquiry');
-    //    return $resultPage;
+        return $this->resultPageFactory->create();
     }
 }

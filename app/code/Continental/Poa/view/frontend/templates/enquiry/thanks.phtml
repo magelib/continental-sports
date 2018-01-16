@@ -12,4 +12,4 @@
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $checkoutSession = $objectManager->get('\Magento\Checkout\Model\Session');
 ?>
-<p><button onclick="window.location='<?=$checkoutSession->getContinueShoppingUrl()?>';">Continue Shopping</button></p>
+<p><button onclick="window.location='<?=$checkoutSession->getContinueShoppingUrl()?>//';">Continue Shopping</button></p>
