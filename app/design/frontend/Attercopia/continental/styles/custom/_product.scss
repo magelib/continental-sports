@@ -13,6 +13,10 @@
 
 .product-info-wrapper {
 	margin-bottom: 30px;
+
+	@media screen and (max-width: 1034px) {
+		width: 100%;
+	}
 }
 
 .fotorama__wrap {
@@ -393,7 +397,7 @@
 		float: left!important;
 
 		@media screen and (max-width: 1023px) {
-			width: 49%;
+			width: 100%;
 		}
 	}
 

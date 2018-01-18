@@ -86,6 +86,29 @@
                 disablePoa();
             <?php endif; ?>
             $(".showcart").click(function () {
+                <?php
+
+                $cart = $this->helper('\Magento\Checkout\Helper\Cart');
+
+                $quote = $cart->getQuote();
+                $items = $quote->getAllVisibleItems();
+                $maxId = 0;
+
+                foreach ($items as $item) {
+                    // Get Product as object
+                    $product = $accessories->getProductByID($item->getProductId());
+                    if ($hidemeHelper->isNeedHideProduct($product)) {
+                        $enquiry = true;
+                    }
+                }
+
+                // Hide summary items
+                if ($enquiry === true):
+                ?>
+                setPoaActive();
+                <?php else: ?>
+                disablePoa();
+                <?php endif; ?>
                 <?php if ($enquiry === false): ?>
                 // Hide if visible
                 $("#top-cart-btn-checkout").show();
