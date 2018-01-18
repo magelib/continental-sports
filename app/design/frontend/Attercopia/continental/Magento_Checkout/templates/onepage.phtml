@@ -48,6 +48,12 @@
                     });
                 }
             });
+
+            $(window).load(function() {
+                $('.field._required').each(function () {
+                    $(this).addClass('required').removeClass('_required');
+                });
+            });
         });
     </script>
 </div>
