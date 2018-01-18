@@ -13,36 +13,42 @@
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $registry = $objectManager->get('\Magento\Framework\Registry');
 $currentProduct = $registry->registry('current_product');
+if ($currentProduct) {
+    $_children = $currentProduct->getTypeInstance()->getUsedProducts($currentProduct);
+    $data = $currentProduct->getTypeInstance()->getConfigurableOptions($currentProduct);
+    if (count($_children)) {
+        foreach ($_children as $child) {
+            if ($child->getTierPrice()) { ?>
 
-$_children = $currentProduct->getTypeInstance()->getUsedProducts($currentProduct);
-$data = $currentProduct->getTypeInstance()->getConfigurableOptions($currentProduct);
-foreach ($_children as $child) {
-if($child->getTierPrice()) { ?>
+                <table class="tier-table" style="display: none;" data-sku="<?php echo $child->getSku() ?>">
+                    <tr>
+                        <th>Qty</th>
+                        <th>Discount</th>
+                        <th>Base price</th>
+                    </tr>
+                    <?php foreach ($child->getTierPrice() as $tierPrice): ?>
+                        <tr>
+                            <td>x<?php echo round($tierPrice['price_qty']) ?></td>
+                            <td>
+                                <?php if ($tierPrice['percent'] != -1): ?>
+                                    <?php echo $tierPrice['percent'] ?>
+                                <?php else: ?>
+                                    <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($child->getFinalPrice() - $tierPrice['price'],
+                                        2), true, false); ?>
+                                <?php endif; ?>
+                            </td>
+                            <td><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($child->getFinalPrice(),
+                                    2), true, false) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
 
-    <table class="tier-table" style="display: none;" data-sku="<?php echo $child->getSku() ?>">
-        <tr>
-            <th>Qty</th>
-            <th>Discount</th>
-            <th>Base price</th>
-        </tr>
-        <?php foreach ($child->getTierPrice() as $tierPrice): ?>
-            <tr>
-                <td>x<?php echo round($tierPrice['price_qty']) ?></td>
-                <td>
-                    <?php if ($tierPrice['percent'] != -1): ?>
-                        <?php echo $tierPrice['percent'] ?>
-                    <?php else: ?>
-                        <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($child->getFinalPrice() - $tierPrice['price'],2),true,false); ?>
-                    <?php endif; ?>
-                </td>
-                <td><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($child->getFinalPrice(),2),true,false) ?></td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-
-    <?php
+                <?php
+            }
+        }
+    }
 }
-} ?>
+?>
 <span class="con-price-from">Price from:</span>
 <span class="price-container <?php /* @escapeNotVerified */
 echo $block->getAdjustmentCssClasses() ?>"
@@ -65,7 +71,7 @@ echo $block->getAdjustmentCssClasses() ?>"
             echo $block->getPriceWrapperCss(); ?>"
         <?php echo $block->getSchema() ? ' itemprop="price"' : '' ?>>
 
-        
+
 
         <?php /* @escapeNotVerified */
         echo $block->formatCurrency($block->getDisplayValue(), (bool)$block->getIncludeContainer()) ?>
@@ -80,10 +86,10 @@ echo $block->getAdjustmentCssClasses() ?>"
 </span>
 
 <script type="text/javascript">
-    require(['jquery', 'jquery/ui'], function($) {
+    require(['jquery', 'jquery/ui'], function ($) {
         $('.super-attribute-select').on('change', function () {
             console.log($('.sku div[itemprop="sku"]').text());
-            $('.tier-table[data-sku="' + $('.sku div[itemprop="sku"]').text()  + '"]').show();
+            $('.tier-table[data-sku="' + $('.sku div[itemprop="sku"]').text() + '"]').show();
         });
     });
 </script>
