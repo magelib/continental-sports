@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Amasty Team
- * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @copyright Copyright (c) 2018 Amasty (https://www.amasty.com)
  * @package Amasty_Methods
  */
 
@@ -16,12 +16,23 @@ class RestrictPaymentMethodsObserver extends \Amasty\Methods\Model\Manager
 {
     protected $_objectManager;
 
+    /** @var \Magento\Framework\App\State $_state */
+    protected $_state;
+
+    /**
+     * RestrictPaymentMethodsObserver constructor.
+     * @param \Magento\Framework\App\Request\Http $request
+     * @param \Magento\Framework\ObjectManagerInterface $objectManager
+     * @param \Magento\Framework\App\State $state
+     */
     public function __construct(
         \Magento\Framework\App\Request\Http $request,
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Magento\Framework\App\State $state
     ){
         parent::__construct($request);
         $this->_objectManager = $objectManager;
+        $this->_state = $state;
     }
 
     /**
@@ -43,8 +54,13 @@ class RestrictPaymentMethodsObserver extends \Amasty\Methods\Model\Manager
         $methodInstance = $event->getMethodInstance();
 
         if ($quote = $event->getQuote()){
+            $websiteId = $quote->getStore()->getWebsiteId();
+            if ($this->_state->getAreaCode() == \Magento\Framework\App\Area::AREA_ADMINHTML) {
+                $websiteId = 0;//adminhtml website ID
+            }
+
             $structure = $this->getMethodsStructure(
-                $this->getWebsiteId($quote->getStore()->getWebsiteId())
+                $this->getWebsiteId($websiteId)
             );
 
             if ($structure->getSize() > 0) {

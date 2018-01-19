@@ -95,9 +95,10 @@ class Save extends \Magento\Backend\App\Action
             } else {
                 $data['documentfile'] = null;
             }
+
+
            
             $model->setData($data);
-
 
             $this->inlineTranslation->suspend();
             try {

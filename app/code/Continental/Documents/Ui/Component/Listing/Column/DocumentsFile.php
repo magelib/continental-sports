@@ -54,9 +54,17 @@ class DocumentsFile extends Column
             foreach ($dataSource['data']['items'] as & $item) {
                 $url = '';
                 if ($item[$fieldName] != '') {
-                    $url = $this->storeManager->getStore()->getBaseUrl(
-                        \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                    ).$item[$fieldName];
+                    if(strpos($item[$fieldName], 'pdf') === false) {
+                        $url = $this->storeManager->getStore()->getBaseUrl(
+                                \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+                            ) . $item[$fieldName];
+                    }
+                    else {
+                        $url = $this->storeManager->getStore()->getBaseUrl(
+                                \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+                            ) . 'documents/pdf.svg';
+                    }
+
                 }
                 $item[$fieldName . '_src'] = $url;
                 $item[$fieldName . '_alt'] = $item['title'] ? $item['title'] : '';
