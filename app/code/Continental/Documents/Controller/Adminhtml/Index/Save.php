@@ -69,6 +69,7 @@ class Save extends \Magento\Backend\App\Action
         /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $data = $this->getRequest()->getPostValue();
+        $data['assigns'] = json_encode($this->getRequest()->getPost('assigns'));
         if ($data) {
             $id = $this->getRequest()->getParam('documents_id');
 

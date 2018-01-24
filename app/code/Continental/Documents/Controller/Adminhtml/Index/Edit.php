@@ -72,7 +72,6 @@ class Edit extends \Magento\Backend\App\Action
         // 1. Get ID and create model
         $id = $this->getRequest()->getParam('documents_id');
         $model = $this->_objectManager->create('Continental\Documents\Model\Documents');
-
         // 2. Initial checking
         if ($id) {
             $model->load($id);

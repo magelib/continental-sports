@@ -109,3 +109,22 @@ $tags = $block->getTags();
     <div class="fb-comments" data-href="<?= $article->getUrl() ?>"
          data-numposts="5" width="100%"></div>
 <?php endif ?>
+<h2 style="margin-top: 30px;margin-bottom: 30px;"><?php echo __('Downloads') ?></h2>
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$documents = $objectManager->create('\Continental\Documents\Model\ResourceModel\Documents\Collection');
+$documents->load();
+
+foreach ($documents as $document) {
+    $assigns = json_decode($document->getAssigns(), true);
+    foreach ((array)$assigns as $assign) {
+        if($block->getArticle()->getArticleId() == intval(trim($assign, 'a'))) {
+            echo '<div style="float: left; width: 28%; padding-right: 10px;">';
+            echo '<a href="'.$this->getUrl('pub/media').$document->getDocumentfile().'"><img style="float: left;" src="'.$this->getUrl('pub/media').'/pdf/pdf-icon.png" /> <span style="margin-left: 5px; margin-top: 5px;">'.$document->getTitle().'</span></a>';
+            echo '<div style="margin-left: 25px;">'.$document->getDescription().'</div>';
+            echo '</div>';
+            break;
+        }
+    }
+}
+?>

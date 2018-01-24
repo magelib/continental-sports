@@ -36,10 +36,8 @@
     if ($collection): ?>
         <tr>
         <?php
-        //foreach ($collection as $index => $relatedProduct):
-        // testing
-        $relatedProduct = $collection[0];
-        for ($index = 0; $index <= 14; $index++): ?>
+        foreach ($collection as $index => $relatedProduct):
+        ?>
 
 
             <?php echo ( ( ($index % 3) == 0) && ($index > 0)) ? '</tr><tr>' : ''; ?>
@@ -69,8 +67,7 @@
             </td>
 
         <?php
-        endfor;
-        //endforeach;
+        endforeach;
         endif;
         ?>
         </tr>

@@ -12,5 +12,8 @@
         <referenceContainer name="content">
             <uiComponent name="documents_index_form"/>
         </referenceContainer>
+        <referenceContainer name="footer">
+            <block class="Continental\Documents\Block\Documents" template="Continental_Documents::js.phtml"/>
+        </referenceContainer>
     </body>
 </page>

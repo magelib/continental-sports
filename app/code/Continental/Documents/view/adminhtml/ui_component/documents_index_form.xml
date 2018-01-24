@@ -96,6 +96,26 @@
             </argument>
         </field>
 
+        <field name="assigns">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Continental\Documents\Model\Source\Assigns</item>
+                <item name="value" xsi:type="string">2</item>
+
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="additionalClasses" xsi:type="string">admin__field-default</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="source" xsi:type="string">assigns</item>
+                    <item name="label" xsi:type="string" translate="true">Assign to articles/categories</item>
+                    <item name="tooltip" xsi:type="array">
+                        <item name="link" xsi:type="string">#</item>
+                        <item name="description" xsi:type="string" translate="true">Hold the CTRL key to select multiple filters</item>
+                    </item>
+                    <item name="scopeLabel" xsi:type="string">[STORE VIEW]</item>
+                </item>
+            </argument>
+        </field>
+
          <field name="documentfile">
         <argument name="data" xsi:type="array">
             <item name="config" xsi:type="array">
