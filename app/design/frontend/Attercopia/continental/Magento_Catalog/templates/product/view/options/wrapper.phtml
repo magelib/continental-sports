@@ -17,37 +17,45 @@ echo $required; ?>>
     </div>
 </div>
 
-<!-- Tiered Pricing -->
 <?php
-$products = $this->getLayout()->createBlock('\Continental\Products\Block\Details');
-if ($products->childProducts()):?>
-    <h2>Testing 2</h2>
-    <div class="price-table">
-        <div class="thead">
-            <span>Qty</span>
-            <span>Discount</span>
-            <span>Base Price</span>
-        </div>
-        <div class="tbody">
-            <div class="trow">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-        <div class="tbody extra-fields" style="display: none;">
-            <div class="trow">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-        <button class="expand-table hidden"
-        ">more
-        <small>▼</small>
-        </button>
-    </div>
-<?php endif; ?>
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$registry = $objectManager->get('\Magento\Framework\Registry');
+$currentProduct = $registry->registry('current_product');
+if ($currentProduct) {
+    $_children = $currentProduct->getTypeInstance()->getUsedProducts($currentProduct);
+    $data = $currentProduct->getTypeInstance()->getConfigurableOptions($currentProduct);
+    if (count($_children)) {
+        foreach ($_children as $child) {
+            if ($child->getTierPrice()) {
+                ?>
+
+                <table class="tier-table" style="display: none;" data-sku="<?php echo $child->getSku() ?>">
+                    <tr>
+                        <th>Qty</th>
+                        <th>Discount</th>
+                        <th>Base price</th>
+                    </tr>
+                    <?php foreach ($child->getTierPrice() as $tierPrice): ?>
+                        <tr>
+                            <td>x<?php echo round($tierPrice['price_qty']) ?></td>
+                            <td>
+                                <?php
+                                echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($child->getFinalPrice() - $tierPrice['price'], 2), true, false); ?>
+                            </td>
+                            <td><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($child->getFinalPrice(),
+                                    2), true, false) ?></td>
+                        </tr>
+                    <?php endforeach;
+
+                    ?>
+                </table>
+
+                <?php
+            }
+        }
+    }
+}
+?>
 <script>
     require(['jquery'], function ($) {
         $('body').on('DOMNodeInserted', function (e) {
