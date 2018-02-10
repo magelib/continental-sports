@@ -40,10 +40,10 @@ if ($currentProduct) {
                             <td>x<?php echo round($tierPrice['price_qty']) ?></td>
                             <td>
                                 <?php
-                                echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($child->getFinalPrice() - $tierPrice['price'], 2), true, false); ?>
+                                echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($child->getFinalPrice() - $tierPrice['price'], true, false); ?>
                             </td>
-                            <td><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($child->getFinalPrice(),
-                                    2), true, false) ?></td>
+                            <td><?php
+                                echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($child->getFinalPrice(), true, false) ?></td>
                         </tr>
                     <?php endforeach;
 
