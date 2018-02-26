@@ -13,12 +13,14 @@
    <update handle="page_calendar" />
    <body>
       <attribute name="itemtype" value="http://schema.org/Product" />
+      <referenceContainer name="breadcrumbs" remove="true" />
+       <referenceContainer name="page.main.title" remove="true" />
       <attribute name="itemscope" value="itemscope" />
       <referenceBlock name="head.components">
          <block class="Magento\Framework\View\Element\Js\Components" name="checkout_page_head_components" template="Magento_Catalog::js/components.phtml" />
       </referenceBlock>
       <referenceBlock name="page.main.title">
-         <arguments>
+          <arguments>
             <argument name="css_class" xsi:type="string">product</argument>
             <argument name="add_base_attribute" xsi:type="string">itemprop="name"</argument>
          </arguments>
@@ -30,8 +32,9 @@
       </referenceBlock>
       <referenceContainer name="content">
          <container name="product.info.wrap" htmlTag="div" htmlClass="product-info-wrap">
-            <container name="product.info.main" htmlTag="div" htmlClass="product-info-main" before="-">
-               <container name="product.info.price" label="Product info auxiliary container" htmlTag="div" htmlClass="product-info-price" after="product.info.review">
+             <container name="product.info.main" htmlTag="div" htmlClass="product-info-main" before="-">
+                 <block class="Continental\General\Block\Breadcrumbs" name="product.breadcrumbs" before="-" template="Continental_General::breadcrumbs.phtml" />
+                 <container name="product.info.price" label="Product info auxiliary container" htmlTag="div" htmlClass="product-info-price" after="product.info.review">
                   <container name="product.info.stock.sku" label="Product auxiliary info" htmlTag="div" htmlClass="product-info-stock-sku">
                      <container name="product.info.type" before="-" />
                      <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.sku" template="product/view/attribute.phtml" after="product.info.type">

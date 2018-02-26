@@ -65,7 +65,6 @@
     z-index: 1;
     right: 0;
     background: #fff;
-	margin-top: -20px;
 	box-shadow: 0 13px 30px #e4e4e4;
 
 	.value {
@@ -422,4 +421,8 @@
 		background: white;
 		border-radius: 10px;
 	}
+}
+
+.fotorama__nav.fotorama__nav--thumbs {
+  text-align: center;
 }
