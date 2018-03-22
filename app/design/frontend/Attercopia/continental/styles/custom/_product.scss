@@ -13,9 +13,11 @@
 
 .product-info-wrapper {
 	margin-bottom: 30px;
+	padding-right: 100px;
 
 	@media screen and (max-width: 1034px) {
 		width: 100%;
+		padding-right: 0;
 	}
 }
 
@@ -29,6 +31,11 @@
 	.fotorama__img {
 	margin-top:100px;
 	}
+}
+
+.fotorama__nav-wrap {
+	min-height: 95px;
+	display: block!important;
 }
 
 .catalog-product-view .column.main {
