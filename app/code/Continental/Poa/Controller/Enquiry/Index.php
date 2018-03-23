@@ -2,7 +2,7 @@
 namespace Continental\Poa\Controller\Enquiry;
 class Index extends \Magento\Framework\App\Action\Action
 {
-    const ADMIN_EMAIl = "enquiries@contisports.co.uk";
+    const ADMIN_EMAIl = "enquiries@continentalsports.co.uk";
     /**
      * @var \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
@@ -235,7 +235,7 @@ class Index extends \Magento\Framework\App\Action\Action
         // Use this for testing on other domains
         if (!empty($matches[1])) {
             $this->domain = $this->getProtocol() . $matches[1];
-            $from = str_replace('continentalsports.co.uk', $matches[1], $from);
+           // $from = str_replace('continentalsports.co.uk', $matches[1], $from);
         }
 
         if (!preg_match('/attercopia/', $to)) {
@@ -257,8 +257,7 @@ class Index extends \Magento\Framework\App\Action\Action
             ];
 
             $recipient = $this->_escaper->escapeHtml($to);
-
-
+            
             $transport = $this->_transportBuilder
                 ->setTemplateIdentifier('send_customer_email_template')// this code we have mentioned in the email_templates.xml
                 ->setTemplateOptions(
