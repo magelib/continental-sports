@@ -39,7 +39,7 @@ class CartSaveBefore implements ObserverInterface
     {
         $cart = $observer->getCart();
         $quote = $cart->getQuote();
-        $items = $quote->getAllItems();  
+        $items = $quote->getAllItems();
 
         $qty = $this->calculateQty($quote);
         $this->recalculatePrice($quote, $qty);
@@ -54,7 +54,7 @@ class CartSaveBefore implements ObserverInterface
         foreach ($items as $item) {
             if ($item->getProduct()->getTypeId() == 'configurable') {
                 $currentQty = isset($result[$item->getProductId()]) ? $result[$item->getProductId()] : 0;
-                $result[$item->getProductId()] = $currentQty + $item->getQty();   
+                $result[$item->getProductId()] = $item->getQty();
             }
         }
         
