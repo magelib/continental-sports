@@ -150,6 +150,30 @@ class Flatrate extends AbstractCarrier implements CarrierInterface
         ) {
             $shippingPrice = '0.00';
         }
+
+        $postalCode = $request->getData('dest_postcode');;
+        foreach ($request->getAllItems() as $item) {
+            $product = $item->getProduct();
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $product = $objectManager->create('Magento\Catalog\Model\Product')->load($product->getId());
+            if($product->getData('installation_required') == 1) {
+                $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+                $vals = $this->_scopeConfig->getValue('continental-attributes/attributes_configurations/attribute_set_top',
+                    $storeScope);
+                foreach (unserialize($vals) as $val) {
+                    foreach (explode(',', $val['postcode']) as $code) {
+                        if (substr($postalCode, 0, strlen($code)) === $code || $code == $postalCode) {
+                            $shippingPrice = $val['rate'];
+                            break 2;
+                        }
+                    }
+                }
+                break;
+            }
+        }
+
+
+
         return $shippingPrice;
     }
 
