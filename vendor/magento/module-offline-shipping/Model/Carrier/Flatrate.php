@@ -86,7 +86,20 @@ class Flatrate extends AbstractCarrier implements CarrierInterface
         $shippingPrice = $this->getShippingPrice($request, $freeBoxes);
 
         if ($shippingPrice !== false) {
-            $method = $this->createResultMethod($shippingPrice);
+
+            $requires = false;
+            foreach ($request->getAllItems() as $item) {
+                $product = $item->getProduct();
+                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                $product = $objectManager->create('Magento\Catalog\Model\Product')->load($product->getId());
+                if($product->getData('installation_required') == 1) {
+                    $requires = true;
+                    break;
+                }
+            }
+
+            $textTo = $requires ? __('Installation required') : '';
+            $method = $this->createResultMethod($shippingPrice, $textTo);
             $result->append($method);
         }
 
@@ -162,7 +175,7 @@ class Flatrate extends AbstractCarrier implements CarrierInterface
                     $storeScope);
                 foreach (unserialize($vals) as $val) {
                     foreach (explode(',', $val['postcode']) as $code) {
-                        if (substr($postalCode, 0, strlen($code)) === $code || $code == $postalCode) {
+                        if ((substr($postalCode, 0, strlen(trim($code))) === trim($code)) || (trim($code) == $postalCode)) {
                             $shippingPrice = $val['rate'];
                             break 2;
                         }
@@ -181,7 +194,7 @@ class Flatrate extends AbstractCarrier implements CarrierInterface
      * @param int|float $shippingPrice
      * @return \Magento\Quote\Model\Quote\Address\RateResult\Method
      */
-    private function createResultMethod($shippingPrice)
+    private function createResultMethod($shippingPrice, $requires_installation = '')
     {
         /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $method */
         $method = $this->_rateMethodFactory->create();
@@ -190,7 +203,12 @@ class Flatrate extends AbstractCarrier implements CarrierInterface
         $method->setCarrierTitle($this->getConfigData('title'));
 
         $method->setMethod('flatrate');
-        $method->setMethodTitle($this->getConfigData('name'));
+        if($requires_installation) {
+            $method->setMethodTitle($requires_installation . $this->getConfigData('name'));
+        }
+        else {
+            $method->setMethodTitle($this->getConfigData('name'));
+        }
 
         $method->setPrice($shippingPrice);
         $method->setCost($shippingPrice);
