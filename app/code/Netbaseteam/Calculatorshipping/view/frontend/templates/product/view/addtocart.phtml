@@ -6,7 +6,39 @@
 /*Create add to cart box: button Add to Cart...., qty, */
 ?>
 <?php $_product = $block->getProduct(); ?>
-<?php if ($_product->isSaleable()): ?>
+
+<?php
+
+// use helper here to check if enquiry
+$enquiry = false;
+
+$hidemeHelper = $this->helper('Amasty\HidePrice\Helper\Data');
+
+if ($hidemeHelper->isNeedHideProduct($_product)) {
+    $enquiry = true;
+}
+
+if(!$enquiry) {
+    if ($_product->getTypeId() == 'simple' || $_product->getTypeId() == 'virtual'): ?>
+        <div class="price-box price-final_price" data-role="priceBox"
+             data-product-id="<?php echo $_product->getId() ?>">
+    <span class="price-container">
+    <span id="product-price-<?php echo $_product->getId() ?>"
+          data-price-amount="<?php echo $_product->getFinalPrice() ?>" data-price-type="finalPrice"
+          class="price-wrapper " itemprop="price">
+        <span class="price"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($_product->getFinalPrice(),
+                true, false); ?></span>
+    </span>
+    </span>
+        </div>
+    <?php endif;
+}
+else {
+    ?>
+
+    <?php
+}
+if ($_product->isSaleable()): ?>
 <?php 
 	$helper = $this->helper('Netbaseteam\Calculatorshipping\Helper\Data');
 	$buttonTitle = $helper->getButtonTitle();
@@ -34,17 +66,16 @@
 		
 		<?php
 		echo $this->getLayout()->createBlock('Netbaseteam\Calculatorshipping\Block\Calculatorshipping')
-							->setTemplate('Netbaseteam_Calculatorshipping::view.phtml')->toHtml(); 
-		?>
-		
+							->setTemplate('Netbaseteam_Calculatorshipping::view.phtml')->toHtml(); ?>
+
         <div class="actions">
 			<button type="button" title="Cancel" class="action primary" id="estshippingcost_cancel">
                 <span><?php echo __('Close') ?></span>
             </button>
-			
+
             <button type="submit"
                     title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
-                    class="action primary tocart ajax-popup-to-cart"
+                    class="action primary tocart"
                     id="product-addtocart-button">
                 <span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
             </button>

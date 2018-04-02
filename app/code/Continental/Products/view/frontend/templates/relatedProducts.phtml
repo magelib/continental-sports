@@ -2,14 +2,13 @@
 // Get collection
 $helper = $this->helper('Continental\Products\Helper\Accessories');
 $relatedCollection = $helper->getAccesories();
-if (count($relatedCollection) > 1 ):?>
+if (count($relatedCollection) > 0 ):?>
 
 <div class="related_column">
     <h2>Accessories</h2>
         <?php foreach ($relatedCollection as $index=>$product): ?>
             <?php // filter out spares
                 $sparesId = $helper->getCategoryId('Spares');
-                if (!in_array($sparesId, $product->getCategoryIds() ) ):
             ?>
                 <div class="accessories_div">
             <ul>
@@ -32,7 +31,7 @@ if (count($relatedCollection) > 1 ):?>
                 </li>
             </ul>
         </div>
-                    <?php endif; ?>
+
                 <?php endforeach; ?>
 </div>
     <script>

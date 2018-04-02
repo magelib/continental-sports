@@ -26,6 +26,7 @@
 <?php
 
 if ($_product->isSaleable()): ?>
+    <?php ?>
     <div class="box-tocart">
         <div class="fieldset">
             <?php if ($block->shouldRenderQuantity()): ?>
@@ -62,6 +63,7 @@ if ($_product->isSaleable()): ?>
             </div>
         </div>
     </div>
+    <?php ?>
 <?php endif; ?>
 <script type="text/x-magento-init">
     {

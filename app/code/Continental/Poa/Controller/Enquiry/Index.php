@@ -257,7 +257,7 @@ class Index extends \Magento\Framework\App\Action\Action
             ];
 
             $recipient = $this->_escaper->escapeHtml($to);
-            
+
             $transport = $this->_transportBuilder
                 ->setTemplateIdentifier('send_customer_email_template')// this code we have mentioned in the email_templates.xml
                 ->setTemplateOptions(

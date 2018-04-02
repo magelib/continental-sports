@@ -119,6 +119,7 @@
         </referenceContainer>
         <referenceContainer name="footer-container">
             <container name="footer" as="footer" label="Page Footer" htmlTag="div" htmlClass="footer content">
+                <attribute name="itemtype" value="http://schema.org/LocalBusiness" />
                 <block class="Magento\Store\Block\Switcher" name="store_switcher" as="store_switcher" template="switch/stores.phtml"/>
                 <!-- <block class="Magento\Framework\View\Element\Html\Links" name="footer_links">
                     <arguments>

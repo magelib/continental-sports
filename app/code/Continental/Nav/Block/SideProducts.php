@@ -45,6 +45,14 @@ class SideProducts
 	return $imageHtml;
 	}
 
+	public function getDescription() {
+        return $this->category->getDescription();
+    }
+
+    public function getName() {
+        return $this->category->getName();
+    }
+
 	function SideSubMenu($showImages = false) {
 		$subcats = $this->category->getChildrenCategories();
 //		$_helper = $this->helper('Magento\Catalog\Helper\Output');

@@ -6,29 +6,38 @@
  */
 ?>
 <div class="category-nav">
-	<?php echo $this->SideSubMenu(); ?>
+    <?php echo $this->SideSubMenu(); ?>
+
+    <div class="category-holder">
+        <?php if ($title = $block->getName()): ?>
+            <?php echo '<div class="cat-title">'.$title.'</div>'; ?>
+        <?php endif; ?>
+        <?php if ($description = $block->getDescription()): ?>
+            <?php echo '<div class="cat-desc">'.$description.'</div>'; ?>
+        <?php endif; ?>
+    </div>
 </div>
 
 <?php // background image
 //echo "Testing background: [" . $this->categoryBackgroundImage() . "]";
 ?>
 <script>
-	require(['jquery'], function($) {
+    require(['jquery'], function ($) {
 
-		// This adds a wrapping div around main content called category-bg. It then finds the h1 parent div and puts drops the h1 inside the ul. Gives the category bg a style attribute and gets the category image from the cms.
+        // This adds a wrapping div around main content called category-bg. It then finds the h1 parent div and puts drops the h1 inside the ul. Gives the category bg a style attribute and gets the category image from the cms.
 
-	$( "#maincontent" ).wrap( "<div class='category-bg'></div>" );
-	$(".category-bg").find('.page-title-wrapper').prependTo('.category-nav ul');
+        $("#maincontent").wrap("<div class='category-bg'></div>");
+        $(".category-bg").find('.page-title-wrapper').prependTo('.category-nav ul');
 
-	<?php 
-		if ($this->categoryBackgroundImage()):
-	?>
+        <?php
+        if ($this->categoryBackgroundImage()):
+        ?>
 
-	$(".category-bg").css({"background-image":"url('<?php echo $this->categoryBackgroundImage(); ?>')"});
+        $(".category-bg").css({"background-image": "url('<?php echo $this->categoryBackgroundImage(); ?>')"});
 
-	<?php 
-		endif;
-	?>
+        <?php
+        endif;
+        ?>
 
-	});
+    });
 </script>

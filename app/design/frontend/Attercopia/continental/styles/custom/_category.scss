@@ -76,3 +76,31 @@
   width: 33.333%;
 }
 
+.category-description {
+	display: none!important;
+}
+
+.category-holder {
+	float: right;
+	background: rgba(0,0,0,0.7);
+	width: 500px;
+	max-width: 100%;
+	margin-right: 3%;
+	padding:20px;
+	text-align: right;
+
+	.cat-title {
+		font-size: 40px;
+		color: white;
+		text-transform: uppercase;
+		font-weight: bold;
+	}
+
+	.cat-desc {
+		font-size: 14px;
+		color: white;
+		text-transform: uppercase;
+		word-wrap: break-word
+	}
+}
+

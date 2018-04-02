@@ -56,6 +56,11 @@ if ($currentProduct) {
     }
 }
 ?>
+<style>
+    .swatch-option.image {
+        background-size: cover!important;
+    }
+</style>
 <script>
         require(['jquery', 'jquery/ui'], function ($) {
             $('.super-attribute-select').on('change', function () {
@@ -66,14 +71,4 @@ if ($currentProduct) {
             });
         });
 
-    require(['jquery'], function ($) {
-        $('body').on('DOMNodeInserted', function (e) {
-            if ($(e.target).hasClass('swatch-attribute')) {
-                $('.color .swatch-option.image').each(function () {
-                    var $this = $(this);
-                    $this.css('background-image', $this.css('background-image').replace(/swatch_image\/30x20/, 'swatch_thumb/110x90'));
-                });
-            }
-        });
-    });
 </script>
