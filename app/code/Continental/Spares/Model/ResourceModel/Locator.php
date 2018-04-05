@@ -14,8 +14,6 @@ class Locator extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     protected function _construct()
     {
-        $this->_init('continental_sparesimages', 'spares_id');
-
-
+        $this->_init('continental_spares', 'spares_id');
     }
 }

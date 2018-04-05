@@ -1,4 +1,13 @@
-<?php if($this->_EnableModule()) : ?>
+<?php
+$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+$registry = $objectManager->get('\Magento\Framework\Registry');
+
+$currentProduct = $registry->registry('current_product');
+
+
+$product = $objectManager->create('Magento\Catalog\Model\Product')->load($currentProduct->getId());
+
+if($this->_EnableModule() && $product->getData('installation_required') == 1) : ?>
 <?php 
 $country_code = ""; $region_name = ""; 
 $region_code = ""; $region_id = ""; $zip_code = "";

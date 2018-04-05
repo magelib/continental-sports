@@ -46,6 +46,17 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
     ?>
     <div class="products wrapper <?php /* @escapeNotVerified */ echo $viewMode; ?> products-<?php /* @escapeNotVerified */ echo $viewMode; ?>">
         <?php $iterator = 1; ?>
+
+        <style>
+            .products.list.items {
+                display: inline-block;
+            }
+
+            .column.main {
+                float: left!important;
+                width: 100%!important;
+            }
+        </style>
         <ol class="products list items product-items">
             <?php /** @var $_product \Magento\Catalog\Model\Product */ ?>
             <?php foreach ($_productCollection as $_product): ?>
@@ -76,19 +87,19 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                                 <strong class="product name product-item-name">
                                 <a class="product-item-link" href="<?php /* @escapeNotVerified */ echo $_product->getProductUrl() ?>">
                                     <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
-                                </a>                                
+                                </a>
                             </strong>
                                 </div>
                              <?php if ($_product->getShortDescription()):?>
-                                <div class="product description product-item-description">                    
+                                <div class="product description product-item-description">
                                     <?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
-                                </div>                           
+                                </div>
                             <?php endif; ?>
 <?php
 // Load contiproducts class
 $contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\Details');
 ?>
-                            
+
                         </div>
                         <?php echo $block->getReviewsSummaryHtml($_product, $templateType); ?>
                         <?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?>
@@ -116,7 +127,7 @@ $contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\De
                                             <div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
                                         <?php endif; ?>
                                     <?php endif; ?> -->
-                                    
+
                                 </div>
 
                                 <a class="btn btn-secondary" title="View Item"
@@ -128,7 +139,7 @@ $contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\De
                                         <?php echo $addToBlock->setProduct($_product)->getChildHtml(); ?>
                                     <?php endif; ?>
                                 </div>
-                            </div>                        
+                            </div>
                         </div>
                     </div>
                 </div>

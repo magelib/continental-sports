@@ -52,12 +52,14 @@ class Save extends \Magento\Backend\App\Action
         if (!$category) {
             return $resultRedirect->setPath('kbase/*/', ['_current' => true, 'id' => null]);
         }
-
         $refreshTree = false;
         if ($data = $this->getRequest()->getParams()) {
             try {
                 $data = array_merge($data, $this->getRequest()->getPostValue());
+                $data['image'] = $_FILES['image']['name'];
                 $category = $this->categorySaveService->saveCategory($data, $category);
+                $category->setData('image', $_FILES['image']['name'])->save();
+                move_uploaded_file($_FILES['image']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . '/media/kb-images/'.$_FILES['image']['name']);
                 $this->registry->unregister('kb_current_category');
                 $this->messageManager->addSuccess(__('You saved the category.'));
                 $refreshTree = true;

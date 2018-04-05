@@ -55,7 +55,7 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     private function debug($str) {
-       // printf("<pre>%s</pre>",  $str);
+        printf("<pre>%s</pre>",  $str);
     }
 
     function execute()
@@ -84,7 +84,6 @@ class Index extends \Magento\Framework\App\Action\Action
             $filename = str_replace(' - ', '-', $filename);
             $filename = preg_replace('/[^A-Za-z0-9_-]/', '', $filename);
             $filename .= '.pdf';
-
             $path = $this->basepath . 'media/pdf/';
             if (!file_exists($path . $filename)) {
                 $url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -191,7 +190,6 @@ html;
         $configurableArray = $this->getConfigurables($productId, $product, $contents);
 
         $contents = str_replace($configurableArray[0], $configurableArray[1], $contents);
-
         # Show html
         echo $contents;
         exit();
@@ -239,38 +237,44 @@ html;
 
     protected function getConfigurables($productId, $product, $content)
     {
-        $r = array();
-        if ($this->showConfigurablesCount($product)) {
-            $pattern = '/<!-- [CONFIGURATION_START] -->.*<!-- [CONFIGURATION_END] -->/s';
+        try {
+            $r = array();
+            if ($this->showConfigurablesCount($product)) {
+                $pattern = '/<!-- [CONFIGURATION_START] -->.*<!-- [CONFIGURATION_END] -->/s';
 
-            $pattern = '/<!-- \[CONFIGURATION_START\] -->.*END/s';
-            $pattern = '/<!-- \[CONFIGURATION_START\] -->.*END\] -->/s';
-            //$pattern = '/<!-- \[CONFIGURATION_START\] -->.*<!-- \[CONFIGURATION_END\] -->/';
-            $replacement = '';
+                $pattern = '/<!-- \[CONFIGURATION_START\] -->.*END/s';
+                $pattern = '/<!-- \[CONFIGURATION_START\] -->.*END\] -->/s';
+                //$pattern = '/<!-- \[CONFIGURATION_START\] -->.*<!-- \[CONFIGURATION_END\] -->/';
+                $replacement = '';
 
-            preg_match($pattern, $content, $matches);
-            if (empty($matches[0])) exit( print_r($matches, true) );
+                preg_match($pattern, $content, $matches);
+                if (empty($matches[0])) {
+                    exit(print_r($matches, true));
+                }
 
-            $template = $matches[0];
+                $template = $matches[0];
 
-            foreach ($this->configurablesData($product) as $index => $row) {
-                $colour = $row->getAttribute('color');
-                $colour = !empty($colour) ? $colour : 'N/A';
-                $replacement .= str_replace(
-                   array('{%sku%}','{%options%}','{%colour%}'),
-                   array( $row->getSku(), $row->getName(), $colour ),
-                   $template);
+                foreach ($this->configurablesData($product) as $index => $row) {
+                    $colour = $row->getAttribute('color');
+                    $colour = !empty($colour) ? $colour : 'N/A';
+                    $replacement .= str_replace(
+                        array('{%sku%}', '{%options%}', '{%colour%}'),
+                        array($row->getSku(), $row->getName(), $colour),
+                        $template);
+                }
+
+                $r[1] = 'SharkFins';
+            } else {
+                $pattern = '/<table>.*<\/table>/';
+                preg_match($pattern, $content, $matches);
+
+                $template = isset($matches[0]) ? $matches[0] : '';
             }
-
-            $r[1] = 'SharkFins';
-        } else {
-            $pattern = '/<table>.*<\/table>/';
-            preg_match($pattern, $content, $matches);
-            $template = $matches[0];
+            $r[0] = $template;
+            $r[1] = isset($replacement) ? $replacement : '';
+        } catch (\Exception $e) {
+//            die($e->getMessage());
         }
-        $r[0] = $template;
-        $r[1] = $replacement;
-
         return $r;
 
     }

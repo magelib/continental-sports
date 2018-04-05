@@ -7,23 +7,77 @@
 ?>
 
 <div class="header-top-links">
-  <nav>
-    <ul>
-      <li><a href="<?php echo $block->getUrl('spares') ?>">Spare Parts</a></li>
-      <li><a href="<?php echo $block->getUrl('maintenance-service') ?>">Maintenance Service</a></li>
-      <li><a href="<?php echo $block->getUrl('technical-information') ?>" title="Technical Information">Technical Information</a></li>
-      <li><a href="/news" title="News">News</a></li>
-      <li>
-		    <a class="" href="<?php echo $block->getAccountUrl() ?>">
-				 	<?php if ($block->isLoggedIn()): ?>
-					 	<?php echo __('My Account') ?>
-						<?php else: ?>
-						Login
-  				<?php endif; ?>
-		    </a>
-		 	</li>
-		 	<li><a class="redBg" href="/contact">Contact Us</a></li>
-    </ul>
-  </nav>
+    <nav>
+        <ul>
+            <li><a href="<?php echo $block->getUrl('spares') ?>">Spare Parts</a></li>
+            <li><a href="<?php echo $block->getUrl('maintenance-service') ?>">Maintenance Service</a></li>
+            <li><a href="<?php echo $block->getUrl('technical-information') ?>" title="Technical Information">Technical Information</a></li>
+            <li><a href="/news" title="News">News</a></li>
+            <li>
+                <a class="" href="<?php echo $block->getAccountUrl() ?>">
+                    <?php if ($block->isLoggedIn()): ?>
+                        <?php echo __('My Account') ?>
+                    <?php else: ?>
+                        Login
+                    <?php endif; ?>
+                </a>
+            </li>
+            <?php if ($block->isLoggedIn()): ?>
+                <li><a href="<?php echo $block->getUrl('customer/account/logout') ?>" title="<?php echo __("Logout") ?>"><?php echo __("Logout") ?></a></li>
+            <?php endif; ?>
+            <li><a class="redBg" href="/contact">Contact Us</a></li>
+        </ul>
+    </nav>
 </div>
+<style>
+    .category-holder {
+        font-family: montserrat!important;
+    }
 
+    @media screen and (max-width: 1023px) {
+        .category-holder {
+            margin-right: 0!important;
+            margin-bottom: 20px;
+        }
+
+        .page-title {
+            text-align: center!important;
+        }
+
+        .category-nav a {
+            color: #ffffff;
+            text-transform: uppercase;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            padding-left: 48px;
+            padding-right: 48px;
+            line-height: normal;
+            float: left;
+            cursor: pointer;
+            margin-right: 6px;
+            transition: 0.3s all ease-in-out;
+            border-radius: 0;
+            transform: skew(-20deg);
+            -webkit-transform: skew(-20deg);
+            -moz-transform: skew(-20deg);
+            -o-transform: skew(-20deg);
+            background-color: #d1242e;
+            border: 1px solid #d1242e;
+            text-decoration: none;
+            font-style: normal!important;
+            text-transform: none;
+            margin-bottom: 20px;
+            width: 70%;
+            text-align: center!important;
+            display: inline-block!important;
+        }
+
+        .category-nav a:hover span {
+            float: none!important;
+        }
+
+        .category-nav li {
+            margin-bottom: 20px;
+        }
+    }
+</style>

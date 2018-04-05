@@ -37,16 +37,21 @@
             return url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getBaseUrl();?>');
         })
     </script>
+    <style>
+        .action-update , .action-update:hover {
+            background-color: #d1242e;
+            border: 1px solid #d1242e;
+            color: white;
+        }
+    </style>
     <script>
         require([
             "jquery"
         ], function ($) {
             $(document).on('DOMNodeInserted', function(e) {
-                if ( $(e.target).hasClass('billing-address-form') ) {
                     $('.field._required').each(function () {
                         $(this).addClass('required').removeClass('_required');
                     });
-                }
             });
 
             $(window).load(function() {

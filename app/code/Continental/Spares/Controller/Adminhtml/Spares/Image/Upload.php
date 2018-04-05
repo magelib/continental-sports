@@ -36,6 +36,7 @@ class Upload extends \Magento\Backend\App\Action
         \Continental\Spares\Model\LocatorFactory $sparesFactory,
         \Magento\Framework\App\Filesystem\DirectoryList $directory_list,
         \Magento\Framework\Registry $registry,
+
         \Magento\Framework\App\Request\Http $request
     ) {
         parent::__construct($context);
@@ -77,7 +78,7 @@ class Upload extends \Magento\Backend\App\Action
     public function execute()
     {
         $mediaPath = $this->directory_list->getPath('media');
-        $media  =  $mediaPath .'/spares/';
+        $media = $mediaPath . '/spares/';
 
         if (isset($_FILES['product'])) { // Direct download
             $file_name = $_FILES['product']['name']['continental_sparesimages'];
@@ -91,25 +92,31 @@ class Upload extends \Magento\Backend\App\Action
             $file_type = $_FILES['file']['type'];
         }
 
-        if (move_uploaded_file($file_tmp,$media.$file_name))
-        {
-            $productId = (int)  $this->getRequest()->getParam('id');
+        if (move_uploaded_file($file_tmp, $media . $file_name)) {
+            $productId = (int)$this->getRequest()->getParam('id');
 
             // Get sku
             $sku = $this->productRepository->getById($productId)->getSku();
 
-            $this->messageManager->addSuccess(__('File has been successfully uploaded'));
+            $this->messageManager->addSuccess(__('File has been successfully uploaded !'));
 
             // Save into database
             $sampleModel = $this->_objectManager->create('Continental\Spares\Model\Locator');
             $sampleModel->setMaster_product_sku($sku);
             $sampleModel->setSpareimage($file_name);
             $sampleModel->save();
-            exit("ok");
-        }
-        else
-        {
-            echo "File was not uploaded";
+            $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+
+            // Your code
+            $resultRedirect->setUrl($this->_redirect->getRefererUrl());
+            return $resultRedirect;
+        } else {
+            $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+
+            $this->messageManager->addError(__('File was not uploaded !'));
+
+            $resultRedirect->setUrl($this->_redirect->getRefererUrl());
+            return $resultRedirect;
         }
     }
 }

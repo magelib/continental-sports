@@ -142,13 +142,14 @@ class Image extends \Magento\Backend\Block\Widget\Form
             ]);
         }
 */
-        $fieldset->addField('category_image', 'image', [
-            'label' => __('Image* <br />(This is still in development)'),
-            'name' => 'custom_image_field',
+
+        $fieldset->addField('image', 'image', [
+            'label' => __('Image'),
+            'name' => 'image',
             'title' => __('Image'),
-            'class' => 'category_image',
+            'class' => 'image',
             'data-form-part' => $this->getData('target_form'),
-            'value' => $this->setImagesDir('kb-images') . $category->getImage(),
+            'value' => $this->setImagesDir('kb-images') . '/' . $category->getImage(),
             'note' => __('Allowed image types: jpg,png')
         ]);
 

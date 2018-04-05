@@ -56,7 +56,7 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         $currentProduct = $this->getCurrentProduct();
 
         $relatedProducts = $currentProduct->getRelatedProducts();
-        
+
         foreach ($relatedProducts as $relatedProduct) {
             $product = $this->_productRepository->getById( $relatedProduct->getId() );
             $categoryIds = $relatedProduct->getCategoryIds();
@@ -70,7 +70,7 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
                 );
             }
         }
-        
+
         if (!empty($relatedProducts)) {
             return $productData;
         } else {
@@ -85,9 +85,11 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         $rowHtml = '<table>';
 
         if ( count($list) > 0 ) {
-            foreach ($list as $index=> $obj) {
-                $rowHtml .= printf("<tr><td>%s</td></tr>", $index);
-           }
+                foreach ($list as $index => $obj) {
+                    if(!empty($obj->getData('location')) && !empty($obj->getData('dimensions'))) {
+                        $rowHtml .= "<tr><td>L:" . $obj->getData('location') . " D:" . $obj->getData('dimensions') . "<BR /></td></tr>";
+                    }
+                }
             $rowHtml .= '</table>';
             return $rowHtml;
         }

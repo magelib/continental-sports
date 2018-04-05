@@ -94,7 +94,6 @@ class Save extends \Magento\Backend\App\Action
 
         // Use for post $postData = $this->getRequest()->getPostValue();
         // Fields with numbers didn't work....??
-
         $model = $this->spares;
 /*        $model->setMaster_product_sku($_product->getSku());
         $model->setCo_ords1($co_ords1);
@@ -115,7 +114,6 @@ class Save extends \Magento\Backend\App\Action
 
         $model->save();
 
-        exit("Stpop 1");
         // Redirect
         $resultRedirect = $this->resultRedirectFactory->create();
         try{

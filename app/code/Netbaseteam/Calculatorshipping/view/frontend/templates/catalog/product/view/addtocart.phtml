@@ -43,16 +43,22 @@
                         <div class="fieldset">
                             <?php if ($block->shouldRenderQuantity()): ?>
                                 <div class="field qty">
-                                    <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+                                    <label class="label" for="qty"><span><?php /* @escapeNotVerified */
+                                            echo __('Qty') ?></span></label>
                                     <div class="control">
+                                        <button type="button" class="subtract">-</button>
                                         <input type="number"
                                                name="qty"
                                                id="qty"
                                                maxlength="12"
-                                               value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
-                                               title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty"
+                                               value="<?php /* @escapeNotVerified */
+                                               echo $block->getProductDefaultQty() * 1 ?>"
+                                               title="<?php /* @escapeNotVerified */
+                                               echo __('Qty') ?>" class="input-text qty"
                                                data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
                                         />
+
+                                        <button type="button" class="add">+</button>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -63,8 +69,8 @@
     border: 1px solid #d1242e;
     color: #ffffff;
     text-transform: uppercase;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 10px;
+    padding-bottom: 11px;
     padding-left: 48px;
     padding-right: 48px;
     line-height: normal;
@@ -130,16 +136,22 @@
 ">X</span>
                             <?php if ($block->shouldRenderQuantity()): ?>
                                 <div class="field qty">
-                                    <label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+                                    <label class="label" for="qty"><span><?php /* @escapeNotVerified */
+                                            echo __('Qty') ?></span></label>
                                     <div class="control">
+                                        <button type="button" class="subtract">-</button>
                                         <input type="number"
                                                name="qty"
                                                id="qty"
                                                maxlength="12"
-                                               value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
-                                               title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty"
+                                               value="<?php /* @escapeNotVerified */
+                                               echo $block->getProductDefaultQty() * 1 ?>"
+                                               title="<?php /* @escapeNotVerified */
+                                               echo __('Qty') ?>" class="input-text qty"
                                                data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
                                         />
+
+                                        <button type="button" class="add">+</button>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -152,8 +164,8 @@
     border: 1px solid #d1242e;
     color: #ffffff;
     text-transform: uppercase;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 10px;
+    padding-bottom: 11px;
     padding-left: 48px;
     padding-right: 48px;
     line-height: normal;
@@ -183,8 +195,8 @@
     border: 1px solid #d1242e;
     color: #ffffff;
     text-transform: uppercase;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 10px;
+    padding-bottom: 11px;
     padding-left: 48px;
     padding-right: 48px;
     line-height: normal;

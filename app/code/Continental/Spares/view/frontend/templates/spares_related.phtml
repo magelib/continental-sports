@@ -2,7 +2,12 @@
     <?php
     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
     $listBlock = $objectManager->get('\Magento\Catalog\Block\Product\ListProduct');
+    $storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+    $currentStore = $storeManager->getStore();
     ?>
+<div class="image-map">
+    <img src="" />
+</div>
     <table>
         <script>
             require([
@@ -15,14 +20,20 @@
                 $x = $helper->filterSpares('master_product_sku', $block->getProduct()->getSku());
                 $count = 0;
 		if (count($x) > 0) {
-                foreach ($x as $item): ?>
-                    <?php $spare = $item->getData(); ?>
-                    <?php
-                        if ( preg_match('/\.[A-Za-z]{3}/', trim($spare['spareimage']))) {
-                            echo '$(".image-map img").attr("src","' . $spare['spareimage'] . '");';
-                        }
+                foreach ($x as $item):
+
+                ?>
+                    <?php $spare = $item->getData();
+                    if(empty($helper->getLocation($spare['location'])[0]) || empty($helper->getDimensions($spare['dimensions'])[0])) {
+                        continue;
+                    }
                     ?>
-                        html += '<a class="map-section" style="width:<?= $helper->getLocation($spare['location'])[0] ?>px; height:<?= $helper->getDimensions($spare['dimensions'])[0] ?>px;top:<?=  $helper->getLocation($spare['location'])[0] ?>px;left:<?= $helper->getDimensions($spare['dimensions'])[0]; ?>px;" href="#"></a>';
+                    <?php
+
+                echo '$(".image-map img").attr("src","' . $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'spares/' . $spare['spareimage'] . '");';
+
+                    ?>
+                        html += '<a class="map-section" style="left:<?= $helper->getLocation($spare['location'])[0] ?>px; top:<?= $helper->getLocation($spare['location'])[1] ?>px;width:<?=  $helper->getDimensions($spare['dimensions'])[0] ?>px;height:<?= $helper->getDimensions($spare['dimensions'])[1]; ?>px;" href="#"><?php echo $spare['sku'] ?></a>';
                     <?php
                 endforeach;
 		}
@@ -73,3 +84,19 @@
         </tr>
     </table>
 </div>
+<style>
+    .map-section {
+        position: absolute;
+        background-color: rgba(51, 51, 51, 0.3);
+        color: white;
+        text-align: center;
+        padding: 3px;
+    }
+
+    .map-section:hover {
+        position: absolute;
+        color: white;
+        text-decoration: none;
+        background-color: rgba(51, 51, 51, 0.9);
+    }
+</style>

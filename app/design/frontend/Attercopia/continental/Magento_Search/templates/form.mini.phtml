@@ -34,13 +34,14 @@ $helper = $this->helper('Magento\Search\Helper\Data');
             </div>
         </div>
         <div class="control">
-            <input class="head-search" id="search"
+            <input class="head-search input-text" id="search"
                    data-mage-init='{"quickSearch":{
                   "formSelector":"#search_mini_form",
                   "url":"<?php /* @escapeNotVerified */
                    echo $block->getUrl('search/ajax/suggest', ['_secure' => $block->getRequest()->isSecure()]); ?>",
                   "destinationSelector":"#search_autocomplete"}
              }'
+                   aria-expanded="false"
                    type="text"
                    name="<?php /* @escapeNotVerified */
                    echo $helper->getQueryParamName() ?>"
@@ -48,7 +49,6 @@ $helper = $this->helper('Magento\Search\Helper\Data');
                    echo $helper->getEscapedQueryText() ?>"
                    placeholder="<?php /* @escapeNotVerified */
                    echo __('Search our products'); ?>"
-                   class="input-text"
                    maxlength="<?php /* @escapeNotVerified */
                    echo $helper->getMaxQueryLength(); ?>"
                    role="combobox"

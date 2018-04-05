@@ -4,12 +4,22 @@
 
 $rootCategory = $block->getCategory();
 $children = $this->getCategoryChildren($rootCategory);
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance(); //instance of\Magento\Framework\App\ObjectManager
+$storeManager = $_objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$currentStore = $storeManager->getStore();
+
 ?>
+
+<?php
+echo '<img src="'.$currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'kb-images/' . $rootCategory->getImage().'" />';
+?>
+
 <h1><?=  $rootCategory->getName() ?></h1>
 <?= $block->getChildHtml('kb.search.form'); ?>
 <?= $block->getKbPageTitle() ?>
 
-<?php if ($rootCategory->getDescription()): ?>
+<?php
+if ($rootCategory->getDescription()): ?>
     <div class="kb__category-description">
         <?= $rootCategory->getDescription() ?>
     </div>

@@ -1,8 +1,11 @@
 <?php
-    $related    = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
-    $collection = $related->getRelatedProducts();
-    $showSpares = is_array($collection) ? true : false;
-    if ($showSpares): ?>
+$related = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
+$collection = $related->getRelatedProducts();
+$showSpares = is_array($collection) ? true : false;
+$_objectManager = \Magento\Framework\App\ObjectManager::getInstance(); //instance of\Magento\Framework\App\ObjectManager
+$storeManager = $_objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$currentStore = $storeManager->getStore();
+if ($showSpares): ?>
 <table class="data-grid">
     <thead>
     <tr>
@@ -14,27 +17,26 @@
     </tr>
     </thead>
 
-<?php endif; ?>
-<?php
+    <?php endif; ?>
+    <?php
     if ($showSpares) {
-    foreach ($collection as $index => $relatedProduct): ?>
-        <tr>
-            <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>"/></td>
-            <td><?= $relatedProduct['sku'] ?></td>
-            <td><?= $relatedProduct['title'] ?></td>
-            <td>
-                <button class="modalOpenSpare">Add Image Co-ordinates</button>
-            </td>
-            <td>
-                <button class="modalOpenSpare">Edit</button>
-            </td>
-        </tr>
-    <?php endforeach; ?>
+        foreach ($collection as $index => $relatedProduct): ?>
+            <tr>
+                <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>"/></td>
+                <td><?= $relatedProduct['sku'] ?></td>
+                <td><?= $relatedProduct['title'] ?></td>
+                <td>
+                    <button class="modalOpenSpare">Add Image Co-ordinates</button>
+                </td>
+                <td>
+                    <button class="modalOpenSpare">Edit</button>
+                </td>
+            </tr>
+        <?php endforeach; ?>
     <?php } else {
-	echo "No spares are available for this product";
-}
- ?>
-
+        echo "No spares are available for this product";
+    }
+    ?>
 </table>
 
 <div id="popup-mpdal" class="spares-editor">
@@ -44,8 +46,10 @@
     $sparesImages = $related->getSparesMasterImages($_product->getSku());
     $spares = $this->getLayout()->createBlock('\Continental\Spares\Block\Spares');
     $uploader = $this->getLayout()->createBlock('\Magento\Backend\Block\Media\Uploader');
-    if ($sparesImages) {
-        $image = $sparesImages->getFirstItem()->getSpareimage();
+    if (count($sparesImages) > 0) {
+        $asd = array_reverse($sparesImages->toArray());
+
+        $image = $asd['items'][count($asd['items']) - 1]['spareimage'];
     } else {
         $image = 'http://www.continentalsports.co.uk/img/spares/blank.jpg';
     }
@@ -53,11 +57,10 @@
     if (!$spares->getLayoutImge($_product)): ?>
         <h3>Please add a template image to continue.</h3>
     <?php else: ?>
-    Testing images found????
     <?php $mediaUrl = $this->getUrl('spares/spares_image/upload/id/' . $_product->getId()); ?>
         <div class="gallery ui-sortable">
-            <div class="image image-placeholder">
-        <h2>Upload Image:</h2>
+            <div class="">
+                <h2>Upload Image:</h2>
                 <!-- is this a duplicate???
         <div id="<?php echo $uploader->getHtmlId() ?>" class="uploader"
              data-mage-init='{
@@ -65,11 +68,11 @@
             "template": "ui/form/element/uploader/uploader",
             "previewTmpl": "Magento_Catalog/image-preview",
             "maxFileSize": <?php /* @escapeNotVerified */
-             echo $uploader->getFileSizeService()->getMaxFileSize() ?>,
+                echo $uploader->getFileSizeService()->getMaxFileSize() ?>,
             "maxWidth":<?php /* @escapeNotVerified */
-             echo \Magento\Framework\File\Uploader::MAX_IMAGE_WIDTH ?> ,
+                echo \Magento\Framework\File\Uploader::MAX_IMAGE_WIDTH ?> ,
             "maxHeight": <?php /* @escapeNotVerified */
-             echo \Magento\Framework\File\Uploader::MAX_IMAGE_HEIGHT ?>,
+                echo \Magento\Framework\File\Uploader::MAX_IMAGE_HEIGHT ?>,
              "uploaderConfig": {
                     "url": "<?php echo $mediaUrl; ?>"
                }
@@ -78,21 +81,27 @@
             >
             </div>
 -->
-                <div class="image image-placeholder">
-                    <div class="fileinput-button form-buttons button">
+                <form action="<?php echo $mediaUrl ?>" enctype="multipart/form-data" method="post">
+                    <?php echo $this->getBlockHtml('formkey')?>
+                    <div class="">
+                        <div class="">
                 <span><?php /* @escapeNotVerified */
                     echo __('Browse Files...') ?></span>
-                    <input id="fileupload" type="file" name="<?php /* @escapeNotVerified */
-                    //echo $uploader->getConfig()->getFileField() ?>"
-                           data-url="<?php /* @escapeNotVerified */
-                           echo $mediaUrl; ?>" multiple="multiple"/>
 
-                        <div class="dummy-btn">Add Files</div>
+                            <input id="fileupload" type="file" name="<?php /* @escapeNotVerified */
+                            echo $uploader->getConfig()->getFileField() ?>"
+                                   data-url="<?php /* @escapeNotVerified */
+                                   echo $mediaUrl; ?>"/>
+                            <button type="submit">Upload</button>
 
+                            <div class="dummy-btn">Add Files</div>
+
+                        </div>
                     </div>
-                </div>
+                </form>
 
-        </div>
+
+            </div>
             <div class="clear"></div>
             <script id="<?php echo $uploader->getHtmlId() ?>-template" type="text/x-magento-template"
                     data-template="uploader">
@@ -122,27 +131,33 @@
                     <label>
                         <span>Start Co-ordinates:</span>
                     </label>
-                        <input type="text" name="co_ords1" value="<?= $sparesImages->getFirstItem()->getLocation(); ?>"/>
+                    <input type="text" name="co_ords1" value="<?= $sparesImages->getFirstItem()->getLocation(); ?>"/>
                 </p>
+
+                <input type="hidden" name="sku" value="" />
 
                 <p>
                     <label>
                         <span>Dimensions:</span>
                     </label>
-                    <input type="text" name="co_ords2" value="<?= $sparesImages->getFirstItem()->getDimensions(); ?>" /></p>
+                    <input type="text" name="co_ords2" value="<?= $sparesImages->getFirstItem()->getDimensions(); ?>"/>
+                </p>
 
                 <p>
                     <input type="hidden" name="sparesimage" value="<?php echo $image; ?>"/></p>
-                    <input type="hidden" name="action" value="new"/>
+                <input type="hidden" name="action" value="new"/>
 
-                <p class="save"><button>Save</button></p>
-                <p class="update"><button>Update</button></p>
+                <p class="save">
+                    <button>Save</button>
+                </p>
+                <p class="update">
+                    <button>Update</button>
                 </p>
             </form>
 
         </div>
-	<div>Existing Locations</div>
-	<?=$related->showLocations($_product->getSku() ); ?>
+        <div>Existing Locations</div>
+    <?= $related->showLocations($_product->getSku()); ?>
 
         <script>
             require(["jquery"], function ($) {
@@ -158,7 +173,7 @@
                     imageObj.onload = function () {
                         ctx.drawImage(imageObj, 0, 0);
                     };
-                    imageObj.src = "<?php echo $image; ?>";
+                    imageObj.src = "<?php echo $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'spares/' . $image; ?>";
                     canvas.addEventListener('mousedown', mouseDown, false);
                     canvas.addEventListener('mouseup', mouseUp, false);
                     canvas.addEventListener('mousemove', mouseMove, false);
@@ -174,7 +189,7 @@
                     drag = false;
                 }
 
-                function DrawBox(x,y,w,h) {
+                function DrawBox(x, y, w, h) {
                     alert(x + ", " + y + ", " + w + ", " + h);
                     ctx.clearRect(0, 0, 600, 600);
                     ctx.drawImage(imageObj, 0, 0);
@@ -243,6 +258,14 @@
                 }, 2000);
             });
 
+            $(document.body).on('click', '.modalOpenSpare', function () {
+                $('[name="sku"]').val($(this).parent('td').prev('td').prev('td').text());
+            });
         }
     );
 </script>
+<style>
+    .canvasWrapper {
+        background: url(<?php echo $currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'spares/' . $image; ?>);
+    }
+</style>

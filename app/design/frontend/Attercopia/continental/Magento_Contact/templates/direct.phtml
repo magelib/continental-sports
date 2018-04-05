@@ -46,6 +46,9 @@ if ($customerSession->isLoggedIn()) {
     }
 
 }
+else {
+    header('Location: /');
+}
 $contiForms = $this->getLayout()->createBlock('\Continental\Forms\Block\ContactForms');
 
 ?>
@@ -63,7 +66,8 @@ $clientToken = $om->create($test)->generate($args);
 ?>
 <form class="form contact direct"
       action="<?php /* @escapeNotVerified */
-      echo $block->getFormAction(); ?>"
+      //echo $this->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true])
+      echo $block->getFormAction() ?>"
       id="contact-form"
       method="post"
       data-hasrequired="<?php /* @escapeNotVerified */
@@ -82,50 +86,50 @@ $clientToken = $om->create($test)->generate($args);
                        class="input-text" type="text" data-validate="{required:true}"/>
             </div>
 
+        </div>
+
+
+        <div class="field name required">
+            <label class="label" for="firstame"><span><?php /* @escapeNotVerified */
+                    echo __('First Name') ?></span></label>
+
+            <div class="control">
+                <input name="firstname" id="firstname" title="<?php /* @escapeNotVerified */
+                echo __('First Name') ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('firstname') ?: $firstname) ?>"
+                       class="input-text" type="text" data-validate="{required:true}"/>
             </div>
+        </div>
 
 
-            <div class="field name required">
-                <label class="label" for="firstame"><span><?php /* @escapeNotVerified */
-                        echo __('First Name') ?></span></label>
+        <div class="field name required">
+            <label class="label" for="lastname"><span><?php /* @escapeNotVerified */
+                    echo __('Last Name') ?></span></label>
 
-                <div class="control">
-                    <input name="firstname" id="firstname" title="<?php /* @escapeNotVerified */
-                    echo __('First Name') ?>"
-                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('firstname') ?: $firstname) ?>"
-                           class="input-text" type="text" data-validate="{required:true}"/>
-                </div>
+            <div class="control">
+                <input name="lastname" id="lastname" title="<?php /* @escapeNotVerified */
+                echo __('Last Name') ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('lastname') ?: $lastname) ?>"
+                       class="input-text" type="text" data-validate="{required:true}"/>
             </div>
+        </div>
 
 
-            <div class="field name required">
-                <label class="label" for="lastname"><span><?php /* @escapeNotVerified */
-                        echo __('Last Name') ?></span></label>
+        <div class="field name">
+            <label class="label" for="name"><span><?php /* @escapeNotVerified */
+                    echo __('Company') ?></span></label>
 
-                <div class="control">
-                    <input name="lastname" id="lastname" title="<?php /* @escapeNotVerified */
-                    echo __('Last Name') ?>"
-                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('lastname') ?: $lastname) ?>"
-                           class="input-text" type="text" data-validate="{required:true}"/>
-                </div>
+            <div class="control">
+                <input name="company" id="company" title="<?php /* @escapeNotVerified */
+                echo __('Company') ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('company') ?: $company) ?>"
+                       class="input-text" type="text" data-validate="{required:false}"/>
             </div>
+        </div>
 
-
-            <div class="field name">
-                <label class="label" for="name"><span><?php /* @escapeNotVerified */
-                        echo __('Company') ?></span></label>
-
-                <div class="control">
-                    <input name="company" id="company" title="<?php /* @escapeNotVerified */
-                    echo __('Company') ?>"
-                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('company') ?: $company) ?>"
-                           class="input-text" type="text" data-validate="{required:false}"/>
-                </div>
-            </div>
-
-            <div class="field telephone">
-                <label class="label" for="telephone"><span><?php /* @escapeNotVerified */
-                        echo __('Telephone') ?></span></label>
+        <div class="field telephone">
+            <label class="label" for="telephone"><span><?php /* @escapeNotVerified */
+                    echo __('Telephone') ?></span></label>
 
             <div class="control">
                 <input name="telephone" id="telephone" title="<?php /* @escapeNotVerified */
@@ -133,20 +137,20 @@ $clientToken = $om->create($test)->generate($args);
                        value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('telephone') ? : $telephone) ?>"
                        class="input-text" type="text"/>
             </div>
+        </div>
 
+        <div class="field email required">
+            <label class="label" for="email"><span><?php /* @escapeNotVerified */
+                    echo __('Email') ?></span></label>
 
-            <div class="field email required">
-                <label class="label" for="email"><span><?php /* @escapeNotVerified */
-                        echo __('Email') ?></span></label>
-
-                <div class="control">
-                    <input name="email" id="email" title="<?php /* @escapeNotVerified */
-                    echo __('Email') ?>"
-                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>"
-                           class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
-                </div>
+            <div class="control">
+                <input name="email" id="email" title="<?php /* @escapeNotVerified */
+                echo __('Email') ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('email') ?: $this->helper('Magento\Contact\Helper\Data')->getUserEmail()) ?>"
+                       class="input-text" type="email" data-validate="{required:true, 'validate-email':true}"/>
             </div>
         </div>
+
         <div class="field address1 required">
             <label class="label" for="address1"><span><?php /* @escapeNotVerified */
                     echo __('Address#1') ?></span></label>
@@ -157,11 +161,11 @@ $clientToken = $om->create($test)->generate($args);
                        value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('address1')) ?: $street ?>"
                        class="input-text" type="text"/>
             </div>
+        </div>
 
-
-            <div class="field address2 required">
-                <label class="label" for="address2"><span><?php /* @escapeNotVerified */
-                        echo __('Address#2') ?></span></label>
+        <div class="field address2 required">
+            <label class="label" for="address2"><span><?php /* @escapeNotVerified */
+                    echo __('Address#2') ?></span></label>
 
             <div class="control">
                 <input name="address1" id="address1" title="<?php /* @escapeNotVerified */
@@ -170,10 +174,11 @@ $clientToken = $om->create($test)->generate($args);
                        class="input-text" type="text"/>
 
             </div>
+        </div>
 
-            <div class="field postcode required">
-                <label class="label" for="postcode"><span><?php /* @escapeNotVerified */
-                        echo __('Post Code') ?></span></label>
+        <div class="field postcode required">
+            <label class="label" for="postcode"><span><?php /* @escapeNotVerified */
+                    echo __('Post Code') ?></span></label>
 
 
             <div class="control">
@@ -183,10 +188,11 @@ $clientToken = $om->create($test)->generate($args);
                        class="input-text" type="text"/>
 
             </div>
+        </div>
 
-            <div class="field county">
-                <label class="label" for="county"><span><?php /* @escapeNotVerified */
-                        echo __('County') ?></span></label>
+        <div class="field county">
+            <label class="label" for="county"><span><?php /* @escapeNotVerified */
+                    echo __('County') ?></span></label>
 
             <div class="control">
                 <input name="county" id="county" title="<?php /* @escapeNotVerified */
@@ -194,23 +200,23 @@ $clientToken = $om->create($test)->generate($args);
                        value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('county')) ?: $region ?>"
                        class="input-text" type="text"/>
             </div>
+        </div>
+        <div class="field country">
+            <label class="label" for="country"><span><?php /* @escapeNotVerified */
+                    echo __('Country') ?></span></label>
 
-            <div class="field country">
-                <label class="label" for="country"><span><?php /* @escapeNotVerified */
-                        echo __('Country') ?></span></label>
-
-                <div class="control">
-                    <?php echo $contiForms->getCountries(); ?>
-                </div>
+            <div class="control">
+                <?php echo $contiForms->getCountries(); ?>
             </div>
+        </div>
 
-            <div class="field message">
-                <label class="label" for="message"><span><?php /* @escapeNotVerified */
-                        echo __('Message') ?></span></label>
+        <div class="field message">
+            <label class="label" for="message"><span><?php /* @escapeNotVerified */
+                    echo __('Message') ?></span></label>
 
-                <div class="control">
+            <div class="control">
                 <textarea name="" id="message" title="<?php /* @escapeNotVerified */
-                echo __('Message') ?>" class="input-text" cols="5" rows="3"
+                echo __('Message') ?>" class="input-text" rows="3"
                           data-validate="{required:false}"><?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('message')) ?>
 
                     <?php
@@ -227,48 +233,48 @@ $clientToken = $om->create($test)->generate($args);
                     }
                     ?>
 </textarea>
-                </div>
             </div>
-
-            <div class="field reference required ">
-                <label class="label" for="reference"><span><?php /* @escapeNotVerified */
-                        echo __('Reference') ?></span></label>
-
-                <div class="control">
-                    <input name="reference" id="referemce" title="<?php /* @escapeNotVerified */
-                    echo __('Reference') ?>"
-                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('county')) ?>"
-                           class="input-text" type="text"/>
-                </div>
-            </div>
-
-            <div class="field amount">
-                <label class="label" for="amount"><span><?php /* @escapeNotVerified */
-                        echo __('Payment amount') ?> &pound;</span></label>
-
-                <div class="control">
-                    <input name="amount" id="amount" title="<?php /* @escapeNotVerified */
-                    echo __('Payment amount') ?>"
-                           value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('amount')) ?>"
-                           class="input-text" type="text"/>
-                </div>
-            </div>
-
-            <div class="field contact-method">
-                <label class="label" for="contact-method"><span><?php /* @escapeNotVerified */
-                        echo __('Preferred contact method') ?></span></label>
-
-                <div class="control">
-                    <select name="contact-method" id="contact-method" title="<?php /* @escapeNotVerified */
-                    echo __('Preferred contact method') ?>" class="select-text" data-validate="{required:true}">
-                        <option value="telephone">Telephone</option>
-                        <option value="email">Email</option>
-                    </select>
-                </div>
-            </div>
-
-            <?php echo $block->getChildHtml('form.additional.info'); ?>
         </div>
+
+        <div class="field reference required ">
+            <label class="label" for="reference"><span><?php /* @escapeNotVerified */
+                    echo __('Reference') ?></span></label>
+
+            <div class="control">
+                <input name="reference" id="referemce" title="<?php /* @escapeNotVerified */
+                echo __('Reference') ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('county')) ?>"
+                       class="input-text" type="text"/>
+            </div>
+        </div>
+
+        <div class="field amount">
+            <label class="label" for="amount"><span><?php /* @escapeNotVerified */
+                    echo __('Payment amount') ?> &pound;</span></label>
+
+            <div class="control">
+                <input name="amount" id="amount" title="<?php /* @escapeNotVerified */
+                echo __('Payment amount') ?>"
+                       value="<?php echo $block->escapeHtml($this->helper('Magento\Contact\Helper\Data')->getPostValue('amount')) ?>"
+                       class="input-text" type="text"/>
+            </div>
+        </div>
+
+        <div class="field contact-method">
+            <label class="label" for="contact-method"><span><?php /* @escapeNotVerified */
+                    echo __('Preferred contact method') ?></span></label>
+
+            <div class="control">
+                <select name="contact-method" id="contact-method" title="<?php /* @escapeNotVerified */
+                echo __('Preferred contact method') ?>" class="select-text" data-validate="{required:true}">
+                    <option value="telephone">Telephone</option>
+                    <option value="email">Email</option>
+                </select>
+            </div>
+        </div>
+
+        <?php echo $block->getChildHtml('form.additional.info'); ?>
+
     </fieldset>
     <!-- Braintree form goes here>
 		<fieldset>
@@ -380,7 +386,7 @@ $testcvv = 'XXX';
                             return;
                         }
 
-                        document.querySelector('input[name="payment-method-nonce"]').value = payload.nonce;
+                        //document.querySelector('input[name="payment-method-nonce"]').value = payload.nonce;
                         // Populate hidden fields
                         jQuery("#" + formID + " #email").val(jQuery("#contact-form #email").val());
                         form.submit();

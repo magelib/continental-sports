@@ -226,6 +226,9 @@
                                                                         <item name="sortOrder" xsi:type="string">115</item>
                                                                     </item>
                                                                     <item name="telephone" xsi:type="array">
+                                                                        <item name="validation" xsi:type="array">
+                                                                            <item name="min_text_length" xsi:type="number">10</item>
+                                                                        </item>
                                                                         <item name="config" xsi:type="array">
                                                                             <item name="tooltip" xsi:type="array">
                                                                                 <item name="description" xsi:type="string" translate="true">For delivery questions.</item>

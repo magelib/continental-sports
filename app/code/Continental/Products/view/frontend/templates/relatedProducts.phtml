@@ -31,9 +31,41 @@ if (count($relatedCollection) > 0 ):?>
                 </li>
             </ul>
         </div>
-
                 <?php endforeach; ?>
 </div>
+    <style type="text/css">
+        @media screen and (max-width: 1023px) {
+            .accessories_div .btns {
+                float: none!important;
+                clear: both;
+                width: 100%!important;
+            }
+
+            .accessories_div ul li.details {
+                width: 70%;
+            }
+
+            .accessories_div .btns p {
+                float: left;
+                width: 49%;
+            }
+
+            .accessories_div .btns p button {
+                height: 35px;
+            }
+
+            .accessories_div .btns p:nth-child(2) {
+                float: right;
+                width: 49%;
+            }
+
+
+
+        }
+        .page-bottom .product.attribute.description {
+            padding: 0!important;
+        }
+    </style>
     <script>
         // add js here to handle buttons
         require(["jquery"], function ($) {

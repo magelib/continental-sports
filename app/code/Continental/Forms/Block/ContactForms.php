@@ -13,12 +13,14 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
     public function __construct(
         Template\Context $context,
         \Magento\Directory\Block\Data $directoryBlock,
+        \Magento\Framework\Message\ManagerInterface $messageManager,
         array $data = []
     )
     {
         parent::__construct($context, $data);
         $this->_isScopePrivate = true;
         $this->directoryBlock = $directoryBlock;
+        $this->messageManager = $messageManager;
         $this->checkSubmission();
     }
 
@@ -28,13 +30,15 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
         if (!empty($email)) {
             //var_dump($this->braintreeHosted() );
             $x = $this->braintreeHosted();
-            if ($x->success) {
+            if (isset($x->success) && $x->success) {
                 // send email and update
                 $this->saveContact();
                 //redirect to thank you page
-
+                return $this->messageManager->addSuccess('Payment registered !');
             }
-            exit("submission");
+            else {
+                return $this->messageManager->addError('Payment failed, please try again !');
+            }
         }
     }
 
@@ -72,63 +76,66 @@ class ContactForms extends \Magento\Contact\Block\ContactForm
 
     public function braintreeHosted()
     {
-        $amount = $_POST['amount'];
+        if(isset($_POST['amount']) &&
+        isset($_POST['reference'])) {
+            $amount = $_POST['amount'];
 
-        $nonceFromTheClient = $_POST["payment-method-nonce"];
+            $nonceFromTheClient = isset($_POST["payment-method-nonce"]) ? $_POST["payment-method-nonce"] : '';
 
-        $invoice = $_POST['reference'];
+            $invoice = $_POST['reference'];
 
-        $firstname = $lastname = $company = $telephone = $email = $address1 = $address2 = $county = $country = $postcode = null;
+            $firstname = $lastname = $company = $telephone = $email = $address1 = $address2 = $county = $country = $postcode = null;
 
-        $fields = array('county', 'lastname', 'firstname', 'company', 'telephone', 'email', 'postcode', 'country');
+            $fields = array('county', 'lastname', 'firstname', 'company', 'telephone', 'email', 'postcode', 'country');
 
-        foreach ($fields as $val) {
-            ${$val} = $this->getRequest()->getPost($val);
+            foreach ($fields as $val) {
+                ${$val} = $this->getRequest()->getPost($val);
+            }
+
+            /* Need to use Braintree adapter - use this for testing */
+            \Braintree\Configuration::merchantId('hskdkw4bv8v49vr9');
+            \Braintree\Configuration::environment('sandbox');
+            \Braintree\Configuration::publicKey('j8w5xhzjs9bvb2rv');
+            \Braintree\Configuration::privateKey('ff2238a060754e6d3f4673618f110a60');
+
+            $result = \Braintree\Transaction::sale([
+                'amount' => $amount,
+                'orderId' => $invoice,
+                'paymentMethodNonce' => $nonceFromTheClient,
+                'customer' => [
+                    'firstName' => $firstname,
+                    'lastName' => $lastname,
+                    'company' => $company,
+                    'phone' => $telephone,
+                    'email' => $email
+                ],
+                'billing' => [
+                    'firstName' => $firstname,
+                    'lastName' => $lastname,
+                    'company' => $company,
+                    'streetAddress' => $address1,
+                    'extendedAddress' => $address2,
+                    'locality' => $county,
+                    'postalCode' => $postcode,
+                    'countryCodeAlpha2' => $country
+                ],
+                'shipping' => [
+                    'firstName' => $firstname,
+                    'lastName' => $lastname,
+                    'company' => $company,
+                    'streetAddress' => $address1,
+                    'extendedAddress' => $address2,
+                    'locality' => $county,
+                    'postalCode' => $postcode,
+                    'countryCodeAlpha2' => $country
+                ],
+                'options' => [
+                    'submitForSettlement' => true
+                ]
+            ]);
+
+            return $result;
         }
-
-        /* Need to use Braintree adapter - use this for testing */
-        \Braintree\Configuration::merchantId('hskdkw4bv8v49vr9');
-        \Braintree\Configuration::environment('sandbox');
-        \Braintree\Configuration::publicKey('j8w5xhzjs9bvb2rv');
-        \Braintree\Configuration::privateKey('ff2238a060754e6d3f4673618f110a60');
-
-        $result = \Braintree\Transaction::sale([
-            'amount' => $amount,
-            'orderId' => $invoice,
-            'paymentMethodNonce' => $nonceFromTheClient,
-            'customer' => [
-                'firstName' => $firstname,
-                'lastName' => $lastname,
-                'company' => $company,
-                'phone' => $telephone,
-                'email' => $email
-            ],
-            'billing' => [
-                'firstName' => $firstname,
-                'lastName' => $lastname,
-                'company' => $company,
-                'streetAddress' => $address1,
-                'extendedAddress' => $address2,
-                'locality' => $county,
-                'postalCode' => $postcode,
-                'countryCodeAlpha2' => $country
-            ],
-            'shipping' => [
-                'firstName' => $firstname,
-                'lastName' => $lastname,
-                'company' => $company,
-                'streetAddress' => $address1,
-                'extendedAddress' => $address2,
-                'locality' => $county,
-                'postalCode' => $postcode,
-                'countryCodeAlpha2' => $country
-            ],
-            'options' => [
-                'submitForSettlement' => true
-            ]
-        ]);
-
-        return $result;
     }
 
     public function getCountries()

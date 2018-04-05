@@ -40,6 +40,16 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'comment'  => 'Display mode',
                 ]);
         }
+
+        $installer->getConnection()
+            ->addColumn($installer->getTable('mst_kb_category'), 'image', [
+                'type'     => Table::TYPE_TEXT,
+                'nullable' => true,
+                'length'   => 255,
+                'default'  => '',
+                'comment'  => 'Image',
+            ]);
+
         if (version_compare($context->getVersion(), '1.0.2') < 0) {
             $installer->getConnection()
                 ->modifyColumn($installer->getTable('mst_kb_article'), 'created_at', [

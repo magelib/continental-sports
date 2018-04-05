@@ -27,3 +27,10 @@
 <?php else:?>
     </a>
 <?php endif?>
+<script type="text/javascript">
+    require(["jquery"], function ($) {
+        $(document).ready(function () {
+            $('.footer.content').attr('itemtype', 'http://schema.org/LocalBusiness');
+        });
+    });
+</script>
