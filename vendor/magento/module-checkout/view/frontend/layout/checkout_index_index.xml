@@ -227,7 +227,7 @@
                                                                     </item>
                                                                     <item name="telephone" xsi:type="array">
                                                                         <item name="validation" xsi:type="array">
-                                                                            <item name="min_text_length" xsi:type="number">10</item>
+                                                                            <item name="phoneUK" xsi:type="string">true</item>
                                                                         </item>
                                                                         <item name="config" xsi:type="array">
                                                                             <item name="tooltip" xsi:type="array">

@@ -62,6 +62,15 @@ if ($_product->isSaleable()): ?>
                 <?php echo $block->getChildHtml('', true) ?>
             </div>
         </div>
+
+        <?php
+        if($_product->getTypeId() != 'virtual' && $_product->getTypeId() != 'downloadable') {
+            /* integrate calculate shipping */
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $helper = $objectManager->get('\Netbaseteam\Calculatorshipping\Helper\Data');
+            echo $helper->showShippingEstimate();
+        }
+        ?>
     </div>
     <?php ?>
 <?php endif; ?>

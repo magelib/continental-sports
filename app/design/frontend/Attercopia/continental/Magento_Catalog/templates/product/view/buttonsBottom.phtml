@@ -29,7 +29,7 @@ if ($currentProduct = $block->getCurrentProduct()) { ?>
 <script type="application/javascript">
     require(['jquery', 'jquery/ui'], function($){
         $(document).ready(function () {
-           $(document.body).on('click', '.bottom-buttons .btn-spares', function () {
+           $(document.body).on('click', '.btn-spares', function () {
                 $('.spares-listing, .columns, .product-info-wrapper, .related_column').toggle();
            });
         });

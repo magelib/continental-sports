@@ -42,4 +42,7 @@ echo $block->getAdjustmentCssClasses() ?>"
         <meta itemprop="priceCurrency" content="<?php /* @escapeNotVerified */
         echo $block->getDisplayCurrencyCode() ?>"/>
     <?php endif; ?>
+    <meta itemprop="price" content="<?php /* @escapeNotVerified */
+    echo $block->getDisplayValue() ?>"/>
+
 </span>

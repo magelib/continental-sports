@@ -298,6 +298,9 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
                                 ],
                             ],
                             'telephone' => [
+                                'validation' => [
+                                    'phoneUK' => true,
+                                ],
                                 'config' => [
                                     'tooltip' => [
                                         'description' => __('For delivery questions.'),
