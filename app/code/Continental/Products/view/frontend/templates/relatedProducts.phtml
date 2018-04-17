@@ -2,43 +2,76 @@
 // Get collection
 $helper = $this->helper('Continental\Products\Helper\Accessories');
 $relatedCollection = $helper->getAccesories();
-if (count($relatedCollection) > 0 ):?>
+if (count($relatedCollection) > 0):?>
 
-<div class="related_column">
-    <h2>Accessories</h2>
-        <?php foreach ($relatedCollection as $index=>$product): ?>
+    <div class="related_column">
+        <h2>Accessories</h2>
+        <?php foreach ($relatedCollection as $index => $product): ?>
             <?php // filter out spares
-                $sparesId = $helper->getCategoryId('Spares');
+            $sparesId = $helper->getCategoryId('Spares');
             ?>
-                <div class="accessories_div">
-            <ul>
-                <li class="thumb">
-                    <?php $thumbnail = $product->getThumbnail();
-                    if ($thumbnail): ?>
-                    <img src="/pub/media/catalog/product/<?= $thumbnail ?>" alt=""/></li>
-                <?php endif; ?>
-                <li class="details">
-                    <p class="title"><h4><?= $product->getName(); ?></h4></p>
-                    <p class="sku"><?= $product->getSku() ?></p>
-                    <?php if ($product->getShortDescription()): ?>
-                    <p class="desc">desc:<?= $product->getShortDescription() ?></p>
+            <div class="accessories_div">
+                <ul>
+                    <li class="thumb">
+                        <?php $thumbnail = $product->getThumbnail();
+                        if ($thumbnail): ?>
+                        <img src="/pub/media/catalog/product/<?= $thumbnail ?>"
+                             alt="<?php echo str_replace('"', '', $product->getName()) ?>"/></li>
                     <?php endif; ?>
-                    <p class="price">&pound;<?= $helper->formatPrice($product->getPrice()) ?></p>
-                </li>
-                <li class="btns">
-                    <p><a data-button="view" href="<?=$product->getProductUrl()?>"><button class="view-btn"><span>View</span></button></a></p>
-                    <p><a data-button="addtocart" data-addtocart="<?=$helper->getAddToCartUrl($product->getId())?>" href=""><button class="add-btn"><span>Add</span></button></a></p>
-                </li>
-            </ul>
-        </div>
-                <?php endforeach; ?>
-</div>
+                    <li class="details">
+                        <div class="title"><h4><?= $product->getName(); ?></h4></div>
+                        <p class="sku"><?= $product->getSku() ?></p>
+                        <?php if ($product->getShortDescription()): ?>
+                            <p class="desc">desc:<?= $product->getShortDescription() ?></p>
+                        <?php endif; ?>
+                        <p class="price">&pound;<?= $helper->formatPrice($product->getPrice()) ?></p>
+                    </li>
+                    <li class="btns">
+                        <p><a data-button="view" href="<?= $product->getProductUrl() ?>">
+                                <span style="
+font-size: 12px;    background-color: white;
+    border: 1px solid #000;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: black;
+        border-radius: 4px;
+    float: right;
+    text-transform: uppercase;
+    width: 100%;
+        margin-bottom: 3px;
+
+" class="view-btn"><span>View</span></span>
+                            </a></p>
+                        <p><a data-button="addtocart"
+                              data-addtocart="<?= $helper->getAddToCartUrl($product->getId()) ?>" href="">
+                                <span style="
+border: 1px solid #d1242e;
+    background-color: #d1242e;
+    color: #fff;
+        font-size: 12px;
+        padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 4px;
+    float: right;
+    text-transform: uppercase;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+" class="add-btn"><span>Add</span></span>
+                            </a></p>
+                    </li>
+                </ul>
+            </div>
+        <?php endforeach; ?>
+    </div>
     <style type="text/css">
         @media screen and (max-width: 1023px) {
             .accessories_div .btns {
-                float: none!important;
+                float: none !important;
                 clear: both;
-                width: 100%!important;
+                width: 100% !important;
             }
 
             .accessories_div ul li.details {
@@ -59,25 +92,24 @@ if (count($relatedCollection) > 0 ):?>
                 width: 49%;
             }
 
-
-
         }
+
         .page-bottom .product.attribute.description {
-            padding: 0!important;
+            padding: 0 !important;
         }
     </style>
     <script>
         // add js here to handle buttons
         require(["jquery"], function ($) {
-            $(".btns a").click(function() {
-            if ($(this).data("button") === "view") {
-                window.location = $(this).attr("href");
-            }
-            if ($(this).data("button") === "addtocart") {
-                //window.location = $(this).attr("addtocart");
-                console.log("add to cart url : " + $(this).data("addtocart"));
-                $('<form data-role="tocart-form" action="' + $(this).data("addtocart") + '" method="post"><?= $block->getBlockHtml('formkey')?></form>').appendTo('body').submit();
-            }
+            $(".btns a").click(function () {
+                if ($(this).data("button") === "view") {
+                    window.location = $(this).attr("href");
+                }
+                if ($(this).data("button") === "addtocart") {
+                    //window.location = $(this).attr("addtocart");
+                    console.log("add to cart url : " + $(this).data("addtocart"));
+                    $('<form data-role="tocart-form" action="' + $(this).data("addtocart") + '" method="post"><?= $block->getBlockHtml('formkey')?></form>').appendTo('body').submit();
+                }
                 return false;
             })
         });

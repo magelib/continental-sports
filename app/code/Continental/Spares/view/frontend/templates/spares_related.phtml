@@ -6,7 +6,7 @@
     $currentStore = $storeManager->getStore();
     ?>
 <div class="image-map">
-    <img src="" />
+    <img src="no-image.png" alt="<?php $block->getProduct()->getName() ?>" />
 </div>
     <table>
         <script>
@@ -52,7 +52,7 @@
 
 
             <?php echo ( ( ($index % 3) == 0) && ($index > 0)) ? '</tr><tr>' : ''; ?>
-            <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>" /></td>
+            <td><img height="45" src="/pub/media/catalog/product/<?= $relatedProduct['image'] ?>"  alt="<?php $block->getProduct()->getName() ?>" /></td>
             <td class="rowText" hover-data="{100,100,100,100}">
                 <ul>
                     <li class="sparesName">

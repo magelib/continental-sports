@@ -11,7 +11,7 @@ if (!empty($gridImage)): ?>
         <?php endif; ?>
         <div class="contigrid">
             <div class="gallery_image_wrapper"  style="max-height: 250px;">
-                <img src="<?=$image->getUrl(); ?>" style="max-height: 250px;" />
+                <img src="<?=$image->getUrl(); ?>" style="max-height: 250px;" alt="<?=$image->getLabel()?>" />
             </div>
             <span><?=$image->getLabel()?></span>
         </div>
