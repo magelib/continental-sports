@@ -92,7 +92,7 @@ function($){
 			} else {
 				$("#input_region_id").removeClass("validate-my-input");
 			}
-			
+
 			if($("#estimate_region_id").css('display') == 'block' && $(".li_estimate_region_id .select2-selection__placeholder").length) {
 				alert("Please choose State/Province");
 				$("#input_region_id").focus();
