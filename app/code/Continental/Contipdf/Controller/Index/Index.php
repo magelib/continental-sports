@@ -57,7 +57,7 @@ class Index extends \Magento\Framework\App\Action\Action
     }
 
     private function debug($str) {
-        printf("<pre>%s</pre>",  $str);
+        error_log(date("Y-m-d H:i:s ") . $str . PHP_EOL, 3, '/var/www/continental-staging/pdf-debug.log');
     }
 
     function execute()
@@ -70,52 +70,61 @@ class Index extends \Magento\Framework\App\Action\Action
             $this->debug("No product");
         }
 
+        $pdfheader = isset($_GET['headerhtml']) ? true : false; 
+        
         $html = isset($_GET['html']) ? true : false;
 
-        if ($html) {
+        if ($pdfheader) {
+            echo $this->getHeaderHtml();
+            exit();
+        } elseif ($html) {
             $this->createHtml($productId);
+            exit();
         } else {
-            // Force Download of Pdf
-            $this->debug("pdf start");
-
-            //result = $this->resultFactory->create(PdfResult::TYPE);
-            $product = $this->getProduct($productId);
-            $this->debug('product set');
-
-            $filename = str_replace(' ', '_', $product->getName());
-            $filename = str_replace(' - ', '-', $filename);
-            $filename = preg_replace('/[^A-Za-z0-9_-]/', '', $filename);
-            $filename .= '.pdf';
-            $path = $this->basepath . 'media/pdf/';
-            if (!file_exists($path . $filename)) {
-                $url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-                $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf \'' . $url . '&html=yes\' \'' . $path . $filename . '\'';
-                $bash = exec($command);
-        } else {
-        }
-
+            $this->buildPdf();
         // Force Download
-	ob_end_clean();
-        header('Content-Type: application/pdf');
-	header("Content-Transfer-Encoding: binary");
-	header('Pragma: public');
-	header("Content-disposition: attachment; filename=".$filename);
-	readfile($path.$filename);
-
+            ob_end_clean();
+            header('Content-Type: application/pdf');
+            header("Content-Transfer-Encoding: binary");
+            header('Pragma: public');
+            header("Content-disposition: attachment; filename=".$filename);
+            readfile($path.$filename);
         }
     }
 
-    function getProtocol() {
-        $isSecure = false;
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
-            $isSecure = true;
+    private function buildPdf() {
+    // Create html
+        $this->createHtml($productId);
+    // Force Download of Pdf
+        $this->debug("html created");
+        $product = $this->getProduct($productId);
+        $this->debug('product set');
+
+        $filename = str_replace(' ', '_', $product->getName());
+        $filename = str_replace(' - ', '-', $filename);
+        $filename = preg_replace('/[^A-Za-z0-9_-]/', '', $filename);
+        $filename .= '.pdf';
+        $header_file = 'http://staging.continentalsports.co.uk/pdf/templates/header.html';
+        
+        // folder path to save pdf to
+        $path = $this->basepath . 'media/pdf/';
+        
+        // change this back when working
+        if (file_exists($path . $filename)) {
+        // Path to html file on open port 80 pdf directory
+            $htmlUrl = $_SERVER['HTTP_HOST'] . '/pdf/' . $productId . '.html';
+        
+        // Terminal command to compile the pdf
+            $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf --header-html '. $header_file .' \'' . $htmlUrl . '&html=yes\' \'' . $path . $filename . '\'';
+            $this->debug($command);
+            $bash = exec($command);
         }
-        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
-            $isSecure = true;
-        }
-        return $isSecure ? 'https' : 'http';
     }
 
+    /**
+     * [getFooter description]
+     * @return [type] [description]
+     */
     private function getFooter() {
         $this->checkFooter();
         if (file_exists($this->footerFile)) {
@@ -123,12 +132,21 @@ class Index extends \Magento\Framework\App\Action\Action
         }
     }
 
+    /**
+     * [getHeader description]
+     * @return [type] [description]
+     */
     private function getHeader() {
         $this->checkHeader();
         if (file_exists($this->headerFile)) {
             return file_get_contents($this->headerFile);
         }
     }
+
+    /**
+     * [checkFooter description]
+     * @return [type] [description]
+     */
     private function checkFooter() {
         $this->footerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/footer.html';
 
@@ -148,28 +166,62 @@ html;
 
     }
 
-    private function checkHeader() {
-        $this->headerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/header.html';
-
-        if (!file_exists($this->headerFile)) {
-            $headerHtml = <<< html
-           <!DOCTYPE html>
+    /**
+     * [getHeaderHtml description]
+     * @return [type] [description]
+     */
+    private function getHeaderHtml() {
+            $html = <<< html
+                      <!DOCTYPE html>
+           <head>
+            <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
+            <style>
+            body {
+                margin:0;padding:0;
+                font-family: 'Roboto', sans-serif;
+                color:#fff;
+            }
+            .pdf-container {
+                padding:30px
+            }
+            .pdf-header {
+                background-color:#333!important; height:100px;
+            }
+           </style>
+           </head>
            <body>
-               <div class="pdf-header" style="background-color:#333!important; height:100px; width:100%">
-                    <div class="pdf-container" style="padding:30px">
-                        <img src="//continental.attercopia.co.uk/static/version1502457461/frontend/Attercopia/continental/en_GB/images/footer-logo.png" alt="PDF Logo" />
-                    </div>
+           <div class="pdf-header">
+                <div class="pdf-container">
+                    <img src="/pub/media/wysiwyg/global/footer-logo.png" alt="PDF Logo" />
                 </div>
+            </div>
             </body>
             </html>
 html;
-            file_put_contents($headerFile, $headerHtml);
-        }
-
+                return $html;
     }
 
-    function createHtml($productId = false)
+    /**
+     * [checkHeader description]
+     * @return [type] [description]
+     */
+    private function checkHeader() {
+        $this->headerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/header.html';
+        $site = $_SERVER['SERVER_NAME'];    
+        if (!file_exists($this->headerFile)) {
+            $headerHtml = $this->getHeaderHtml();
+            file_put_contents($headerFile, $headerHtml);
+        }
+    }
+    
+    /**
+     * [createHtml description]
+     * @param  boolean $productId [description]
+     * @return [type]             [description]
+     */
+    private function createHtml($productId = false)
     {
+        $this->debug("createHtml()");
         // Added header
         $this->checkHeader();
         // Added Footer
@@ -187,8 +239,8 @@ html;
         # Get product details
         $product = $this->getProduct($productId);
 
-	// Only show sku master for simple products
-	$skuMaster = ($this->showConfigurablesCount($product)) ? '' : $product->getSku();
+	   // Only show sku master for simple products
+	   $skuMaster = ($this->showConfigurablesCount($product)) ? '' : $product->getSku();
 
         $replacements = array(
             'description' => $product->getDescription(),
@@ -205,16 +257,31 @@ html;
         $configurableArray = $this->getConfigurables($productId, $product, $contents);
 
         $contents = str_replace($configurableArray[0], $configurableArray[1], $contents);
-        // Show header
-        echo $this->getHeader();
+        // Save the contents as an html file
+        $this->saveHtml( $contents, $productId );
+        return;
+    }
+
+    function saveHtml( $contents, $productId ) {
+        $this->debug("saveHtml");
+        ob_start();
         # Show main html
         echo $contents;
         // Show Footer
-        echo $this->getFooter();
-        exit();
-//  	$result = $this->resultFactory->create(PdfResult::TYPE);
+        //echo date("Y-m-d H:i:s");
+        $html = ob_get_clean();
+        // write html to open port 80 directory so we can access with wkhtml
+        $this->debug("$contents");
+        
+        $htmlfile = $this->get_path($productId);
+        $this->debug("put contents to $htmlfile");
+        $this->debug("put contents to $html");
+        file_put_contents( $htmlfile, $html );
+         $this->debug("saved");
+    }
 
-//   	return $result;
+    function get_path($productId) {
+        return '/var/www/continental-staging/pub/pdf_html/' . $productId . '.html'; 
     }
 
     function _execute()
@@ -334,35 +401,14 @@ html;
         }
     }
 
-    public function standardHeader()
-    {
-        $this->content->addSection('header');
-        // here you can define your Content by ->addContent
-        // or adding an Image with ->addImage()
-
-        $this->content->addImage('http://continental.attercopia.co.uk/media/logo/stores/1/logo.png', 'Continental Sports');
-        $this->content->endSection();
-    }
-
-    public function buildContent()
-    {
-        $this->title = 'PDF Title';
-        $this->cssPath = '/skin/frontend/your_theme/default/css/';
-
-        /* Add Content */
-        #Css
-
-        $this->content = $this->pdf->createBlock('staempfli_pdf/pdf_content');
-        $this->content->addStylesheet($this->cssPath . 'pdf.css');
-
-        exit("Stop2");
-        # PDF Title
-        $this->content->setTitle($this->title);
-
-        # Header
-        $this->standardHeader();
-
-        echo "DONE";
-
+    function getProtocol() {
+        $isSecure = false;
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+            $isSecure = true;
+        }
+        elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+            $isSecure = true;
+        }
+        return $isSecure ? 'https' : 'http';
     }
 }
