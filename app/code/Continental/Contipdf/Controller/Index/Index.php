@@ -53,7 +53,7 @@ class Index extends \Magento\Framework\App\Action\Action
          * // return \Magento\Framework\View\Result\Page
          */
 
-	$this->basepath = $_SERVER['DOCUMENT_ROOT'] . '/';
+	    $this->basepath = $_SERVER['DOCUMENT_ROOT'] . '/';
     }
 
     private function debug($str) {
@@ -68,6 +68,7 @@ class Index extends \Magento\Framework\App\Action\Action
         if (!$productId) {
 //            exit("<script>history.back();</script>");
             $this->debug("No product");
+            exit("No product id");
         }
 
         $pdfheader = isset($_GET['headerhtml']) ? true : false; 
@@ -79,9 +80,10 @@ class Index extends \Magento\Framework\App\Action\Action
             exit();
         } elseif ($html) {
             $this->createHtml($productId);
+            $this->displayHtml($productId);
             exit();
         } else {
-            $this->buildPdf();
+            $this->buildPdf($productId);
         // Force Download
             ob_end_clean();
             header('Content-Type: application/pdf');
@@ -92,8 +94,26 @@ class Index extends \Magento\Framework\App\Action\Action
         }
     }
 
-    private function buildPdf() {
-    // Create html
+    /**
+     * [displayHtml description]
+     * @return [type] [description]
+     */
+    private function displayHtml($productId = null) {
+        if ($productId === null) {
+            exit("Missing product id");
+        }
+
+        $htmlFile = $this->basepath . 'pdf_html/'. $productId . '.html';
+        echo file_get_contents($htmlFile);
+    }
+
+    /**
+     * [buildPdf description]
+     * @return [type] [description]
+     */
+    private function buildPdf($productId = null) {
+    // Create html and save to file
+        if ($productId === null ) exit("Missing Product id");
         $this->createHtml($productId);
     // Force Download of Pdf
         $this->debug("html created");
@@ -104,7 +124,7 @@ class Index extends \Magento\Framework\App\Action\Action
         $filename = str_replace(' - ', '-', $filename);
         $filename = preg_replace('/[^A-Za-z0-9_-]/', '', $filename);
         $filename .= '.pdf';
-        $header_file = 'http://staging.continentalsports.co.uk/pdf/templates/header.html';
+        $header_file = 'http://staging.continentalsports.co.uk/pdf/header.html';
         
         // folder path to save pdf to
         $path = $this->basepath . 'media/pdf/';
@@ -115,7 +135,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $htmlUrl = $_SERVER['HTTP_HOST'] . '/pdf/' . $productId . '.html';
         
         // Terminal command to compile the pdf
-            $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf --header-html '. $header_file .' \'' . $htmlUrl . '&html=yes\' \'' . $path . $filename . '\'';
+            $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf --header-html \''. $header_file .'\' \'' . $htmlUrl . '&html=yes\' \'' . $path . $filename . '\'';
             $this->debug($command);
             $bash = exec($command);
         }
@@ -241,12 +261,24 @@ html;
 
 	   // Only show sku master for simple products
 	   $skuMaster = ($this->showConfigurablesCount($product)) ? '' : $product->getSku();
+       
+       // copy main image
+       $fileParts = explode('/', $product->getImage() );
+       $imageFileName = end( $fileParts  );
+       
+       $newImageFile = $_SERVER['DOCUMENT_ROOT'] . '/pdf_html/images/'. $imageFileName;
+       // Copy image files across to port 80 folder
+       $command = 'cp '. $_SERVER['DOCUMENT_ROOT'] . '/media/catalog/product' . $product->getImage() . ' ' . $newImageFile;
+       $this->debug($command); 
+       system( $command );
 
+       // Set permissions
+       system( 'chown www-data ' . $newImageFile); 
         $replacements = array(
             'description' => $product->getDescription(),
             'title' => $product->getName(),
             'sku-master' => $skuMaster,
-            'mainimage' => '/pub/media/catalog/product/' . $product->getImage()
+            'mainimage' => 'http://' . $this->get_server() . '/pdf/images/' . $imageFileName
         );
 
         # Populate template
@@ -259,7 +291,6 @@ html;
         $contents = str_replace($configurableArray[0], $configurableArray[1], $contents);
         // Save the contents as an html file
         $this->saveHtml( $contents, $productId );
-        return;
     }
 
     function saveHtml( $contents, $productId ) {
@@ -280,36 +311,11 @@ html;
          $this->debug("saved");
     }
 
+    function get_server() {
+        return 'staging.continentalsports.co.uk';
+    }
     function get_path($productId) {
         return '/var/www/continental-staging/pub/pdf_html/' . $productId . '.html'; 
-    }
-
-    function _execute()
-    {
-        $filename = 'contitest.pdf';
-        $result = $this->resultFactory->create(PdfResult::TYPE);
-        $source = $result->renderSourceDocument();
-        $this->pdf = new
-        $this->pdf->appendContent($source);
-
-        # Generate PDF:
-
-        $pdfFileContents = $this->pdf->file()->toString();
-
-        $result->setFilename($filename);
-
-        $result->addGlobalOptions(
-            new PdfOptions(
-                [
-                    PdfOptions::KEY_GLOBAL_TITLE => 'Example Title',
-                    PdfOptions::KEY_PAGE_ENCODING => PdfOptions::ENCODING_UTF_8,
-                    PdfOptions::KEY_GLOBAL_ORIENTATION => PdfOptions::ORIENTATION_LANDSCAPE,
-                ]
-            )
-        );
-        echo "Complete";
-        return $result;
-
     }
 
     /***
