@@ -553,7 +553,8 @@ class Toolbar extends \Magento\Framework\View\Element\Template
      */
     public function getAvailableLimit()
     {
-        return [10 => 10, 20 => 20, 50 => 50];
+        //return [10 => 10, 20 => 20, 50 => 50];
+        return [100];
     }
 
     /**

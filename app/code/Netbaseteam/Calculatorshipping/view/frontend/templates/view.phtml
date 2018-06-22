@@ -36,7 +36,7 @@ endif;
 
 <div class="estimaste-body">
 	<div class="est-description">
-		<p><strong><?php echo __("Calculator Shipping") ?></strong></p>
+		<p><strong><?php echo __("Installation Required") ?></strong></p>
 		<p><?php echo __("Enter destination to get a shipping cost.") ?></p>
 	</div>
 	
@@ -93,18 +93,21 @@ endif;
 			-->
 			
 			<li class="item zip-code field">
-				<label class="label" for="Zip/Postal Code">
-					<span><?php echo __("Zip/Postal Code") ?><span class="my-require">*</span></span>
+				<label class="label" for="Post Code">
+					<span><?php echo __("Post Code") ?><span class="my-require">*</span></span>
 				</label>
 
 				<div class="control">
-					<input type="text" name="estimate[post_code]" id="estimate_postcode" value="<?php echo $zip_code; ?>" title="<?php echo __("Zip/Postal Code") ?>" style="border-radius:0">
+					<input type="text" name="estimate[post_code]" id="estimate_postcode" value="<?php echo $zip_code; ?>" title="<?php echo __("Post Code") ?>" style="border-radius:0; width:90px; float:left;margin-right: 10px;;">
+                    <div class="primary">
+                    <button type="button" title="<?php echo $block->_getButtonTitle(); ?>" id="calculate-shipping" class="btn btn-primary action submit primary btn-primary-estimate" style="margin-top: 2px; margin-left:20px;"><span><?php echo $block->_getButtonTitle(); ?></span></button>
+                </div>
 				</div>		
 			</li>
 			
 			<?php if($this->_getAutoIp()) : ?>
 			<li class = "item">
-				 <a href="javascript:void(0)" id="auto_ip"><?php echo __("Get informations from IP address."); ?></a>
+				 <a href="javascript:void(0)" id="auto_ip"><?php echo __("Get information from IP address."); ?></a>
 			</li>
 			<?php endif; ?>
 			
@@ -113,21 +116,24 @@ endif;
 				 <input type="checkbox" id="include_cart" name="include_cart" value="1" checked><?php echo __("Include items in the cart."); ?>
 			</li>
 			<?php endif; ?>
-
+           <!--
 			<li class="item">
 				<div class="primary">
-					<button type="button" title="<?php echo $block->_getButtonTitle(); ?>" id="calculate-shipping" class="btn btn-primary action submit primary btn-primary-estimate" style="margin-top: 10px"><span><?php echo $block->_getButtonTitle(); ?></span></button>
+					<button type="button" title="<?php echo $block->_getButtonTitle(); ?>" id="calculate-shipping" class="btn btn-primary action submit primary btn-primary-estimate" style=""><span><?php echo $block->_getButtonTitle(); ?></span></button>
 				</div>
 			</li>
+            -->
 		</ul>
 	</div>
     <div style="clear:both;"></div>
 	<!-- Shipping Rate -->
-	<div class="est-description">
+	<!--
+    <div class="est-description">
 		<p><strong><?php echo __("Shipping Rates") ?></strong></p>
 		<p><?php echo __("Please enter above informations and click calculate button to show estimate shipping results.") ?></p>
 		<div id="shipping-result-form"></div>
 	</div>
+    -->
 </div>
 
 <script>

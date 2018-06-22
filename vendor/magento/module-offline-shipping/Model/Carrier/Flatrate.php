@@ -164,7 +164,11 @@ class Flatrate extends AbstractCarrier implements CarrierInterface
             $shippingPrice = '0.00';
         }
 
-        $postalCode = $request->getData('dest_postcode');;
+        $longMatch = false;
+        $postalCode = $request->getData('dest_postcode');
+
+        $this->getAllPostCodes();
+     
         foreach ($request->getAllItems() as $item) {
             $product = $item->getProduct();
             $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -173,21 +177,55 @@ class Flatrate extends AbstractCarrier implements CarrierInterface
                 $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
                 $vals = $this->_scopeConfig->getValue('continental-attributes/attributes_configurations/attribute_set_top',
                     $storeScope);
-                foreach (unserialize($vals) as $val) {
-                    foreach (explode(',', $val['postcode']) as $code) {
-                        if ((substr($postalCode, 0, strlen(trim($code))) === trim($code)) || (trim($code) == $postalCode)) {
-                            $shippingPrice = $val['rate'];
+               
+               $postcodes = $this->getAllPostCodes();
+
+               foreach ($postcodes as $index => $arr) {
+                    foreach ($arr as $i => $row) {
+                        $code = trim($row['code']);
+                        if ((substr($postalCode, 0, strlen($code)) === $code) || ($code == $postalCode)) {
+                            $shippingPrice = $row['rate'];
                             break 2;
                         }
                     }
-                }
-                break;
+                }               
             }
         }
-
-
-
         return $shippingPrice;
+    }
+
+    function debugShip($str) {
+        error_log($str  . PHP_EOL, 3, '/var/www/continental-staging/test.txt'); 
+    }
+
+    function getAllPostCodes() {
+        $postcodes = [];
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $vals = $this->_scopeConfig->getValue('continental-attributes/attributes_configurations/attribute_set_top',
+                    $storeScope);
+                foreach (unserialize($vals) as $val) {
+                    foreach (explode(',', $val['postcode']) as $code) {
+                        $code = trim($code);
+                        $pLen = strlen($code);
+                        if (!isset($postcodes[$pLen])) {
+                            $postcodes[$pLen][0] = array("code" => $code, "rate" => $val['rate']);
+                        } else {
+                            $postcodes[$pLen][] = array("code" => $code, "rate" => $val['rate']);
+                        }
+                        
+                    }
+                }
+        return array_reverse($postcodes);
+    }
+    
+    /**
+    * @param string $code postcode
+    * @return string $code formatted code (uppercase alphanumeric only)
+    */
+    private function formatPostCodes($code) {
+        $code = strtoupper($code);
+        $code = preg_replace('/[^A-Z0-9]/','', $code);
+        return $code;
     }
 
     /**

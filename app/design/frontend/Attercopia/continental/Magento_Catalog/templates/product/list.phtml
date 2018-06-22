@@ -208,6 +208,29 @@ $contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\De
         }
 
     </style>
+    <?php /* -- sort images and height -- */ ?>
+<script type="text/javascript">
+     require(["jquery"], function ($) {
+        $(document).ready(function() {
+            
+        equalHeight(".product-item-name");
+        equalHeight(".list.items .product-item-description");
+        function equalHeight(el) {
+        var maxHeight = 0;
+        $(el).each(function() {
+            x = $(this).height();
+            console.log(el + " = " + x);
+            if (x > maxHeight) {
+                maxHeight = x;
+            }
+        });
+        $(el).height(maxHeight);
+        }
+         jQuery(".product-item-info img").css({"width":"inherit","display":"block","margin":"0 auto"});
+        });
+       
+    });
+</script>
     <?php echo $block->getToolbarHtml() ?>
     <?php if (!$block->isRedirectToCartEnabled()) : ?>
         <script type="text/x-magento-init">

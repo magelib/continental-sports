@@ -12,6 +12,7 @@ return array(
     'PHPMD\\' => array($vendorDir . '/phpmd/phpmd/src/main/php'),
     'OAuth\\Unit' => array($vendorDir . '/lusitanian/oauth/tests'),
     'OAuth' => array($vendorDir . '/lusitanian/oauth/src'),
+    'Mandrill' => array($vendorDir . '/mandrill/mandrill/src'),
     'MagentoHackathon\\Composer\\Magento' => array($vendorDir . '/magento/magento-composer-installer/src'),
     'Less' => array($vendorDir . '/oyejorge/less.php/lib'),
     'JShrink' => array($vendorDir . '/tedivm/jshrink/src'),

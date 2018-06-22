@@ -191,6 +191,7 @@ class Rate extends \Magento\Checkout\Controller\Cart
 						$region = $params["estimate"]["region"];
 					}
 					
+	error_log("Shipping cost module post code is " . $post_code ) ;
 					$quote->getShippingAddress()
 							->setCountryId($params["estimate"]["country_id"]) 
 							/* ->setCity($params["estimate"]["city"]) */ 

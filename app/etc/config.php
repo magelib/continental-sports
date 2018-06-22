@@ -136,9 +136,12 @@ return array (
     'Mirasvit_SearchReport' => 1,
     'Mirasvit_SearchSphinx' => 1,
     'Mirasvit_SearchUltimate' => 1,
+    'Netbaseteam_Calculatorshipping' => 1,
     'Staempfli_Pdf' => 1,
     'Swissup_Core' => 1,
     'Swissup_FontAwesome' => 1,
     'WeProvide_Dompdf' => 1,
+    'Wyomind_Core' => 1,
+    'Wyomind_CronScheduler' => 1,
   ),
 );

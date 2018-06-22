@@ -6,6 +6,7 @@
 ?>
 <?php
 $collection = $block->getArticleCollection();
+echo '<!-- Collection count: ' . $collection->count() . ' -->';
 ?>
 <?php if ($collection->count()): ?>
     <?= $block->getToolbarHtml() ?>

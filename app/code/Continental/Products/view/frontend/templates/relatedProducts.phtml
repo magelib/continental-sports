@@ -20,9 +20,11 @@ if (count($relatedCollection) > 0):?>
                     <?php endif; ?>
                     <li class="details">
                         <div class="title"><h4><?= $product->getName(); ?></h4></div>
+                        <?php if ( strtolower( $product->getSku() ) != strtolower( $product->getName() ) ): ?>
                         <p class="sku"><?= $product->getSku() ?></p>
-                        <?php if ($product->getShortDescription()): ?>
-                            <p class="desc">desc:<?= $product->getShortDescription() ?></p>
+                        <?php endif; ?>
+                        <?php if ( $product->getShortDescription() && ( strlen($product->getShortDescription()) > 1 ) ): ?>
+                            <p class="desc"><?= $product->getShortDescription() ?></p>
                         <?php endif; ?>
                         <p class="price">&pound;<?= $helper->formatPrice($product->getPrice()) ?></p>
                     </li>

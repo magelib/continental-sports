@@ -3,9 +3,11 @@
 	position:relative;
 	display:inline-block;
 }
+/* Removed on 24th May 2018 - but wait, what's this comment doing in the repo?
 .product-item-info img{
 	width:100%;
 }
+*/
 /* .product-item-info:hover img{
 	-webkit-filter: blur(1.7px);
 } */

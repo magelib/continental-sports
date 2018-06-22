@@ -267,7 +267,8 @@ class ListArticle extends \Magento\Framework\View\Element\Template implements Id
 
             $collection->setCurPage($this->getCurrentPage());
 
-            $limit = (int) $toolbar->getLimit();
+            //$limit = (int) $toolbar->getLimit();
+            $limit = 100;
             if ($limit) {
                 $collection->setPageSize($limit);
             }
@@ -280,7 +281,7 @@ class ListArticle extends \Magento\Framework\View\Element\Template implements Id
             }
             $this->collection = $collection;
         }
-
+        //echo $collection->load()->getSelect();
         return $this->collection;
     }
     /**

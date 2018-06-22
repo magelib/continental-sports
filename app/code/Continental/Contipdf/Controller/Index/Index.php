@@ -17,6 +17,8 @@ class Index extends \Magento\Framework\App\Action\Action
 {
     private $basepath;
     private $content;
+    private $footerFile;
+    private $headerFile;
 
     protected $productRepository;
 
@@ -114,10 +116,23 @@ class Index extends \Magento\Framework\App\Action\Action
         return $isSecure ? 'https' : 'http';
     }
 
-    private function checkFooter() {
-        $footerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/footer.html';
+    private function getFooter() {
+        $this->checkFooter();
+        if (file_exists($this->footerFile)) {
+            return file_get_contents($this->footerFile);
+        }
+    }
 
-        if (!file_exists($footerFile)) {
+    private function getHeader() {
+        $this->checkHeader();
+        if (file_exists($this->headerFile)) {
+            return file_get_contents($this->headerFile);
+        }
+    }
+    private function checkFooter() {
+        $this->footerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/footer.html';
+
+        if (!file_exists($this->footerFile)) {
             $footerHtml = <<< html
             <!DOCTYPE html>
            <body>
@@ -128,19 +143,19 @@ class Index extends \Magento\Framework\App\Action\Action
         </body>
         </html>
 html;
-            file_put_contents($footerFile, $footerHtml);
+            file_put_contents($this->footerFile, $footerHtml);
         }
 
     }
 
     private function checkHeader() {
-        $headerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/header.html';
+        $this->headerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/header.html';
 
-        if (!file_exists($headerFile)) {
+        if (!file_exists($this->headerFile)) {
             $headerHtml = <<< html
            <!DOCTYPE html>
            <body>
-               <div class="pdf-header" style="background-color:#333!important; height:100px;">
+               <div class="pdf-header" style="background-color:#333!important; height:100px; width:100%">
                     <div class="pdf-container" style="padding:30px">
                         <img src="//continental.attercopia.co.uk/static/version1502457461/frontend/Attercopia/continental/en_GB/images/footer-logo.png" alt="PDF Logo" />
                     </div>
@@ -190,8 +205,12 @@ html;
         $configurableArray = $this->getConfigurables($productId, $product, $contents);
 
         $contents = str_replace($configurableArray[0], $configurableArray[1], $contents);
-        # Show html
+        // Show header
+        echo $this->getHeader();
+        # Show main html
         echo $contents;
+        // Show Footer
+        echo $this->getFooter();
         exit();
 //  	$result = $this->resultFactory->create(PdfResult::TYPE);
 
