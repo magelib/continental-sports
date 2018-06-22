@@ -11,12 +11,13 @@ $currentStore = $storeManager->getStore();
 ?>
 
 <?php
-echo '<img src="'.$currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'kb-images/' . $rootCategory->getImage().'" />';
+if ( $rootCategory->getImage() ) {
+    echo '<img src="'.$currentStore->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'kb-images/' . $rootCategory->getImage().'" />';
+}
 ?>
 
 <h1><?=  $rootCategory->getName() ?></h1>
 <?= $block->getChildHtml('kb.search.form'); ?>
-<?= $block->getKbPageTitle() ?>
 
 <?php
 if ($rootCategory->getDescription()): ?>
