@@ -72,8 +72,10 @@ class CartItemProcessor implements CartItemProcessorInterface
      */
     public function processOptions(CartItemInterface $cartItem)
     {
+
 	$attributesOption = $cartItem->getProduct()->getCustomOption('attributes');
-        $selectedConfigurableOptions = unserialize($attributesOption->getValue());
+       
+	$selectedConfigurableOptions = unserialize($attributesOption->getValue());
 
         if (is_array($selectedConfigurableOptions)) {
             $configurableOptions = [];

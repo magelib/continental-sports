@@ -212,19 +212,38 @@ $contiproducts = $this->getLayout()->createBlock('\Continental\Products\Block\De
 <script type="text/javascript">
      require(["jquery"], function ($) {
         $(document).ready(function() {
-            
+        $(".amasty-hide-price-container").css({"float":"left","clear":"both","margin-top":"-10px"});
+        $(".product-item-description").css({"min-width":"240px"});
+        
         equalHeight(".product-item-name");
-        equalHeight(".list.items .product-item-description");
+        equalHeight(".product-item-description");
+        equalHeight(".product-item-details");
+        
+        function equalWidth(el) {
+            var maxWidth = 0;
+            $(el).each(function() {
+                y = $(this).width();
+                console.log(y);
+                if (y > maxWidth) {
+                    maxWidth = y;
+                }
+            });
+            $(el).width(maxWidth);
+        }
+
         function equalHeight(el) {
-        var maxHeight = 0;
-        $(el).each(function() {
-            x = $(this).height();
-            console.log(el + " = " + x);
-            if (x > maxHeight) {
-                maxHeight = x;
-            }
-        });
-        $(el).height(maxHeight);
+            
+            var maxHeight = 0;
+            $(el).each(function() {
+                x = $(this).height();
+                y = $(this).width();
+                
+                if (x > maxHeight) {
+                    maxHeight = x;
+                }
+            });
+        
+            $(el).height(maxHeight);
         }
          jQuery(".product-item-info img").css({"width":"inherit","display":"block","margin":"0 auto"});
         });
