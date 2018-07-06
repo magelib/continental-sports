@@ -64,7 +64,7 @@ class Index extends \Magento\Framework\App\Action\Action
     {
 //        ob_start();
         $productId = isset($_GET['id']) ? preg_replace('/[^0-9]/', '', $_GET['id']) : false;
-        exit($productId);
+
         if (!$productId) {
 //            exit("<script>history.back();</script>");
             $this->debug("No product");
@@ -112,10 +112,10 @@ class Index extends \Magento\Framework\App\Action\Action
      * @return [type] [description]
      */
     private function buildPdf($productId = null) {
-    // Create html and save to file
+    # Create html and save to file
         if ($productId === null ) exit("Missing Product id");
         $this->createHtml($productId);
-    // Force Download of Pdf
+    # Force Download of Pdf
         $this->debug("html created");
         $product = $this->getProduct($productId);
         $this->debug('product set');
@@ -129,16 +129,17 @@ class Index extends \Magento\Framework\App\Action\Action
         // folder path to save pdf to
         $path = $this->basepath . 'media/pdf/';
         
-        // change this back when working
-        if (file_exists($path . $filename)) {
-        // Path to html file on open port 80 pdf directory
+        # change this back when working
+        //if (file_exists($path . $filename)) {
+        
+        # Path to html file on open port 80 pdf directory
             $htmlUrl = $_SERVER['HTTP_HOST'] . '/pdf/' . $productId . '.html';
         
-        // Terminal command to compile the pdf
+        # Terminal command to compile the pdf
             $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf --header-html \''. $header_file .'\' \'' . $htmlUrl . '&html=yes\' \'' . $path . $filename . '\'';
-            $this->debug($command);
+            $this->debug("Run command: " . $command);
             $bash = exec($command);
-        }
+        //}
     }
 
     /**
