@@ -64,7 +64,7 @@ class Index extends \Magento\Framework\App\Action\Action
     {
 //        ob_start();
         $productId = isset($_GET['id']) ? preg_replace('/[^0-9]/', '', $_GET['id']) : false;
-
+        exit($productId);
         if (!$productId) {
 //            exit("<script>history.back();</script>");
             $this->debug("No product");
