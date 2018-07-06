@@ -85,13 +85,18 @@ class Index extends \Magento\Framework\App\Action\Action
         } else {
             $this->buildPdf($productId);
         // Force Download
-            ob_end_clean();
-            header('Content-Type: application/pdf');
-            header("Content-Transfer-Encoding: binary");
-            header('Pragma: public');
-            header("Content-disposition: attachment; filename=".$filename);
-            readfile($path.$filename);
+            $this->ForceDownload();
+            exit();
         }
+    }
+
+    private function ForceDownload() {
+        ob_end_clean();
+        header('Content-Type: application/pdf');
+        header("Content-Transfer-Encoding: binary");
+        header('Pragma: public');
+        header("Content-disposition: attachment; filename=" . $this->pdfFilename);
+        readfile($this->pdfFile);
     }
 
     /**
@@ -124,19 +129,31 @@ class Index extends \Magento\Framework\App\Action\Action
         $filename = str_replace(' - ', '-', $filename);
         $filename = preg_replace('/[^A-Za-z0-9_-]/', '', $filename);
         $filename .= '.pdf';
+        $this->pdfFilename = $filename;
         $header_file = 'http://staging.continentalsports.co.uk/pdf/header.html';
+        $footer_file = 'http://staging.continentalsports.co.uk/pdf/footer.html';
         
-        // folder path to save pdf to
+        # folder path to save pdf to
         $path = $this->basepath . 'media/pdf/';
         
         # change this back when working
-        //if (file_exists($path . $filename)) {
-        
+        //if (!file_exists($path . $this->pdfFilename)) {
         # Path to html file on open port 80 pdf directory
             $htmlUrl = $_SERVER['HTTP_HOST'] . '/pdf/' . $productId . '.html';
         
         # Terminal command to compile the pdf
-            $command = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf --header-html \''. $header_file .'\' \'' . $htmlUrl . '&html=yes\' \'' . $path . $filename . '\'';
+            $this->pdfFile =  $path . $filename;
+            $header     = '--header-html \''. $header_file .'\'';
+            $footer     = '--footer-html \''. $footer_file .'\'';
+            $htmlFile   = '\'' . $htmlUrl . '\'';
+            $pdfFile    = '\'' . $this->pdfFile . '\'';
+            $command    = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf '. 
+            $header . ' ' .
+            $footer .
+            ' --margin-top 18mm --margin-left 0mm --margin-right 0.1mm --margin-bottom 20mm ' .
+            $htmlFile . ' ' . 
+            $pdfFile;
+
             $this->debug("Run command: " . $command);
             $bash = exec($command);
         //}
@@ -160,6 +177,7 @@ class Index extends \Magento\Framework\App\Action\Action
     private function getHeader() {
         $this->checkHeader();
         if (file_exists($this->headerFile)) {
+            
             return file_get_contents($this->headerFile);
         }
     }
@@ -169,7 +187,7 @@ class Index extends \Magento\Framework\App\Action\Action
      * @return [type] [description]
      */
     private function checkFooter() {
-        $this->footerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/footer.html';
+        $this->footerFile = $_SERVER['DOCUMENT_ROOT'] . '/pdf_html/footer.html';
 
         if (!file_exists($this->footerFile)) {
             $footerHtml = <<< html
@@ -192,10 +210,11 @@ html;
      * @return [type] [description]
      */
     private function getHeaderHtml() {
+            $server = 'http://' . $_SERVER['SERVER_NAME'];
             $html = <<< html
                       <!DOCTYPE html>
            <head>
-            <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
+            <link href="//fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
             <style>
             body {
                 margin:0;padding:0;
@@ -213,7 +232,7 @@ html;
            <body>
            <div class="pdf-header">
                 <div class="pdf-container">
-                    <img src="/pub/media/wysiwyg/global/footer-logo.png" alt="PDF Logo" />
+                    <img src="{$server}/pdf/images/footer-logo.png" alt="PDF Logo" />
                 </div>
             </div>
             </body>
@@ -227,7 +246,7 @@ html;
      * @return [type] [description]
      */
     private function checkHeader() {
-        $this->headerFile = $_SERVER['DOCUMENT_ROOT'] . '/media/pdf/templates/header.html';
+        $this->headerFile = $_SERVER['DOCUMENT_ROOT'] . '/pdf_html/header.html';
         $site = $_SERVER['SERVER_NAME'];    
         if (!file_exists($this->headerFile)) {
             $headerHtml = $this->getHeaderHtml();
@@ -244,10 +263,13 @@ html;
     {
         $this->debug("createHtml()");
         // Added header
+        
         $this->checkHeader();
+
         // Added Footer
         $this->checkFooter();
         # Get product id
+        
         if ($productId === false) return false;
 
         # Get template
@@ -299,9 +321,10 @@ html;
         ob_start();
         # Show main html
         echo $contents;
-        // Show Footer
-        //echo date("Y-m-d H:i:s");
         $html = ob_get_clean();
+
+        # Add page break for options
+        $html = str_replace( '<p>Dimensions:</p>', '<p style="page-break-before: always; padding-top:10px;">&nbsp;</p><p>Dimensions:</p>', $html );
         // write html to open port 80 directory so we can access with wkhtml
         $this->debug("$contents");
         
