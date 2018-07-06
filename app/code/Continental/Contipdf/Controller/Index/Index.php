@@ -150,7 +150,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $command    = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf '. 
             $header . ' ' .
             $footer .
-            ' --margin-top 18mm --margin-left 0mm --margin-right 0.1mm --margin-bottom 20mm ' .
+            ' --margin-top 22mm --margin-left 0mm --margin-right 0.1mm --margin-bottom 20mm ' .
             $htmlFile . ' ' . 
             $pdfFile;
 
