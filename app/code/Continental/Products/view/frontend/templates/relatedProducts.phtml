@@ -24,9 +24,8 @@ if (count($relatedCollection) > 0):?>
                         <p class="sku"><?= $product->getSku() ?></p>
                         <?php endif; ?>
                         <?php if ( $product->getShortDescription() && ( strlen($product->getShortDescription()) > 1 ) ): ?>
-                            <p class="desc"><?= $product->getShortDescription() ?></p>
                         <?php endif; ?>
-                        <p class="price">&pound;<?= $helper->formatPrice($product->getPrice()) ?></p>
+                        <p class="price">&pound;<?= $helper->formatPrice( $product->getFinalPrice() ) ?></p>
                     </li>
                     <li class="btns">
                         <p><a data-button="view" href="<?= $product->getProductUrl() ?>">
