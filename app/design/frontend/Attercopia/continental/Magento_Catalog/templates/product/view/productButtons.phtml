@@ -11,8 +11,8 @@
 $_product = $block->getProduct();
 
 ?>
-<div class="product-buttons" style="margin-top: -30px;">
-    <a class="btn-pdf" href="/pdf/?id=<?=$_product->getId(); ?>"><span>Brochure</span></a>
+<div class="product-buttons" style="margin-top: -10px; -webkit-transform: skew(-20deg);">
+    <a class="btn-pdf" href="/pdf/?id=<?=$_product->getId(); ?>"><span style="transform: skew(20deg);">Brochure</span></a>
     <?php 
 	// hide this button if there are no spares available
         $related    = $this->getLayout()->createBlock('\Continental\Spares\Block\RelatedProducts');
