@@ -143,14 +143,14 @@ class Index extends \Magento\Framework\App\Action\Action
         
         # Terminal command to compile the pdf
             $this->pdfFile =  $path . $filename;
-            $header     = '--header-html \''. $header_file .'\'';
-            $footer     = '--footer-html \''. $footer_file .'\'';
+            $header     = '--header-html \''. $header_file .'\' --header-spacing 5';
+            $footer     = '--footer-html \''. $footer_file .'\' --footer-spacing 2 ';
             $htmlFile   = '\'' . $htmlUrl . '\'';
             $pdfFile    = '\'' . $this->pdfFile . '\'';
             $command    = '/usr/bin/xvfb-run -a --server-args="-screen 0, 1024x768x24" wkhtmltopdf '. 
             $header . ' ' .
             $footer .
-            ' --margin-top 22mm --margin-left 0mm --margin-right 0.1mm --margin-bottom 20mm ' .
+            ' --margin-top 28mm --margin-left 0mm --margin-right 0mm --margin-bottom 20mm ' .
             $htmlFile . ' ' . 
             $pdfFile;
 
