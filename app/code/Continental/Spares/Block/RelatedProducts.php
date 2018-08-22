@@ -79,6 +79,58 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         }
     }
 
+    /**
+     * [getLocations description]
+     * @param  [type] $mastersku [description]
+     * @return [type]            [description]
+     */
+    public function getLocations($mastersku) {
+    /* Get all location for this part */
+        $list = $this->_listingHelper->filterSpareImages($mastersku);
+        $locations = [];
+
+        if ( count($list) > 0 ) {
+                foreach ($list as $index => $obj) {
+                    if(!empty($obj->getData('location')) && !empty($obj->getData('dimensions'))) {
+                       
+                        list($x1, $y1) = explode(',', $obj->getData('location'));
+                       
+                        list($x2, $y2) = explode(',', $obj->getData('dimensions'));
+                       
+                        $left = ($x2 > $x1) ? $x1 : $x2;
+                        $top = ($y2 > $y1) ? $y1 : $y2;
+                        $locations[] = array( 
+                            "top" => $top,
+                            "left" => $left,
+                            "width" => abs(round($x2 - $x1)),
+                            "left" => abs(round($y2 - $y1)),
+                            "canvas" => "$x1, $y1, $x2, $y2"
+                        );
+                    }
+                }
+            return $locations;
+        }
+            return "-- No locations found for this item --";
+    }
+
+    /**
+     * Get locations as json string
+     * @param  [type] $mastersku [description]
+     * @return [type]            [description]
+     */
+    public function getLocationsJson($mastersku) {
+        $array = $this->getLocations($mastersku);
+        if ( count ( $array ) > 0) {
+            return json_encode( $array );
+        } else {
+            return '';
+        }
+    }
+
+    public function getLocationsSVG($mastersku) {
+
+    }
+
     public function showLocations($mastersku) {
         /* Get all location for this part */
         $list = $this->_listingHelper->filterSpareImages($mastersku);

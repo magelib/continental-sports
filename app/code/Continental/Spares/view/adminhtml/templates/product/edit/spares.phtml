@@ -123,6 +123,10 @@ if ($showSpares): ?>
         <div class="imageCanvas">
             <div class="canvasWrapper">
                 <canvas id="canvas" width="600" height="600"></canvas>
+                <!-- test placeholder -->
+                <div style="postion:relative">
+                    <a class="hotspot" id="hotspot-111" rel="111" style="display:block; position: absolute; width:79px;height:49px;top:48px;left:386px; border:1px solid #999" href="#"></a>
+                </div>
             </div>
 
             <form class="sparesLocator"
@@ -156,8 +160,6 @@ if ($showSpares): ?>
             </form>
 
         </div>
-        <div>Existing Locations</div>
-    <?= $related->showLocations($_product->getSku()); ?>
 
         <script>
             require(["jquery"], function ($) {
@@ -187,6 +189,12 @@ if ($showSpares): ?>
 
                 function mouseUp() {
                     drag = false;
+                }
+
+                function showBox(x, ctx) {
+                    let c = x.split(',');
+                    ctx.rect(c[0], c[1], c[2], c[3]);
+                    ctx.stroke();
                 }
 
                 function DrawBox(x, y, w, h) {
@@ -223,6 +231,22 @@ if ($showSpares): ?>
                 init();
 
                 //DrawBox(<?= $sparesImages->getFirstItem()->getLocation(); ?>,<?= $sparesImages->getFirstItem()->getDimensions(); ?>);
+                
+                let existingSparesDimensions = '<?= $related->getLocationsJson($_product->getSku()); ?>';
+                if ( existingSparesDimensions.length ) {
+                    //console.log("Ok, we have something to work with here");
+                    let canvas = document.getElementById('canvas');
+                    let ctx = canvas.getContext('2d');
+
+                    let arrayLength = existingSparesDimensions.length;
+                    
+                    /*for ( let x=0; x< arrayLength; x++  ) {
+                        //let L = existingSparesDimensions[x].L;
+                        let canv = existingSparesDimensions[x].canvas; 
+                        alert(canv);
+                        //showBox(canv, ctx)
+                    }*/
+                }
             });
         </script>
         <!-- images editor end -->
