@@ -97,13 +97,11 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
                        
                         list($x2, $y2) = explode(',', $obj->getData('dimensions'));
                        
-                        $left = ($x2 > $x1) ? $x1 : $x2;
-                        $top = ($y2 > $y1) ? $y1 : $y2;
                         $locations[] = array( 
-                            "top" => $top,
-                            "left" => $left,
-                            "width" => abs(round($x2 - $x1)),
-                            "height" => abs(round($y2 - $y1)),
+                            "top" => $y1,
+                            "left" => $x1,
+                            "width" => abs(round($x2)),
+                            "height" => abs(round($y2)),
                             "canvas" => "$x1, $y1, $x2, $y2"
                         );
                     }
@@ -131,7 +129,8 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         $html = '';
         if ( $locationDataArray = $this->getLocations($mastersku) ) {
             foreach ($locationDataArray as $index => $l) {
-                $html .= sprintf('<a class="hotspot" id="hotspot-111" rel="111" style="display:block; position: absolute; width:%spx;height:%spx;top:%spx;left:%spx; border:2px solid #999" href="#"></a>', 
+                $html .= sprintf('<a data-debug="%s" class="hotspot" id="hotspot-111" rel="111" style="display:block; position: absolute; width:%spx;height:%spx;top:%spx;left:%spx; border:2px solid #999" href="#"></a>', 
+		$l['canvas'],
                 $l['width'],
                 $l['height'],
                 $l['top'],
@@ -149,13 +148,20 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         if ( count($list) > 0 ) {
                 foreach ($list as $index => $obj) {
                     if(!empty($obj->getData('location')) && !empty($obj->getData('dimensions'))) {
-                        $rowHtml .= "<tr><td>L:" . $obj->getData('location') . " D:" . $obj->getData('dimensions') . "<BR /></td></tr>";
+                        list($x1, $y1) = explode(',', $obj->getData('location'));
+                           
+                        list($x2, $y2) = explode(',', $obj->getData('dimensions'));
+                        
+                        if(!empty($obj->getData('location')) && !empty($obj->getData('dimensions'))) {
+                            $rowHtml .= sprintf("<tr><td>Width: %s</td><td>Height :%s</td><td>x: %s</td><td>y: %s</td></tr>",
+                                $x2, $y2, $x1, $x2);
+                        }
                     }
                 }
             $rowHtml .= '</table>';
             return $rowHtml;
         }
-            return "-- No locations found for this item --";
+            return "-- No locations set this item --";
 
 
     }
