@@ -125,8 +125,8 @@ if ($showSpares): ?>
                 <canvas id="canvas" width="600" height="600"></canvas>
                 <!-- test placeholder -->
                 <div style="postion:relative">
-                    <a class="hotspot" id="hotspot-111" rel="111" style="display:block; position: absolute; width:79px;height:49px;top:48px;left:386px; border:1px solid #999" href="#"></a>
-                </div>
+                <?php echo $related->display_hotspots( $_product->getSku() ); ?>
+		</div>
             </div>
 
             <form class="sparesLocator"

@@ -103,14 +103,14 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
                             "top" => $top,
                             "left" => $left,
                             "width" => abs(round($x2 - $x1)),
-                            "left" => abs(round($y2 - $y1)),
+                            "height" => abs(round($y2 - $y1)),
                             "canvas" => "$x1, $y1, $x2, $y2"
                         );
                     }
                 }
             return $locations;
         }
-            return "-- No locations found for this item --";
+            return false;
     }
 
     /**
@@ -127,8 +127,18 @@ class RelatedProducts extends \Magento\Framework\View\Element\Template
         }
     }
 
-    public function getLocationsSVG($mastersku) {
-
+	public function display_hotspots( $mastersku ) {
+        $html = '';
+        if ( $locationDataArray = $this->getLocations($mastersku) ) {
+            foreach ($locationDataArray as $index => $l) {
+                $html .= sprintf('<a class="hotspot" id="hotspot-111" rel="111" style="display:block; position: absolute; width:%spx;height:%spx;top:%spx;left:%spx; border:2px solid #999" href="#"></a>', 
+                $l['width'],
+                $l['height'],
+                $l['top'],
+                $l['left']);
+            }
+        }
+        return $html;
     }
 
     public function showLocations($mastersku) {
