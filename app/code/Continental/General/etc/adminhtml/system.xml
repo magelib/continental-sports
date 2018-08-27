@@ -4,7 +4,7 @@
         <tab id="continental" translate="label" sortOrder="10">
             <label>Continental</label>
         </tab>
-        <section id="continental-attributes" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="continental_attributes" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top</class>
             <label>Continental Shipping rates</label>
             <tab>continental</tab>

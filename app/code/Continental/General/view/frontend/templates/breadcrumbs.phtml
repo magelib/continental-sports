@@ -5,7 +5,11 @@ error_reporting(E_ALL);
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $categories = $block->getCurrentProduct()->getCategoryIds();
 $cat = $objectManager->create('Magento\Catalog\Model\Category')->load($categories[0]);
-
+if ($cat->getName() === 'POA' ) {
+// Hacky fix - finesse this later
+// We don't want POA showing as it's own category
+$cat = $objectManager->create('Magento\Catalog\Model\Category')->load($categories[1]);	
+}
 if ($parent = $cat->getParentCategory()) {
     $html = $parent->getName() . ' <b>></b> <span style="color: #d1242e;">' . $cat->getName() . '</span>';
 } else {
@@ -19,5 +23,9 @@ if ($parent = $cat->getParentCategory()) {
 <div class="page-title-wrapper product">
     <h1 class="page-title">
         <span class="base" data-ui-id="page-title-wrapper"
-              itemprop="name"><?php echo $block->getCurrentProduct()->getName() ?></span></h1>
+              itemprop="name">
+              
+              <?php echo $block->getCurrentProduct()->getName() ?>
+              	
+              </span></h1>
 </div>
